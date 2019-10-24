@@ -8,6 +8,7 @@
  */
 
 rootProject.name = 'kuartz-core'
+
 include ':kuartz-data-jpa'
 
-//project('kuartz-data-jpa').projectDir = file('kuartz-data-jpa')
+project(':kuartz-data-jpa').projectDir = file('kuartz-data-jpa')

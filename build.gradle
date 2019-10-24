@@ -1,13 +1,7 @@
 buildscript {
-    ext {
-        springBootVersion = '2.1.3.RELEASE'
-        springCloudVersion = 'Greenwich.SR2'
-        kuartzGradlePluginVersion = '1.1'
-        depManVersion = '0.6.1.RELEASE'
-        queryDslVersion = '4.2.1'
-    }
 
     repositories {
+        jcenter()
         mavenCentral()
         maven {
             url 'http://10.10.14.35:8081/repository/maven-releases/'

@@ -1,11 +1,11 @@
 buildscript {
 
     dependencies {
-        classpath "com.kuartz.core.gradle.querydsl:kuartz-gradle-plugin:${kuartzGradlePluginVersion}"
+        classpath "com.kuartz.core.plugin.gradle:kuartz-gradle-plugin:${kuartzGradlePluginVersion}"
     }
 }
 
-apply plugin: "com.kuartz.core.gradle.querydsl"
+apply plugin: "com.kuartz.core.plugin.gradle"
 
 
 bootJar {
