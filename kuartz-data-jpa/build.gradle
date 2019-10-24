@@ -1,0 +1,89 @@
+buildscript {
+
+    dependencies {
+        classpath "com.kuartz.core.gradle.querydsl:kuartz-gradle-plugin:${kuartzGradlePluginVersion}"
+    }
+}
+
+apply plugin: "com.kuartz.core.gradle.querydsl"
+
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+
+dependencies {
+
+    compile(
+            [group: 'com.querydsl', name: 'querydsl-core', version: queryDslVersion],
+            [group: 'com.querydsl', name: 'querydsl-jpa', version: queryDslVersion],
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'],
+            [group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-joda', version: '2.9.0'],
+    )
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+
+group = 'com.kuartz.core.data.jpa'
+version = '1.0'
+sourceCompatibility = '1.8'
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    archiveClassifier = 'sources'
+}
+
+task javadocJar(type: Jar) {
+    from javadoc
+    archiveClassifier = 'javadoc'
+}
+
+publishing {
+    repositories {
+        maven {
+            url 'http://10.10.14.35:8081/repository/maven-releases/'
+            credentials {
+                username = 'admin'
+                password = '2802nK.'
+            }
+        }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'kuartz-data-jpa'
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            pom {
+                name = 'Kuart JPA Library'
+                description = 'Kuartz custom JPA repository library'
+//                 url = 'http://10.10.14.35:8081/repository/maven-public/'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'celebikutay'
+                        name = 'Kutay Çelebi'
+                        email = 'mail@kutaycelebi.com'
+                    }
+                }
+                // scm {
+                //     connection = 'scm:git:git://example.com/my-library.git'
+                //     developerConnection = 'scm:git:ssh://example.com/my-library.git'
+                //     url = 'http://example.com/my-library/'
+                // }
+            }
+        }
+    }
+}

@@ -1,2 +1,1 @@
-# kuartz-core
-
+# kuartz-data-jpa

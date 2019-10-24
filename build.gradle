@@ -1,0 +1,62 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.3.RELEASE'
+        springCloudVersion = 'Greenwich.SR2'
+        kuartzGradlePluginVersion = '1.1'
+        depManVersion = '0.6.1.RELEASE'
+        queryDslVersion = '4.2.1'
+    }
+
+    repositories {
+        mavenCentral()
+        maven {
+            url 'http://10.10.14.35:8081/repository/maven-releases/'
+        }
+    }
+
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "io.spring.gradle:dependency-management-plugin:${depManVersion}"
+    }
+}
+
+allprojects {
+
+    apply plugin: 'idea'
+    apply plugin: 'java'
+
+    apply plugin: 'maven-publish'
+    apply plugin: 'maven'
+
+    buildscript {
+        repositories {
+            mavenCentral()
+            maven {
+                url 'http://10.10.14.35:8081/repository/maven-releases/'
+                credentials {
+                    username 'admin'
+                    password '2802nK.'
+                }
+            }
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven {
+            url 'http://10.10.14.35:8081/repository/maven-releases/'
+            credentials {
+                username 'admin'
+                password '2802nK.'
+            }
+        }
+    }
+
+}
+
+subprojects {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+}
+
