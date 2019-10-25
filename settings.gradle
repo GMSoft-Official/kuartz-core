@@ -8,8 +8,18 @@
  */
 rootProject.name = 'kuartz-core'
 
-include ':kuartz-data-jpa'
 include ':kuartz-cloud-core'
-
-project(':kuartz-data-jpa').projectDir = file('kuartz-data-jpa')
 project(':kuartz-cloud-core').projectDir = file('kuartz-cloud-core')
+
+include 'kuartz-core-common'
+project(':kuartz-core-common').projectDir = file('kuartz-core-common')
+
+include 'kuartz-core-rest'
+project(':kuartz-core-rest').projectDir = file('kuartz-core-rest')
+
+include ':kuartz-data-jpa'
+project(':kuartz-data-jpa').projectDir = file('kuartz-data-jpa')
+
+include 'kuartz-core-feign'
+project(':kuartz-core-feign').projectDir = file('kuartz-core-feign')
+

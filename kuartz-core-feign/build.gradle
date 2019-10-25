@@ -1,16 +1,6 @@
-group 'com.kuartz.core.cloud'
-version '1.0.3'
+group 'com.kuartz.core.feign'
+version '1.0'
 sourceCompatibility = 1.8
-
-
-bootJar {
-    enabled = false
-}
-
-jar {
-    enabled = true
-}
-
 
 dependencyManagement {
     imports {
@@ -20,12 +10,8 @@ dependencyManagement {
 
 dependencies {
     compile(
-            [group: 'org.springframework.cloud', name: 'spring-cloud-starter'],
-            [group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-zuul'],
-            [group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth'],
-            [group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'],
+            [group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'],
     )
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 }
 
 
@@ -51,13 +37,13 @@ publishing {
     }
     publications {
         mavenJava(MavenPublication) {
-            artifactId = 'kuartz-cloud-core'
+            artifactId = 'kuartz-core-feign'
             from components.java
             artifact sourcesJar
             artifact javadocJar
             pom {
-                name = 'Kuart Cloud Library'
-                description = 'Kuartz custom Cloud repository library'
+                name = 'Kuart Feign Library'
+                description = 'Kuartz custom Feign library'
 //                 url = 'http://10.10.14.35:8081/repository/maven-public/'
                 licenses {
                     license {

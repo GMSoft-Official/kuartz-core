@@ -1,33 +1,7 @@
-group 'com.kuartz.core.cloud'
-version '1.0.3'
+group 'com.kuartz.core.rest'
+version 'unspecified'
+
 sourceCompatibility = 1.8
-
-
-bootJar {
-    enabled = false
-}
-
-jar {
-    enabled = true
-}
-
-
-dependencyManagement {
-    imports {
-        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:' + springCloudVersion
-    }
-}
-
-dependencies {
-    compile(
-            [group: 'org.springframework.cloud', name: 'spring-cloud-starter'],
-            [group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-zuul'],
-            [group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth'],
-            [group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'],
-    )
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-}
-
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
@@ -37,6 +11,13 @@ task sourcesJar(type: Jar) {
 task javadocJar(type: Jar) {
     from javadoc
     archiveClassifier = 'javadoc'
+}
+
+dependencies {
+    compile(
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-web'],
+    )
+    testCompile 'org.springframework:spring-test:4.0.6.RELEASE'
 }
 
 publishing {
@@ -51,13 +32,13 @@ publishing {
     }
     publications {
         mavenJava(MavenPublication) {
-            artifactId = 'kuartz-cloud-core'
+            artifactId = 'kuartz-core-common'
             from components.java
             artifact sourcesJar
             artifact javadocJar
             pom {
-                name = 'Kuart Cloud Library'
-                description = 'Kuartz custom Cloud repository library'
+                name = 'Kuart REST Library'
+                description = 'Kuartz custom REST library'
 //                 url = 'http://10.10.14.35:8081/repository/maven-public/'
                 licenses {
                     license {
@@ -67,7 +48,7 @@ publishing {
                 }
                 developers {
                     developer {
-                        id = 'kutaycelebi'
+                        id = 'celebikutay'
                         name = 'Kutay Çelebi'
                         email = 'mail@kutaycelebi.com'
                     }
