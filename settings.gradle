@@ -6,9 +6,10 @@
  * Detailed information about configuring a multi-project build in Gradle can be found
  * in the user guide at https://docs.gradle.org/5.1/userguide/multi_project_builds.html
  */
-
 rootProject.name = 'kuartz-core'
 
 include ':kuartz-data-jpa'
+include ':kuartz-cloud-core'
 
 project(':kuartz-data-jpa').projectDir = file('kuartz-data-jpa')
+project(':kuartz-cloud-core').projectDir = file('kuartz-cloud-core')
