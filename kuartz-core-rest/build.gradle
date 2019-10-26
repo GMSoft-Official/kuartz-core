@@ -1,7 +1,16 @@
 group 'com.kuartz.core.rest'
-version 'unspecified'
-
+version "${kuartzRestVersion}"
 sourceCompatibility = 1.8
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
@@ -32,7 +41,7 @@ publishing {
     }
     publications {
         mavenJava(MavenPublication) {
-            artifactId = 'kuartz-core-common'
+            artifactId = 'kuartz-core-rest'
             from components.java
             artifact sourcesJar
             artifact javadocJar

@@ -16,11 +16,9 @@ buildscript {
 
 allprojects {
 
-    apply plugin: 'idea'
-    apply plugin: 'java'
+}
 
-    apply plugin: 'maven-publish'
-    apply plugin: 'maven'
+subprojects {
 
     buildscript {
         repositories {
@@ -47,9 +45,13 @@ allprojects {
         }
     }
 
-}
+    apply plugin: 'idea'
+    apply plugin: 'java'
 
-subprojects {
+    apply plugin: 'maven-publish'
+    apply plugin: 'maven'
+    apply plugin: 'wrapper'
+
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 }
