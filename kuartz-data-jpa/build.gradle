@@ -1,4 +1,4 @@
-group 'com.kuartz.core.rest'
+group 'com.kuartz.core.data.jpa'
 version "${kuartzDataJpaVersion}"
 sourceCompatibility = 1.8
 
@@ -25,16 +25,13 @@ dependencies {
             [group: 'com.querydsl', name: 'querydsl-core', version: queryDslVersion],
             [group: 'com.querydsl', name: 'querydsl-jpa', version: queryDslVersion],
             [group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonVersion}"],
     )
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-
-group = 'com.kuartz.core.data.jpa'
-version = '1.0'
-sourceCompatibility = '1.8'
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava

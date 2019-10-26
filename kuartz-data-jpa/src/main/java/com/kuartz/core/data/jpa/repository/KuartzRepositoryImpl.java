@@ -47,7 +47,9 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     }
 
     public JPAQuery<KE> getJpaQuery() {
-        return new JPAQuery<>(entityManager);
+        JPAQuery<KE> kejpaQuery = new JPAQuery<>(entityManager);
+        kejpaQuery.from(this.path);
+        return kejpaQuery;
     }
 
     @Transactional
