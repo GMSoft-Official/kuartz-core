@@ -1,6 +1,5 @@
 package com.kuartz.core.data.jpa.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
@@ -9,7 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.Date;
 
 /**
  * @author Kutay Celebi
@@ -17,10 +16,6 @@ import java.time.Instant;
  */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(
-        value = {"createdAt", "updatedAt"},
-        allowGetters = true
-)
 public class KuartzEntity implements Serializable {
 
     @Id
@@ -30,10 +25,13 @@ public class KuartzEntity implements Serializable {
     private Long id;
 
     @CreationTimestamp
-    private Instant createdAt;
+    private Date createdAt;
 
     @LastModifiedDate
-    private Instant updatedAt;
+    private Date updatedAt;
+
+    public KuartzEntity () {
+    }
 
     public Long getId() {
         return id;
@@ -43,20 +41,19 @@ public class KuartzEntity implements Serializable {
         this.id = id;
     }
 
-    public Instant getCreatedAt() {
+    public Date getCreatedAt () {
         return createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt (Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Instant getUpdatedAt() {
+    public Date getUpdatedAt () {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Instant updatedAt) {
+    public void setUpdatedAt (Date updatedAt) {
         this.updatedAt = updatedAt;
     }
-
 }
