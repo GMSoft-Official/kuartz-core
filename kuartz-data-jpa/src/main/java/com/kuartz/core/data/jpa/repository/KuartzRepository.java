@@ -1,13 +1,19 @@
 package com.kuartz.core.data.jpa.repository;
 
 import com.kuartz.core.data.jpa.entity.KuartzEntity;
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQuery;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Kutay Celebi
@@ -27,4 +33,27 @@ public interface KuartzRepository<KE extends KuartzEntity> extends CrudRepositor
 
     List<KE> saveAllFlush(Iterable<KE> entities);
 
+    @Override
+    Optional<KE> findOne(Predicate predicate);
+
+    @Override
+    Iterable<KE> findAll(Predicate predicate);
+
+    @Override
+    Iterable<KE> findAll(Predicate predicate, Sort sort);
+
+    @Override
+    Iterable<KE> findAll(Predicate predicate, OrderSpecifier<?>... orders);
+
+    @Override
+    Iterable<KE> findAll(OrderSpecifier<?>... orders);
+
+    @Override
+    Page<KE> findAll(Predicate predicate, Pageable pageable);
+
+    @Override
+    long count(Predicate predicate);
+
+    @Override
+    boolean exists(Predicate predicate);
 }

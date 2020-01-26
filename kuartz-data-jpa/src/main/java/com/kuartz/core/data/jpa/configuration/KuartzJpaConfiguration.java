@@ -1,7 +1,5 @@
 package com.kuartz.core.data.jpa.configuration;
 
-import com.kuartz.core.data.jpa.bean.KuartzRepositoryFactoryBean;
-import com.kuartz.core.data.jpa.repository.KuartzRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -9,7 +7,6 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -23,7 +20,6 @@ import java.util.Properties;
  * @since 7.10.2019
  */
 @Configuration
-@EnableJpaRepositories(basePackageClasses = KuartzRepositoryImpl.class, repositoryFactoryBeanClass = KuartzRepositoryFactoryBean.class)
 @EnableAutoConfiguration
 public class KuartzJpaConfiguration {
 
