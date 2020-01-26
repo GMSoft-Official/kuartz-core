@@ -8,6 +8,11 @@
  */
 rootProject.name = 'kuartz-core'
 
+
+
+include ':kuartz-core-environment'
+project(':kuartz-core-environment').projectDir = file('kuartz-core-environment')
+
 include ':kuartz-cloud-core'
 project(':kuartz-cloud-core').projectDir = file('kuartz-cloud-core')
 
