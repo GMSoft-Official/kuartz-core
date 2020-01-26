@@ -3,10 +3,13 @@ version "${kuartzDataJpaVersion}"
 sourceCompatibility = 1.8
 
 buildscript {
+
     dependencies {
-        // suan kullanilmiyor.
+        classpath "com.kuartz.core.plugin.gradle:kuartz-gradle-plugin:${kuartzGradlePluginVersion}"
     }
 }
+
+apply plugin: "com.kuartz.core.plugin.gradle"
 
 bootJar {
     enabled = false
@@ -52,13 +55,13 @@ publishing {
     }
     publications {
         mavenJava(MavenPublication) {
-            artifactId = 'kuartz-core-environment'
+            artifactId = 'kuartz-data-jpa'
             from components.java
             artifact sourcesJar
             artifact javadocJar
             pom {
-                name = 'Kuart Environment Library'
-                description = 'Kuartz custom Environment library'
+                name = 'Kuart JPA Library'
+                description = 'Kuartz custom JPA repository library'
 //                 url = 'http://10.10.14.35:8081/repository/maven-public/'
                 licenses {
                     license {

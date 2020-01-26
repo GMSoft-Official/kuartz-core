@@ -2,6 +2,11 @@ group 'com.kuartz.core.env'
 version "${kuartzEnvVersion}"
 sourceCompatibility = 1.8
 
+buildscript {
+    dependencies {
+        // suan kullanilmiyor.
+    }
+}
 
 bootJar {
     enabled = false
@@ -11,17 +16,17 @@ jar {
     enabled = true
 }
 
-
-dependencyManagement {
-    imports {
-        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:' + springCloudVersion
-    }
-}
-
 dependencies {
+
     compile(
-            [group: 'org.springframework.boot', name: 'spring-boot'],
+            [group: 'com.querydsl', name: 'querydsl-core', version: queryDslVersion],
+            [group: 'com.querydsl', name: 'querydsl-jpa', version: queryDslVersion],
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonVersion}"],
     )
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 
@@ -38,22 +43,22 @@ task javadocJar(type: Jar) {
 publishing {
     repositories {
         maven {
-            url 'http://10.10.14.35:8081/repository/maven-releases/'
+            url "http://10.10.14.35:8081/repository/maven-releases/"
             credentials {
-                username = 'admin'
-                password = '2802nK.'
+                username 'admin'
+                password '2802nK.'
             }
         }
     }
     publications {
         mavenJava(MavenPublication) {
-            artifactId = 'kuartz-core-feign'
+            artifactId = 'kuartz-core-environment'
             from components.java
             artifact sourcesJar
             artifact javadocJar
             pom {
-                name = 'Kuart Feign Library'
-                description = 'Kuartz custom Feign library'
+                name = 'Kuart Environment Library'
+                description = 'Kuartz custom Environment library'
 //                 url = 'http://10.10.14.35:8081/repository/maven-public/'
                 licenses {
                     license {
@@ -63,7 +68,7 @@ publishing {
                 }
                 developers {
                     developer {
-                        id = 'kutaycelebi'
+                        id = 'celebikutay'
                         name = 'Kutay Çelebi'
                         email = 'mail@kutaycelebi.com'
                     }
