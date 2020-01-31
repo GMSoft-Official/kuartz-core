@@ -7,6 +7,10 @@ import java.io.Serializable;
 public class KuartzQueryModel implements Serializable {
     private KzPageable pageable;
 
+    public KuartzQueryModel() {
+        //    bos yapici
+    }
+
     public KuartzQueryModel(KzPageable pageable) {
         this.pageable = pageable;
     }
