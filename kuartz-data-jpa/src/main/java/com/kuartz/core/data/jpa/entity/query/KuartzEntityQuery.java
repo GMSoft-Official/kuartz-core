@@ -1,14 +1,13 @@
 package com.kuartz.core.data.jpa.entity.query;
 
-import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.kuartz.core.data.jpa.entity.KuartzEntity;
-
-
+import com.querydsl.core.types.Path;
+import com.querydsl.core.types.PathMetadata;
 import com.querydsl.core.types.dsl.*;
 
-import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
-import com.querydsl.core.types.Path;
+
+import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -21,11 +20,17 @@ public class KuartzEntityQuery extends EntityPathBase<KuartzEntity> {
 
     public static final KuartzEntityQuery kuartzEntity = new KuartzEntityQuery("kuartzEntity");
 
-    public final DateTimePath<java.time.Instant> createdAt = createDateTime("createdAt", java.time.Instant.class);
+    public final DateTimePath<java.util.Date> createdAt = createDateTime("createdAt", java.util.Date.class);
+
+    public final DateTimePath<java.util.Date> deletedAt = createDateTime("deletedAt", java.util.Date.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final DateTimePath<java.time.Instant> updatedAt = createDateTime("updatedAt", java.time.Instant.class);
+    public final BooleanPath isDeleted = createBoolean("isDeleted");
+
+    public final DateTimePath<java.util.Date> updatedAt = createDateTime("updatedAt", java.util.Date.class);
+
+    public final StringPath uuid = createString("uuid");
 
     public KuartzEntityQuery(String variable) {
         super(KuartzEntity.class, forVariable(variable));

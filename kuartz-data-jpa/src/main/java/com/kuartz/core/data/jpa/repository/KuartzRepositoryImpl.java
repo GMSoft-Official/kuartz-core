@@ -1,7 +1,11 @@
 package com.kuartz.core.data.jpa.repository;
 
+import com.kuartz.core.common.domain.KzPage;
+import com.kuartz.core.common.domain.KzPageable;
+import com.kuartz.core.common.util.DateUtils;
 import com.kuartz.core.data.jpa.bean.KuartzEntityPathResolver;
 import com.kuartz.core.data.jpa.entity.KuartzEntity;
+import com.kuartz.core.data.jpa.util.KzPageableUtil;
 import com.querydsl.core.NonUniqueResultException;
 import com.querydsl.core.types.EntityPath;
 import com.querydsl.core.types.OrderSpecifier;
@@ -9,8 +13,10 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.CrudMethodMetadata;
@@ -35,7 +41,8 @@ import java.util.Optional;
  */
 @NoRepositoryBean
 public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepository<KE, Long> implements
-        KuartzRepository<KE>, QuerydslPredicateExecutor<KE> {
+                                                                                                 KuartzRepository<KE>,
+                                                                                                 QuerydslPredicateExecutor<KE> {
 
     private static final KuartzEntityPathResolver PATH_RESOLVER = KuartzEntityPathResolver.INSTANCE;
 
@@ -114,6 +121,12 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     }
 
     @Override
+    public void hardDelete(Long id) {
+        Assert.notNull(id, "ID null olamaz.");
+        findById(id);
+    }
+
+    @Override
     public Optional<KE> findOne(Predicate predicate) {
         try {
             return Optional.ofNullable(createQuery(predicate).select(path).fetchOne());
@@ -123,24 +136,29 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     }
 
     @Override
-    public Iterable<KE> findAll(Predicate predicate) {
+    public List<KE> findAll() {
+        return createQuery().fetch();
+    }
+
+    @Override
+    public List<KE> findAll(Predicate predicate) {
         return createQuery(predicate).fetch();
     }
 
     @Override
-    public Iterable<KE> findAll(Predicate predicate, Sort sort) {
+    public List<KE> findAll(Predicate predicate, Sort sort) {
         JPAQuery<KE> query = createQuery(predicate);
         return executeSorted(query, sort);
     }
 
     @Override
-    public Iterable<KE> findAll(Predicate predicate, OrderSpecifier<?>... orders) {
+    public List<KE> findAll(Predicate predicate, OrderSpecifier<?>... orders) {
         JPAQuery<KE> query = createQuery(predicate);
         return executeSorted(query, orders);
     }
 
     @Override
-    public Iterable<KE> findAll(OrderSpecifier<?>... orders) {
+    public List<KE> findAll(OrderSpecifier<?>... orders) {
 
         Assert.notNull(orders, "Order specifiers must not be null!");
         return executeSorted(createQuery(new Predicate[0]).select(path), orders);
@@ -159,6 +177,18 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     }
 
     @Override
+    public KzPage<KE> findAll(Predicate predicate, KzPageable pageable) {
+        Assert.notNull(pageable, "Pageable must not be null!");
+
+        final JPAQuery<KE> query = createQuery(predicate);
+
+        PageRequest toPageable = KzPageableUtil.kzPageableToPageable(pageable);
+        JPAQuery<KE> applyPagination = (JPAQuery<KE>) querydsl.applyPagination(toPageable, query);
+        Page<KE> page = PageableExecutionUtils.getPage(applyPagination.fetch(), toPageable, query::fetchCount);
+        return KzPageableUtil.pageToKzPage(page);
+    }
+
+    @Override
     public long count(Predicate predicate) {
         return createQuery(predicate).fetchCount();
     }
@@ -168,8 +198,45 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         return createQuery(predicate).fetchCount() > 0;
     }
 
+    @Override
+    public void deleteById(Long id) {
+        Assert.notNull(id, "SILINECEK ENTITY ID BOS OLAMAZ");
+        Optional<KE> optional = findById(id);
+        if (optional.isPresent()) {
+            KE entity = optional.get();
+            entity.setDeleted(Boolean.TRUE);
+            entity.setDeletedAt(DateUtils.suankiTarih());
+        } else {
+            throw new EmptyResultDataAccessException(
+                    String.format("No %s entity with id %s exists!", entityInformation.getJavaType(), id), 1);
+        }
+    }
+
+    @Override
+    public void delete(KE entity) {
+        boolean isExists = existsById(entity.getId());
+        Assert.isTrue(isExists, "ENTITY VERITABANINDA YOK");
+
+        entity.setDeleted(Boolean.TRUE);
+        entity.setDeletedAt(DateUtils.suankiTarih());
+        updateFlush(entity);
+    }
+
+    @Override
+    public void deleteAll(Iterable<? extends KE> entities) {
+        entities.forEach(this::delete);
+    }
+
+    @Override
+    public void deleteAll() {
+        findAll().forEach(this::delete);
+    }
+
+
     protected JPAQuery<KE> createQuery(Predicate... predicate) {
-        JPAQuery<KE>       query    = getJpaQuery().where(predicate);
+        JPAQuery<KE> query = getJpaQuery().where(predicate);
+        query.where(builder.getBoolean(KuartzEntity.DELETED_FIELD).isNull().or(builder.getBoolean(KuartzEntity.DELETED_FIELD).isFalse()));
+
         CrudMethodMetadata metadata = getRepositoryMethodMetadata();
         if (metadata == null) {
             return query;
