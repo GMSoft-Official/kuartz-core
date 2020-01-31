@@ -1,47 +1,54 @@
 package com.kuartz.core.common.domain;
 
-import org.springframework.data.domain.AbstractPageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import java.io.Serializable;
 
-public class KzPageable extends AbstractPageRequest {
+public class KzPageable implements Serializable {
 
-    // todo KZ sort yazalım
-    private Sort sort;
+    private static final long serialVersionUID = -970697255361843356L;
 
-    /**
-     * Creates a new {@link AbstractPageRequest}. Pages are zero indexed, thus providing 0 for {@code page} will return
-     * the first page.
-     *
-     * @param page must not be less than zero.
-     * @param size must not be less than one.
-     */
-    public KzPageable(int page, int size) {
-        super(page, size);
+    private KzSort sort;
+
+    private Integer pageNumber;
+
+    private Integer pageSize;
+
+    public KzPageable(KzSort sort, Integer pageNumber, Integer pageSize) {
+        this.sort       = sort;
+        this.pageNumber = pageNumber;
+        this.pageSize   = pageSize;
     }
 
-    public KzPageable(int page, int size, Sort sort) {
-        super(page, size);
-        this.sort = sort;
+    public KzPageable(KzSort sort, Integer pageNumber) {
+        this.sort       = sort;
+        this.pageNumber = pageNumber;
     }
 
-    @Override
-    public Sort getSort() {
+    public KzPageable(Integer pageNumber, Integer pageSize) {
+        this.pageNumber = pageNumber;
+        this.pageSize   = pageSize;
+    }
+
+    public KzSort getSort() {
         return sort;
     }
 
-    @Override
-    public Pageable next() {
-        return new KzPageable(getPageNumber() + 1, getPageSize(), sort);
+    public void setSort(KzSort sort) {
+        this.sort = sort;
     }
 
-    @Override
-    public Pageable previous() {
-        return new KzPageable(getPageNumber() - 1, getPageSize(), sort);
+    public Integer getPageNumber() {
+        return pageNumber;
     }
 
-    @Override
-    public Pageable first() {
-        return new KzPageable(0, getPageSize(), sort);
+    public void setPageNumber(Integer pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 }

@@ -1,32 +1,75 @@
 package com.kuartz.core.common.domain;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.List;
 
 public class KzSort implements Serializable {
     private static final long serialVersionUID = -7943852320107985222L;
 
-    private Map<String, Direction> orderMap;
+    private List<KzOrder> kzOrderList;
 
-    public KzSort(Map<String, Direction> orderMap) {
-        this.orderMap = orderMap;
+    public KzSort(List<KzOrder> kzOrderList) {
+        this.kzOrderList = kzOrderList;
     }
 
-    public Map<String, Direction> getOrderMap() {
-        return orderMap;
+    public List<KzOrder> getKzOrderList() {
+        return kzOrderList;
     }
 
-    public void setOrderMap(Map<String, Direction> orderMap) {
-        this.orderMap = orderMap;
+    public void setKzOrderList(List<KzOrder> kzOrderList) {
+        this.kzOrderList = kzOrderList;
     }
 
-    public static enum NullHandling {
+    public static class KzOrder implements Serializable {
+        private static final long serialVersionUID = -5001150159671661556L;
+
+        private NullHandling nullHandling;
+        private String       property;
+        private Direction    direction;
+
+        public KzOrder(String property, Direction direction) {
+            this.property  = property;
+            this.direction = direction;
+        }
+
+        public KzOrder(NullHandling nullHandling, String property, Direction direction) {
+            this.nullHandling = nullHandling;
+            this.property     = property;
+            this.direction    = direction;
+        }
+
+        public NullHandling getNullHandling() {
+            return nullHandling;
+        }
+
+        public void setNullHandling(NullHandling nullHandling) {
+            this.nullHandling = nullHandling;
+        }
+
+        public String getProperty() {
+            return property;
+        }
+
+        public void setProperty(String property) {
+            this.property = property;
+        }
+
+        public Direction getDirection() {
+            return direction;
+        }
+
+        public void setDirection(Direction direction) {
+            this.direction = direction;
+        }
+    }
+
+    public enum NullHandling {
         DEFAULT,
         NULLS_FIRST,
         NULLS_LAST
     }
 
-    public static enum Direction {
+    public enum Direction {
         ASC,
         DESC
     }
