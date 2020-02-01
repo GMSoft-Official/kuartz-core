@@ -22,6 +22,7 @@ subprojects {
 
     buildscript {
         repositories {
+            mavenLocal();
             mavenCentral()
             maven {
                 url "http://10.10.14.35:8081/repository/maven-releases/"
@@ -34,8 +35,6 @@ subprojects {
     }
 
     repositories {
-        mavenCentral()
-        jcenter()
         maven {
             url 'http://10.10.14.35:8081/repository/maven-releases/'
             credentials {
@@ -43,6 +42,9 @@ subprojects {
                 password '2802nK.'
             }
         }
+        mavenLocal();
+        mavenCentral()
+        jcenter()
     }
 
     apply plugin: 'idea'
