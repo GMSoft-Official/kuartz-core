@@ -17,7 +17,12 @@ public final class KzUtil {
         return map != null && map.size() <= 0;
     }
 
+    public static Boolean isEmpty(String str){
+        return str != null && str.isEmpty();
+    }
+
     public static Boolean isNull(Enum anEnum) {
         return anEnum == null;
     }
+
 }
