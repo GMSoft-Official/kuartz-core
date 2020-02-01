@@ -25,6 +25,7 @@ task javadocJar(type: Jar) {
 dependencies {
     compile(
             [group: 'org.springframework.boot', name: 'spring-boot-starter-web'],
+            [group: 'com.kuartz.core.common', name: 'kuartz-core-common', version: "${kuartzCommonVersion}"],
     )
     testCompile 'org.springframework:spring-test:4.0.6.RELEASE'
 }
