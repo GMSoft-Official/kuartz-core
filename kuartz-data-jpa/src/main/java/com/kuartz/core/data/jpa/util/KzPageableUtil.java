@@ -44,18 +44,21 @@ public final class KzPageableUtil {
     }
 
     public static Sort.NullHandling kzNullHandlingToNullHandling(KzSort.NullHandling nullHandling) {
-        switch (nullHandling) {
-            case NULLS_LAST:
-                return Sort.NullHandling.NULLS_LAST;
-            case NULLS_FIRST:
-                return Sort.NullHandling.NULLS_FIRST;
-            default:
-                return Sort.NullHandling.NATIVE;
+        if (!KzUtil.isNull(nullHandling)) {
+            switch (nullHandling) {
+                case NULLS_LAST:
+                    return Sort.NullHandling.NULLS_LAST;
+                case NULLS_FIRST:
+                    return Sort.NullHandling.NULLS_FIRST;
+                default:
+                    return Sort.NullHandling.NATIVE;
+            }
         }
+        return Sort.NullHandling.NATIVE;
     }
 
     public static <T> KzPage<T> pageToKzPage(Page<T> page) {
-       return new KzPage<T>(page.getContent(), pageableToKzPageable(page.getPageable()));
+        return new KzPage<T>(page.getContent(), pageableToKzPageable(page.getPageable()), page.getTotalElements(), page.getTotalPages());
     }
 
     public static KzPageable pageableToKzPageable(Pageable pageable) {
