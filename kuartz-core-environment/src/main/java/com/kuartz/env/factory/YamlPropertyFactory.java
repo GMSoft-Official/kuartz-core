@@ -1,4 +1,4 @@
-package com.kuartz.env.config;
+package com.kuartz.env.factory;
 
 import org.springframework.boot.env.YamlPropertySourceLoader;
 import org.springframework.core.env.PropertySource;
