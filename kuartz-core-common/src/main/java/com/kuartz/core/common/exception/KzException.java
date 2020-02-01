@@ -7,6 +7,10 @@ public class KzException extends Exception implements KzBaseException {
 
     private ExceptionMessage exceptionMessage;
 
+    public KzException(ExceptionMessage exceptionMessage) {
+        this.exceptionMessage = exceptionMessage;
+    }
+
     public KzException(String message) {
         super(message);
         this.exceptionMessage = new ExceptionMessage(message);

@@ -8,46 +8,39 @@ public class CoddedExceptionMessage extends ExceptionMessage {
 
     private String code;
 
-    public CoddedExceptionMessage(String message, String code) {
+    public CoddedExceptionMessage(String message) {
         super(message);
-        this.code = code;
     }
 
-    public CoddedExceptionMessage(String message, Class source, String code) {
+    public CoddedExceptionMessage(String message, Class source) {
         super(message, source);
-        this.code = code;
     }
 
-    public CoddedExceptionMessage(String message, Date date, String code) {
+    public CoddedExceptionMessage(String message, Date date) {
         super(message, date);
-        this.code = code;
     }
 
-    public CoddedExceptionMessage(String message, Object[] messageArgument, String code) {
+    public CoddedExceptionMessage(String message, Object[] messageArgument) {
         super(message, messageArgument);
-        this.code = code;
     }
 
-    public CoddedExceptionMessage(String message, Object[] messageArgument, Class source, String code) {
+    public CoddedExceptionMessage(String message, Object[] messageArgument, Class source) {
         super(message, messageArgument, source);
-        this.code = code;
     }
 
-    public CoddedExceptionMessage(String message, Object[] messageArgument, Date date, String code) {
+    public CoddedExceptionMessage(String message, Object[] messageArgument, Date date) {
         super(message, messageArgument, date);
-        this.code = code;
     }
 
-    public CoddedExceptionMessage(String message, Object[] messageArgument, Date date, Class source, String code) {
+    public CoddedExceptionMessage(String message, Object[] messageArgument, Date date, Class source) {
         super(message, messageArgument, date, source);
-        this.code = code;
     }
 
     public String getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    protected void setCode(String code) {
         this.code = code;
     }
 }

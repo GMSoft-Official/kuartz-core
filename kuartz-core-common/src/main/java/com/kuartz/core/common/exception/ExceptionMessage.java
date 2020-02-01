@@ -4,6 +4,8 @@ import com.kuartz.core.common.util.DateUtils;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -34,35 +36,44 @@ public class ExceptionMessage implements Serializable {
      */
     private String   uuid = UUID.randomUUID().toString();
 
+    private Map<String, Object> exceptionArguments;
+
+
     public ExceptionMessage(String message) {
         this.message = message;
+        this.exceptionArguments = new HashMap<>();
     }
 
     public ExceptionMessage(String message, Class source) {
         this.message = message;
         this.source  = source;
+        this.exceptionArguments = new HashMap<>();
     }
 
     public ExceptionMessage(String message, Date date) {
         this.message = message;
         this.date    = date;
+        this.exceptionArguments = new HashMap<>();
     }
 
     public ExceptionMessage(String message, Object[] messageArgument) {
         this.message         = message;
         this.messageArgument = messageArgument;
+        this.exceptionArguments = new HashMap<>();
     }
 
     public ExceptionMessage(String message, Object[] messageArgument, Class source) {
         this.message         = message;
         this.messageArgument = messageArgument;
         this.source          = source;
+        this.exceptionArguments = new HashMap<>();
     }
 
     public ExceptionMessage(String message, Object[] messageArgument, Date date) {
         this.message         = message;
         this.messageArgument = messageArgument;
         this.date            = date;
+        this.exceptionArguments = new HashMap<>();
     }
 
     public ExceptionMessage(String message, Object[] messageArgument, Date date, Class source) {
@@ -70,6 +81,7 @@ public class ExceptionMessage implements Serializable {
         this.messageArgument = messageArgument;
         this.date            = date;
         this.source          = source;
+        this.exceptionArguments = new HashMap<>();
     }
 
 
@@ -107,5 +119,18 @@ public class ExceptionMessage implements Serializable {
 
     public String getUuid() {
         return uuid;
+    }
+
+
+    public void addArgument(String key, Object argument) {
+        this.exceptionArguments.put(key, argument);
+    }
+
+    public void deleteArgument(String key) {
+        this.exceptionArguments.remove(key);
+    }
+
+    public Map<String, Object> getExceptionArguments() {
+        return exceptionArguments;
     }
 }
