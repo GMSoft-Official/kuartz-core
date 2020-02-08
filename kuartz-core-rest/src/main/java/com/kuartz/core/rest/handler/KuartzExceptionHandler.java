@@ -25,7 +25,7 @@ public class KuartzExceptionHandler {
     private MessageSource messageSource;
 
     @ExceptionHandler(Exception.class)
-    public KuartzResponse<ExceptionMessage> handleException(Exception e, Locale locale) {
+    public KuartzResponse<ExceptionMessage> handleException(Exception e, Locale locale) throws Exception {
         if (e instanceof KzException) {
             KzException kzException = (KzException) e;
             ExceptionMessage exceptionDetail = kzException.getExceptionDetail();
@@ -38,7 +38,8 @@ public class KuartzExceptionHandler {
         }
         ExceptionMessage exceptionMessage = new ExceptionMessage(e.getLocalizedMessage());
         LOGGER.error("{} : exception cause {}", exceptionMessage.getUuid(), exceptionMessage.getMessage());
-        return new KuartzResponse<>(exceptionMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+        LOGGER.error("Exception : ",e);
+        throw e;
     }
 
     private KuartzResponse<ExceptionMessage> extractExceptionMessage(Locale locale, ExceptionMessage exceptionDetail) {
