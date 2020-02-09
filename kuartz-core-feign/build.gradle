@@ -22,8 +22,11 @@ dependencies {
     compile(
             [group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'],
     )
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
+compileJava.dependsOn(processResources)
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava

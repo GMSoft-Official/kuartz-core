@@ -29,12 +29,11 @@ public interface KuartzRepository<KE extends KuartzEntity> extends Repository<KE
 
     KE saveFlush(KE entity);
 
+    List<KE> saveAllFlush(Iterable<KE> entities);
+
     KE update(KE entity);
 
     KE updateFlush(KE entity);
-
-    List<KE> saveAllFlush(Iterable<KE> entities);
-
     void hardDelete(Long id);
 
     Optional<KE> findOne(Predicate predicate);
@@ -56,4 +55,10 @@ public interface KuartzRepository<KE extends KuartzEntity> extends Repository<KE
 
     @Override
     boolean exists(Predicate predicate);
+
+    Optional<KE> findById(Long id);
+
+    List<KE> findAll();
+
+    void deleteById(Long id);
 }
