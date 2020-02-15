@@ -1,7 +1,7 @@
 package com.kuartz.core.auth.client;
 
 import com.kuartz.core.auth.dto.LoginModel;
-import com.kuartz.core.rest.model.KuartzResponse;
+import com.kuartz.core.auth.dto.RegisterModel;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -17,5 +17,10 @@ public interface AuthRestService {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST,
                     consumes = MediaType.APPLICATION_JSON_VALUE, produces = {MediaType.APPLICATION_JSON_VALUE})
-    KuartzResponse<String> login(@Valid LoginModel loginModel);
+    void login(@Valid LoginModel loginModel);
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST,
+                    consumes = MediaType.APPLICATION_JSON_VALUE, produces = {MediaType.APPLICATION_JSON_VALUE})
+    void register(@Valid RegisterModel registerModel);
+
 }
