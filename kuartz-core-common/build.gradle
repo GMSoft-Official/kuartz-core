@@ -3,15 +3,12 @@ version "${kuartzCommonVersion}"
 
 sourceCompatibility = 1.8
 
-bootJar {
-    enabled = false
-}
-
 jar {
     enabled = true
 }
 
 dependencies {
+
     compile(
             [group: 'com.kuartz.core.env', name: 'kuartz-core-environment', version: "${kuartzEnvVersion}"],
 

@@ -15,7 +15,7 @@ dependencyManagement {
 dependencies {
 
     compile(
-            [group: 'com.kuartz.core.common', name: 'kuartz-core-common', version: "${kuartzCommonVersion}"],
+            [group: 'com.kuartz.core.auth.client', name: 'kuartz-auth-client', version: "${kuartzAuthClientVersion}"],
 
             [group: 'io.jsonwebtoken', name: 'jjwt', version: "${jsonWebtokenVersion}"],
 
@@ -23,7 +23,6 @@ dependencies {
             [group: 'org.springframework.cloud', name: 'spring-cloud-starter-oauth2'],
 
             [group: 'org.springframework.boot', name: 'spring-boot-starter-security'],
-//            [group: 'org.springframework.boot', name: 'spring-boot-security-oauth2'],
     )
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
@@ -31,8 +30,6 @@ dependencies {
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
-
-compileJava.dependsOn(processResources)
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava

@@ -11,10 +11,6 @@ buildscript {
 
 apply plugin: "com.kuartz.core.plugin.gradle"
 
-bootJar {
-    enabled = false
-}
-
 jar {
     enabled = true
 }

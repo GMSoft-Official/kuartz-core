@@ -1,6 +1,7 @@
 package com.kuartz.core.auth.config;
 
 import com.kuartz.core.auth.property.KuartzSecurityProperties;
+import com.kuartz.core.auth.provider.KuartzJwtAccessTokenConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -17,13 +18,13 @@ public class KuartzJwtTokenStoreConfig {
     private KuartzSecurityProperties kuartzSecurityProperties;
 
     @Bean
-    public TokenStore jwtTokenStore(){
+    public TokenStore jwtTokenStore() {
         return new JwtTokenStore(accesTokenConverter());
     }
 
     @Bean
     public JwtAccessTokenConverter accesTokenConverter() {
-        final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        final KuartzJwtAccessTokenConverter converter = new KuartzJwtAccessTokenConverter();
         converter.setSigningKey(kuartzSecurityProperties.getJwtSignKey());
         return converter;
     }

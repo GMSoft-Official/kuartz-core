@@ -2,16 +2,6 @@ group 'com.kuartz.core.env'
 version "${kuartzEnvVersion}"
 sourceCompatibility = 1.8
 
-buildscript {
-    dependencies {
-        // suan kullanilmiyor.
-    }
-}
-
-bootJar {
-    enabled = false
-}
-
 jar {
     enabled = true
 }
@@ -19,7 +9,6 @@ jar {
 dependencies {
 
     compile(
-            [group: 'com.kuartz.core.common', name: 'kuartz-core-common', version: "${kuartzCommonVersion}"],
             [group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'],
             [group: 'org.springframework.boot', name: 'spring-boot'],
     )

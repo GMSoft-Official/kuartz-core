@@ -1,6 +1,5 @@
 package com.kuartz.env.configuration;
 
-import com.kuartz.core.common.util.KzUtil;
 import com.kuartz.env.factory.KuartzMessageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +17,7 @@ public class KuartzEnvironmentConfiguration {
     @Bean
     public ResourceBundleMessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        if (!KzUtil.isEmpty(messageFactory.getBundleDir())) {
+        if (messageFactory.getBundleDir() != null) {
             messageFactory.getBundleDir().forEach(messageSource::setBasenames);
         }
         return messageSource;

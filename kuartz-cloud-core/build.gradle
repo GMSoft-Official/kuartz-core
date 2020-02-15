@@ -3,10 +3,6 @@ version "${kuartzCloudVersion}"
 sourceCompatibility = 1.8
 
 
-bootJar {
-    enabled = false
-}
-
 jar {
     enabled = true
 }

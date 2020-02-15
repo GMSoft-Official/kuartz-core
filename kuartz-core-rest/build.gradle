@@ -2,14 +2,9 @@ group 'com.kuartz.core.rest'
 version "${kuartzRestVersion}"
 sourceCompatibility = 1.8
 
-bootJar {
-    enabled = false
-}
-
 jar {
     enabled = true
 }
-
 
 
 task sourcesJar(type: Jar) {

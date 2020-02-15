@@ -20,7 +20,8 @@ import java.util.UUID;
 @EntityListeners(AuditingEntityListener.class)
 public class KuartzEntity implements Serializable {
 
-    public static final String DELETED_FIELD = "isDeleted";
+    public static final String ID_FIELD         = "ID";
+    public static final String DELETED_FIELD    = "isDeleted";
     public static final String DELETED_AT_FIELD = "deletedAt";
 
     @Id

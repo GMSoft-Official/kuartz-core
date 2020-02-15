@@ -3,14 +3,9 @@ version "${kuartzFeignVersion}"
 sourceCompatibility = 1.8
 
 
-bootJar {
-    enabled = false
-}
-
 jar {
     enabled = true
 }
-
 
 dependencyManagement {
     imports {
@@ -26,7 +21,6 @@ dependencies {
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
-compileJava.dependsOn(processResources)
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
