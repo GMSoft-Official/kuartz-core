@@ -27,4 +27,6 @@ project(':kuartz-data-jpa').projectDir = file('kuartz-data-jpa')
 
 include ':kuartz-core-feign'
 project(':kuartz-core-feign').projectDir = file('kuartz-core-feign')
+include 'kuartz-auth-core'
+include 'kuartz-auth-client'
 

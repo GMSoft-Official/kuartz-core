@@ -52,5 +52,17 @@ subprojects {
 
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
+
+    publishing {
+        repositories {
+            maven {
+                url "http://10.10.14.35:8081/repository/maven-releases/"
+                credentials {
+                    username 'admin'
+                    password '2802nK.'
+                }
+            }
+        }
+    }
 }
 
