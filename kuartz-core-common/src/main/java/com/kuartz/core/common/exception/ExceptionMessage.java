@@ -1,6 +1,6 @@
 package com.kuartz.core.common.exception;
 
-import com.kuartz.core.common.util.DateUtils;
+import com.kuartz.core.common.util.KzDateUtil;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -26,7 +26,7 @@ public class ExceptionMessage implements Serializable {
     /**
      * Exceptionun tarihidir.
      */
-    private Date     date = DateUtils.suankiTarih();
+    private Date     date = KzDateUtil.suankiTarih();
     /**
      * Exceptionun kolay trace edilmesi amaciyla exception kaynagini belirtir.
      */

@@ -1,6 +1,6 @@
 package com.kuartz.core.common.model;
 
-import com.kuartz.core.common.util.DateUtils;
+import com.kuartz.core.common.util.KzDateUtil;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -31,7 +31,7 @@ public class KuartzModel implements Serializable {
 
     void preRemove() {
         this.isDeleted = Boolean.TRUE;
-        this.deletedAt = DateUtils.suankiTarih();
+        this.deletedAt = KzDateUtil.suankiTarih();
     }
 
 

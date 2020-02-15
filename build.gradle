@@ -15,7 +15,7 @@ buildscript {
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
         classpath "io.spring.gradle:dependency-management-plugin:${depManVersion}"
-        classpath "io.freefair.gradle:lombok-plugin:5.0.0-rc2"
+        classpath "io.freefair.gradle:lombok-plugin:${lombokVersion}"
     }
 }
 
@@ -64,16 +64,6 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
 
     apply plugin: "io.freefair.lombok"
-
-//    dependencies {
-//        compileOnly(
-//                [group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"],
-//        )
-//
-//        annotationProcessor(
-//                [group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"]
-//        )
-//    }
 
     tasks.withType(Javadoc) {
         failOnError false
