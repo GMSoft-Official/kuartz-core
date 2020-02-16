@@ -25,12 +25,12 @@ public class KuartzExceptionHandler {
     private MessageSource messageSource;
 
     @ExceptionHandler(Exception.class)
-    public KuartzResponse<ExceptionMessage> handleException(Exception e, Locale locale) throws Exception {
+    public KuartzResponse<ExceptionMessage> handleException(Exception e, Locale locale) {
         if (e instanceof KzException) {
             KzException kzException = (KzException) e;
             ExceptionMessage exceptionDetail = kzException.getExceptionDetail();
             return extractExceptionMessage(locale, exceptionDetail);
-        } else if (e instanceof KzCoddedException){
+        } else if (e instanceof KzCoddedException) {
             KzCoddedException kzException = (KzCoddedException) e;
             CoddedExceptionMessage exceptionDetail = kzException.getExceptionDetail();
             return extractExceptionMessage(locale, exceptionDetail);
@@ -38,7 +38,15 @@ public class KuartzExceptionHandler {
         }
         ExceptionMessage exceptionMessage = new ExceptionMessage(e.getLocalizedMessage());
         LOGGER.error("{} : exception cause {}", exceptionMessage.getUuid(), exceptionMessage.getMessage());
-        LOGGER.error("Exception : ",e);
+        LOGGER.error("Exception : ", e);
+        return new KuartzResponse<>(exceptionMessage);
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public KuartzResponse<ExceptionMessage> handleRuntimeException(Exception e, Locale locale) {
+        ExceptionMessage exceptionMessage = new ExceptionMessage(e.getLocalizedMessage());
+        LOGGER.error("{} : exception cause {}", exceptionMessage.getUuid(), exceptionMessage.getMessage());
+        LOGGER.error("Exception : ", e);
         return new KuartzResponse<>(exceptionMessage);
     }
 
