@@ -7,6 +7,10 @@ public class KzException extends Exception implements KzBaseException {
 
     private ExceptionMessage exceptionMessage;
 
+    public KzException() {
+        // bos yapici.
+    }
+
     public KzException(ExceptionMessage exceptionMessage) {
         this.exceptionMessage = exceptionMessage;
     }

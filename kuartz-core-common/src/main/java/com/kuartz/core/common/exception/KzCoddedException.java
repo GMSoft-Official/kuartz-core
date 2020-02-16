@@ -10,6 +10,10 @@ public class KzCoddedException extends Exception implements KzBaseException {
 
     private CoddedExceptionMessage exceptionMessage;
 
+    public KzCoddedException() {
+        // bos yapici
+    }
+
     public KzCoddedException(CoddedExceptionMessage exceptionMessage, ExceptionCode code) {
         this.exceptionMessage = exceptionMessage;
         this.exceptionMessage.setCode(code.exceptionCode());
