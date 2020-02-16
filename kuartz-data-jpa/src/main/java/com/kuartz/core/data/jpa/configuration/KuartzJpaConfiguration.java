@@ -1,12 +1,16 @@
 package com.kuartz.core.data.jpa.configuration;
 
+import com.kuartz.core.data.jpa.configuration.property.KuartzJpaProperty;
+import com.kuartz.core.data.jpa.initializer.KuartzDataInitializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -21,6 +25,8 @@ import java.util.Properties;
  */
 @Configuration
 @EnableAutoConfiguration
+@EnableConfigurationProperties({KuartzJpaProperty.class})
+@Import(KuartzDataInitializer.class)
 public class KuartzJpaConfiguration {
 
     @Autowired
@@ -72,7 +78,7 @@ public class KuartzJpaConfiguration {
             setProperty("hibernate.hbm2ddl.auto", hibernateProperties.getDdlAuto());
             setProperty("hibernate.dialect", jpaProperties.getDatabasePlatform());
             setProperty("hibernate.show_sql", String.valueOf(jpaProperties.isShowSql()));
-            setProperty("hibernate.format_sql", "true");
+            setProperty("hibernate.format_sql", "false");
         }};
     }
 

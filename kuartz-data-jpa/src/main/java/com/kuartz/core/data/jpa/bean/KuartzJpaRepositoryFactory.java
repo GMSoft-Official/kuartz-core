@@ -46,7 +46,7 @@ public class KuartzJpaRepositoryFactory<KE extends KuartzEntity> extends JpaRepo
         if (isKuartzRepo) {
             JpaEntityInformation<KE, Object> entityInformation = getEntityInformation((Class<KE>) metadata.getDomainType());
             KuartzRepositoryImpl<KE> kuartzRepository = new KuartzRepositoryImpl<>(entityInformation, em);
-            LOGGER.info("Kuartz Repository fragmentsleri alindi.");
+            // fixme 4-5 kere giriyor bakalim buna.
             fragments.append(RepositoryFragment.implemented(kuartzRepository));
         } else {
             throw new UnsupportedOperationException("Kuartz Repository interface bulunamadi");

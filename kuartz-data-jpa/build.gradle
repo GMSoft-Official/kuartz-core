@@ -26,10 +26,14 @@ dependencies {
 
             [group:'org.postgresql', name: 'postgresql', version: '42.2.6'],
     )
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+
+compileJava.dependsOn("processResources");
 
 
 task sourcesJar(type: Jar) {

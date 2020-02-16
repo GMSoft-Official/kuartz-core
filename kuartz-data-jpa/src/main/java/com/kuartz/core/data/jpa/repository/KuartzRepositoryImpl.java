@@ -2,7 +2,7 @@ package com.kuartz.core.data.jpa.repository;
 
 import com.kuartz.core.common.domain.KzPage;
 import com.kuartz.core.common.domain.KzPageable;
-import com.kuartz.core.common.util.DateUtils;
+import com.kuartz.core.common.util.KzDateUtil;
 import com.kuartz.core.data.jpa.bean.KuartzEntityPathResolver;
 import com.kuartz.core.data.jpa.entity.KuartzEntity;
 import com.kuartz.core.data.jpa.util.KzPageableUtil;
@@ -206,7 +206,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         if (optional.isPresent()) {
             KE entity = optional.get();
             entity.setDeleted(Boolean.TRUE);
-            entity.setDeletedAt(DateUtils.suankiTarih());
+            entity.setDeletedAt(KzDateUtil.suankiTarih());
         } else {
             throw new EmptyResultDataAccessException(
                     String.format("No %s entity with id %s exists!", entityInformation.getJavaType(), id), 1);
@@ -219,7 +219,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         Assert.isTrue(isExists, "ENTITY VERITABANINDA YOK");
 
         entity.setDeleted(Boolean.TRUE);
-        entity.setDeletedAt(DateUtils.suankiTarih());
+        entity.setDeletedAt(KzDateUtil.suankiTarih());
         updateFlush(entity);
     }
 

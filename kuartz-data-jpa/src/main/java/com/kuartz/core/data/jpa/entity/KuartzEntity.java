@@ -1,6 +1,6 @@
 package com.kuartz.core.data.jpa.entity;
 
-import com.kuartz.core.common.util.DateUtils;
+import com.kuartz.core.common.util.KzDateUtil;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
@@ -57,7 +57,7 @@ public class KuartzEntity implements Serializable {
     @PreRemove
     void preRemove() {
         this.isDeleted = Boolean.TRUE;
-        this.deletedAt = DateUtils.suankiTarih();
+        this.deletedAt = KzDateUtil.suankiTarih();
     }
 
     public KuartzEntity() {
