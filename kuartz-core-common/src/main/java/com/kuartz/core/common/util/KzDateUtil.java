@@ -13,21 +13,30 @@ public class KzDateUtil {
     }
 
     public static Boolean loeCompare(Date date1, Date date2) {
-        Calendar calendar1 = new Calendar.Builder().setInstant(date1).build();
-        Calendar calendar2 = new Calendar.Builder().setInstant(date2).build();
-        return calendar1.compareTo(calendar2) <= 0;
+        if (date1 != null && date2 != null) {
+            Calendar calendar1 = new Calendar.Builder().setInstant(date1).build();
+            Calendar calendar2 = new Calendar.Builder().setInstant(date2).build();
+            return calendar1.compareTo(calendar2) <= 0;
+        }
+        return false;
     }
 
     public static Boolean goeCompare(Date date1, Date date2) {
-        Calendar calendar1 = new Calendar.Builder().setInstant(date1).build();
-        Calendar calendar2 = new Calendar.Builder().setInstant(date2).build();
-        return calendar1.compareTo(calendar2) >= 0;
+        if (date1 != null && date2 != null) {
+            Calendar calendar1 = new Calendar.Builder().setInstant(date1).build();
+            Calendar calendar2 = new Calendar.Builder().setInstant(date2).build();
+            return calendar1.compareTo(calendar2) >= 0;
+        }
+        return false;
     }
 
     public static Boolean equalCompare(Date date1, Date date2) {
-        Calendar calendar1 = new Calendar.Builder().setInstant(date1).build();
-        Calendar calendar2 = new Calendar.Builder().setInstant(date2).build();
-        return calendar1.compareTo(calendar2) == 0;
+        if (date1 != null && date2 != null) {
+            Calendar calendar1 = new Calendar.Builder().setInstant(date1).build();
+            Calendar calendar2 = new Calendar.Builder().setInstant(date2).build();
+            return calendar1.compareTo(calendar2) == 0;
+        }
+        return false;
     }
 
 
