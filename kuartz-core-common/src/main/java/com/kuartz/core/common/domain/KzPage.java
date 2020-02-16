@@ -17,6 +17,11 @@ public class KzPage<T> implements Serializable {
 
     private final KzPageable pageable;
 
+    public KzPage() {
+        this.pageable = new KzPageable();
+        //    bos yapici
+    }
+
     public KzPage(List<T> content, KzPageable pageable) {
         Assert.notNull(content, "Content must not be null!");
         Assert.notNull(pageable, "Pageable must not be null!");

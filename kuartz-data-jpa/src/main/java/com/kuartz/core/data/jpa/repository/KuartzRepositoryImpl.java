@@ -201,12 +201,13 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
 
     @Override
     public void deleteById(Long id) {
-        Assert.notNull(id, "SILINECEK ENTITY ID BOS OLAMAZ");
+        Assert.notNull(id, "SILINECEK ENTITY ID BOS OLAMAZ"); // todo bu hatalari mesaja cekelim
         Optional<KE> optional = findById(id);
         if (optional.isPresent()) {
             KE entity = optional.get();
             entity.setDeleted(Boolean.TRUE);
             entity.setDeletedAt(KzDateUtil.suankiTarih());
+            updateFlush(entity);
         } else {
             throw new EmptyResultDataAccessException(
                     String.format("No %s entity with id %s exists!", entityInformation.getJavaType(), id), 1);

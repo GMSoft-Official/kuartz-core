@@ -39,7 +39,7 @@ public class KuartzExceptionHandler {
         ExceptionMessage exceptionMessage = new ExceptionMessage(e.getLocalizedMessage());
         LOGGER.error("{} : exception cause {}", exceptionMessage.getUuid(), exceptionMessage.getMessage());
         LOGGER.error("Exception : ",e);
-        throw e;
+        return new KuartzResponse<>(exceptionMessage);
     }
 
     private KuartzResponse<ExceptionMessage> extractExceptionMessage(Locale locale, ExceptionMessage exceptionDetail) {

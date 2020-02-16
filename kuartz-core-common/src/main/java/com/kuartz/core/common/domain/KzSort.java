@@ -8,6 +8,10 @@ public class KzSort implements Serializable {
 
     private List<KzOrder> kzOrderList;
 
+    public KzSort() {
+        //    bos yapici
+    }
+
     public KzSort(List<KzOrder> kzOrderList) {
         this.kzOrderList = kzOrderList;
     }
@@ -26,6 +30,10 @@ public class KzSort implements Serializable {
         private NullHandling nullHandling;
         private String       property;
         private Direction    direction;
+
+        public KzOrder() {
+            //    bos yapici
+        }
 
         public KzOrder(String property, Direction direction) {
             this.property  = property;

@@ -34,6 +34,7 @@ public interface KuartzRepository<KE extends KuartzEntity> extends Repository<KE
     KE update(KE entity);
 
     KE updateFlush(KE entity);
+
     void hardDelete(Long id);
 
     Optional<KE> findOne(Predicate predicate);

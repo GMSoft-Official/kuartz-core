@@ -2,6 +2,9 @@ package com.kuartz.core.auth.client;
 
 import com.kuartz.core.auth.dto.LoginModel;
 import com.kuartz.core.auth.dto.RegisterModel;
+import com.kuartz.core.auth.dto.UserModel;
+import com.kuartz.core.common.exception.KzException;
+import com.kuartz.core.rest.model.KuartzResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -21,6 +24,6 @@ public interface AuthRestService {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST,
                     consumes = MediaType.APPLICATION_JSON_VALUE, produces = {MediaType.APPLICATION_JSON_VALUE})
-    void register(@Valid RegisterModel registerModel);
+    KuartzResponse<UserModel> register(@Valid RegisterModel registerModel) throws KzException;
 
 }

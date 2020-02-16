@@ -11,15 +11,15 @@ public final class KzUtil {
     }
 
     public static Boolean isEmpty(Collection collection) {
-        return collection != null && collection.size() <= 0;
+        return collection == null || collection.size() <= 0;
     }
 
     public static Boolean isEmpty(Map map) {
-        return map != null && map.size() <= 0;
+        return map == null || map.size() <= 0;
     }
 
     public static Boolean isEmpty(String str) {
-        return str != null && str.isEmpty();
+        return str == null || str.isEmpty();
     }
 
     public static Boolean isNull(Enum anEnum) {

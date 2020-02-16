@@ -12,6 +12,10 @@ public class KzPageable implements Serializable {
 
     private Integer pageSize;
 
+    public KzPageable() {
+        //    bos yapici
+    }
+
     public KzPageable(KzSort sort, Integer pageNumber, Integer pageSize) {
         this.sort       = sort;
         this.pageNumber = pageNumber;

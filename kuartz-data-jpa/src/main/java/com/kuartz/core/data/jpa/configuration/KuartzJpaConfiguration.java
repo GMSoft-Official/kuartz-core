@@ -38,9 +38,9 @@ public class KuartzJpaConfiguration {
     @Autowired
     private HibernateProperties hibernateProperties;
 
-
     @Bean
     public DataSource dataSource() {
+
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(dataSourceProperties.getDriverClassName());
         dataSource.setUrl(dataSourceProperties.getUrl());
