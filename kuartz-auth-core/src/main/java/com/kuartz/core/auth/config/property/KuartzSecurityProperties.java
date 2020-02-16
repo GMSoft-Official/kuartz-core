@@ -1,4 +1,4 @@
-package com.kuartz.core.auth.property;
+package com.kuartz.core.auth.config.property;
 
 import com.kuartz.core.auth.constants.KuartzSecurityConstants;
 import org.springframework.boot.context.properties.ConfigurationProperties;

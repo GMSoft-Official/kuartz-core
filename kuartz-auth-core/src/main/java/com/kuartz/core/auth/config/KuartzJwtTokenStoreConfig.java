@@ -1,6 +1,6 @@
 package com.kuartz.core.auth.config;
 
-import com.kuartz.core.auth.property.KuartzSecurityProperties;
+import com.kuartz.core.auth.config.property.KuartzSecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
