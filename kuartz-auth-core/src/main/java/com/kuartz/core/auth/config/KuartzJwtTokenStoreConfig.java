@@ -24,7 +24,6 @@ public class KuartzJwtTokenStoreConfig {
     @Bean
     public JwtAccessTokenConverter accesTokenConverter() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        //final KuartzJwtAccessTokenConverter converter = new KuartzJwtAccessTokenConverter();
         converter.setSigningKey(kuartzSecurityProperties.getJwtSignKey());
         return converter;
     }

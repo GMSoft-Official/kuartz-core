@@ -7,20 +7,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class KuartzModelConverter {
 
 
-    private static ObjectMapper objectMapper;
+    private static final ObjectMapper OBJECT_MAPPER;
 
     static {
-        objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        OBJECT_MAPPER = new ObjectMapper();
+        OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     public static <T> T convert(Object from, TypeReference<T> toClass) {
-        Object o = objectMapper.convertValue(from, toClass);
+        Object o = OBJECT_MAPPER.convertValue(from, toClass);
         return (T) o;
 
     }
 
     public static <T> T convert(Object from, Class<T> to) {
-        return objectMapper.convertValue(from, to);
+        return OBJECT_MAPPER.convertValue(from, to);
+    }
+
+    public static ObjectMapper getMapper() {
+        return OBJECT_MAPPER;
     }
 }

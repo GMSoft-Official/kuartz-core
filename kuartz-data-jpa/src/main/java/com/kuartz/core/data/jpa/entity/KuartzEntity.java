@@ -2,8 +2,8 @@ package com.kuartz.core.data.jpa.entity;
 
 import com.kuartz.core.common.util.KzDateUtil;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -25,8 +25,15 @@ public class KuartzEntity implements Serializable {
     public static final String DELETED_AT_FIELD = "deletedAt";
 
     @Id
-    @Generated(GenerationTime.INSERT)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GenericGenerator(name = "sequence-generator",
+                      strategy = "com.kuartz.core.data.jpa.KuartzSequenceGenerator",
+                      parameters = {
+                              @Parameter(name = "initial_value", value = "1"),
+                              @Parameter(name = "increment_size", value = "10"),
+                              @Parameter(name = "prefer_sequence_per_entity", value = "true")
+                      }
+    )
+    @GeneratedValue(generator = "sequence-generator")
     @Column(name = "ID")
     private Long id;
 
