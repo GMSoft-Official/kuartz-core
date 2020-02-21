@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.EncodedResource;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import javax.sql.DataSource;
@@ -30,6 +29,8 @@ public class KuartzDataInitializer implements InitializingBean {
 
     private final ResourceLoader resourceLoader;
 
+
+
     public KuartzDataInitializer(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }
@@ -46,7 +47,6 @@ public class KuartzDataInitializer implements InitializingBean {
                 ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
                 populator.setContinueOnError(kuartzJpaProperty.getContiveOnError());
                 for (Resource resource : resources) {
-                    populator.addScript(resource);
                     EncodedResource encodedScript = new EncodedResource(resource, dataSourceProperties.getSqlScriptEncoding());
                     KuartzScriptUtil.executeSqlScript(dataSource.getConnection(), encodedScript,
                                                       kuartzJpaProperty.getContiveOnError(), true,
@@ -54,7 +54,6 @@ public class KuartzDataInitializer implements InitializingBean {
                                                       kuartzJpaProperty.getSqlLineSeperator(),
                                                       KuartzScriptUtil.DEFAULT_BLOCK_COMMENT_START_DELIMITER,
                                                       KuartzScriptUtil.DEFAULT_BLOCK_COMMENT_END_DELIMITER);
-                    DatabasePopulatorUtils.execute(populator, dataSource);
                 }
             }
         }

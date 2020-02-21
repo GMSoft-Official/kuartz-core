@@ -1,13 +1,8 @@
-package com.kuartz.env.factory;
-
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+package com.kuartz.core.env.factory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-@Scope("singleton")
 public class KuartzMessageFactory {
     private List<String> bundleDir;
 

@@ -1,11 +1,9 @@
 package com.kuartz.core.feign.property;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import java.util.HashMap;
 import java.util.Map;
 
-@ConfigurationProperties("kuartz.client")
+//@ConfigurationProperties("kuartz.client")
 public class KuartzApiProperty {
 
     private Map<String, ClientProperty> clients = new HashMap<>();

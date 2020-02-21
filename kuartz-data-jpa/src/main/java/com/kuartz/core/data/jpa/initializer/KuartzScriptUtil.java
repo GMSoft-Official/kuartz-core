@@ -3,7 +3,6 @@ package com.kuartz.core.data.jpa.initializer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.support.EncodedResource;
 import org.springframework.jdbc.datasource.init.*;
-import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
@@ -19,7 +18,7 @@ import java.util.List;
 public class KuartzScriptUtil extends ScriptUtils {
 
     public static void executeSqlScript(Connection connection, EncodedResource resource, boolean continueOnError,
-                                        boolean ignoreFailedDrops, String commentPrefix, @Nullable String separator,
+                                        boolean ignoreFailedDrops, String commentPrefix, String separator,
                                         String blockCommentStartDelimiter, String blockCommentEndDelimiter) throws ScriptException {
 
         try {
@@ -66,7 +65,8 @@ public class KuartzScriptUtil extends ScriptUtils {
                     } catch (SQLException ex) {
                         boolean dropStatement = StringUtils.startsWithIgnoreCase(statement.trim(), "drop");
                         if (continueOnError || (dropStatement && ignoreFailedDrops)) {
-                            log.error("Satir calistirilamadi : " + statement);
+                            log.warn("Satir calistirilamadi : " + statement);
+                            log.error("SQL Exception : ", ex);
                         } else {
                             throw new ScriptStatementFailedException(statement, stmtNumber, resource, ex);
                         }
@@ -93,14 +93,11 @@ public class KuartzScriptUtil extends ScriptUtils {
     }
 
 
-    private static String readScript(EncodedResource resource, @Nullable String commentPrefix,
-                                     @Nullable String separator, @Nullable String blockCommentEndDelimiter) throws IOException {
+    private static String readScript(EncodedResource resource, String commentPrefix, String separator,
+                                     String blockCommentEndDelimiter) throws IOException {
 
-        LineNumberReader lnr = new LineNumberReader(resource.getReader());
-        try {
+        try (LineNumberReader lnr = new LineNumberReader(resource.getReader())) {
             return readScript(lnr, commentPrefix, separator, blockCommentEndDelimiter);
-        } finally {
-            lnr.close();
         }
     }
 

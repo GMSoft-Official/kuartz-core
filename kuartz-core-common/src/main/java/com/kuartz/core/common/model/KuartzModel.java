@@ -1,11 +1,13 @@
 package com.kuartz.core.common.model;
 
-import com.kuartz.core.common.util.KzDateUtil;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
+import java.util.Objects;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uuid")
 public class KuartzModel implements Serializable {
 
     private static final long serialVersionUID = -8331727143494828302L;
@@ -25,15 +27,26 @@ public class KuartzModel implements Serializable {
 
     private Boolean isDeleted;
 
-    void prePersist() {
-        this.uuid = UUID.randomUUID().toString();
+    public KuartzModel() {
+        //    bos yapici
     }
 
-    void preRemove() {
-        this.isDeleted = Boolean.TRUE;
-        this.deletedAt = KzDateUtil.suankiTarih();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        KuartzModel that = (KuartzModel) o;
+        return id.equals(that.id);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     public Long getId() {
         return id;

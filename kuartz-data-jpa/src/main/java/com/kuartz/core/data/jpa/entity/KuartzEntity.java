@@ -1,5 +1,7 @@
 package com.kuartz.core.data.jpa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.kuartz.core.common.util.KzDateUtil;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -10,6 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -18,11 +21,13 @@ import java.util.UUID;
  */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uuid")
 public class KuartzEntity implements Serializable {
 
-    public static final String ID_FIELD         = "ID";
-    public static final String DELETED_FIELD    = "isDeleted";
-    public static final String DELETED_AT_FIELD = "deletedAt";
+    public static final  String ID_FIELD         = "ID";
+    public static final  String DELETED_FIELD    = "isDeleted";
+    public static final  String DELETED_AT_FIELD = "deletedAt";
+    private static final long   serialVersionUID = 402199730764879680L;
 
     @Id
     @GenericGenerator(name = "sequence-generator",
@@ -49,12 +54,29 @@ public class KuartzEntity implements Serializable {
     @Column(name = "DELETED_AT")
     private Date deletedAt;
 
-    @Column(name = "UUID")
+    @Column(name = "UUID", unique = true)
     private String uuid;
 
     @Column(name = "DELETED")
     //@Type(type = "org.hibernate.type.NumericBooleanType") todo dialect ile cozelim. simdilik boyle kalsin.
     private Boolean isDeleted;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        KuartzEntity that = (KuartzEntity) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     @PrePersist
     void prePersist() {
@@ -66,6 +88,7 @@ public class KuartzEntity implements Serializable {
         this.isDeleted = Boolean.TRUE;
         this.deletedAt = KzDateUtil.suankiTarih();
     }
+
 
     public KuartzEntity() {
     }

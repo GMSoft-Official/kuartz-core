@@ -1,4 +1,4 @@
-package com.kuartz.env.configuration.properties;
+package com.kuartz.core.env.configuration.properties;
 
 import java.util.List;
 
