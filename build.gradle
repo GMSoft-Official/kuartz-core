@@ -1,9 +1,9 @@
 buildscript {
 
     repositories {
-        mavenLocal()
         jcenter()
         mavenCentral()
+        mavenLocal()
         maven {
             url "https://plugins.gradle.org/m2/"
         }
@@ -23,9 +23,8 @@ subprojects {
 
     buildscript {
         repositories {
-            mavenLocal();
             mavenCentral()
-
+            mavenLocal();
             maven {
                 url "https://plugins.gradle.org/m2/"
             }
@@ -40,10 +39,9 @@ subprojects {
     }
 
     repositories {
-        mavenLocal();
         mavenCentral()
         jcenter()
-
+        mavenLocal();
         maven {
             url 'http://10.10.14.35:8081/repository/maven-releases/'
             credentials {
