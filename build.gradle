@@ -3,6 +3,10 @@ buildscript {
     repositories {
         jcenter()
         mavenCentral()
+        mavenLocal()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
         maven {
             url 'http://10.10.14.35:8081/repository/maven-releases/'
         }
@@ -11,11 +15,8 @@ buildscript {
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
         classpath "io.spring.gradle:dependency-management-plugin:${depManVersion}"
+        classpath "io.freefair.gradle:lombok-plugin:${lombokVersion}"
     }
-}
-
-allprojects {
-
 }
 
 subprojects {
@@ -23,6 +24,10 @@ subprojects {
     buildscript {
         repositories {
             mavenCentral()
+            mavenLocal();
+            maven {
+                url "https://plugins.gradle.org/m2/"
+            }
             maven {
                 url "http://10.10.14.35:8081/repository/maven-releases/"
                 credentials {
@@ -36,6 +41,7 @@ subprojects {
     repositories {
         mavenCentral()
         jcenter()
+        mavenLocal();
         maven {
             url 'http://10.10.14.35:8081/repository/maven-releases/'
             credentials {
@@ -54,5 +60,26 @@ subprojects {
 
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
+
+    apply plugin: "io.freefair.lombok"
+
+    tasks.withType(Javadoc) {
+        failOnError false
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addStringOption('encoding', 'UTF-8')
+        options.addStringOption('charSet', 'UTF-8')
+    }
+
+    publishing {
+        repositories {
+            maven {
+                url "http://10.10.14.35:8081/repository/maven-releases/"
+                credentials {
+                    username 'admin'
+                    password '2802nK.'
+                }
+            }
+        }
+    }
 }
 

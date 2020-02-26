@@ -2,16 +2,6 @@ group 'com.kuartz.core.env'
 version "${kuartzEnvVersion}"
 sourceCompatibility = 1.8
 
-buildscript {
-    dependencies {
-        // suan kullanilmiyor.
-    }
-}
-
-bootJar {
-    enabled = false
-}
-
 jar {
     enabled = true
 }
@@ -19,10 +9,8 @@ jar {
 dependencies {
 
     compile(
-            [group: 'com.querydsl', name: 'querydsl-core', version: queryDslVersion],
-            [group: 'com.querydsl', name: 'querydsl-jpa', version: queryDslVersion],
-            [group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'],
-            [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonVersion}"],
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'],
+            [group: 'org.springframework.boot', name: 'spring-boot'],
     )
 
     testImplementation 'junit:junit:4.12'

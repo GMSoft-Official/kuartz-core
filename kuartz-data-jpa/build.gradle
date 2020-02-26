@@ -11,10 +11,6 @@ buildscript {
 
 apply plugin: "com.kuartz.core.plugin.gradle"
 
-bootJar {
-    enabled = false
-}
-
 jar {
     enabled = true
 }
@@ -26,11 +22,18 @@ dependencies {
             [group: 'com.querydsl', name: 'querydsl-jpa', version: queryDslVersion],
             [group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'],
             [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonVersion}"],
+            [group: 'com.kuartz.core.common', name: 'kuartz-core-common', version: "${kuartzCommonVersion}"],
+
+            [group:'org.postgresql', name: 'postgresql', version: '42.2.6'],
     )
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+
+compileJava.dependsOn("processResources");
 
 
 task sourcesJar(type: Jar) {
