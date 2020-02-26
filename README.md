@@ -1,10 +1,10 @@
 ## Prerequisite
----
+
 - Java 8
 - Gradle > 6.0.0
 
 ## Introduction
----
+
 This repository combines Spring features and allows to easily boot up an app.  Some  versions of dependencies used to create this repository as below,
 > Spring Boot Version : 2.1.3.RELEASE   
 > Spring Cloud Version : Greenwich.SR2
@@ -15,7 +15,7 @@ This repository combines Spring features and allows to easily boot up an app.  S
 > Lombok Version : 5.0.0-rc2
     
 ## Features
----
+
 - Spring-security support.
 - Spring environment features implementation
 - Spring feign central configuration
@@ -29,13 +29,13 @@ This repository combines Spring features and allows to easily boot up an app.  S
 - Utility
 
 ## TODO
----
+
  - [ ] Data initializer with xml scenario
  - [ ] NoSQL support
  - [ ] Unit test
 
 ## Usage
----
+
 To use any project,
 1. Libraries must be published in an artifactory
 	- Local 
@@ -48,8 +48,8 @@ gradle kuartz-cloud-core:publishMavenJavaPublicationToMavenLocal
 ```
 
 ## Contributor
----
-[logo]: https://avatars1.githubusercontent.com/u/10180684?s=460&v=4 "Kutay ÇELEBİ"
+
+![Kutay Çelebi](https://avatars1.githubusercontent.com/u/10180684?s=96&v=4)
 
 
 
