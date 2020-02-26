@@ -46,6 +46,16 @@ To use any project,
 gradle kuartz-auth-core:publishMavenJavaPublicationToMavenLocal
 gradle kuartz-cloud-core:publishMavenJavaPublicationToMavenLocal
 ```
+3. Add dependency,
+for example
+```groovy
+dependencies {
+    compile(
+            [group: 'com.kuartz.core.data.jpa', name: 'kuartz-data-jpa', version: "${kuartzDataJpaVersion}"]
+    )
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+```
 
 ## Contributor
 
