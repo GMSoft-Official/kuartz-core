@@ -49,7 +49,7 @@ gradle kuartz-cloud-core:publishMavenJavaPublicationToMavenLocal
 
 ## Contributor
 
-![Kutay Çelebi](https://avatars1.githubusercontent.com/u/10180684?s=96&v=4)
+[![kutaycelebi](https://avatars1.githubusercontent.com/u/10180684?s=96&v=4)](https://github.com/kutay-celebi)
 
 
 
