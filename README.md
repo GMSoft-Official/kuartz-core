@@ -5,7 +5,7 @@
 
 ## Introduction
 
-This repository combines Spring features and allows to easily boot up an app.  Some  versions of dependencies used to create this repository as below,
+This repository combines Spring and some tech features and allows to easily boot up an app.  Some  versions of dependencies used to create this repository as below,
 > Spring Boot Version : 2.1.3.RELEASE   
 > Spring Cloud Version : Greenwich.SR2
 > Spring Dependency Management Version : 0.6.1.RELEASE   
