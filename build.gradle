@@ -73,11 +73,17 @@ subprojects {
     publishing {
         repositories {
             maven {
-                url "http://10.10.14.35:8081/repository/maven-releases/"
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/kutay-celebi")
                 credentials {
-                    username 'admin'
-                    password '2802nK.'
+                    username = "kutay-celebi"
+                    password = "a4d378bef3b053840933f05004a10776cb9a3538"
                 }
+            }
+        }
+        publications {
+            gpr(MavenPublication) {
+                from(components.java)
             }
         }
     }
