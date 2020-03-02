@@ -39,7 +39,7 @@ public class KuartzExceptionHandler {
         ExceptionMessage exceptionMessage = new ExceptionMessage(e.getLocalizedMessage());
         LOGGER.error("{} : exception cause {}", exceptionMessage.getUuid(), exceptionMessage.getMessage());
         LOGGER.error("Exception : ", e);
-        return new KuartzResponse<>(exceptionMessage);
+        return new KuartzResponse<>(exceptionMessage, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(RuntimeException.class)
