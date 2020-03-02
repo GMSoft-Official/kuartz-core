@@ -31,14 +31,15 @@ task javadocJar(type: Jar) {
 }
 
 publishing {
+    //todo duzenlenecek.
     repositories {
-        maven {
-            url 'http://10.10.14.35:8081/repository/maven-releases/'
-            credentials {
-                username = 'admin'
-                password = '2802nK.'
-            }
-        }
+        // todo acilacak
+//            maven {
+//                url "http://10.10.14.35:8081/repository/maven-releases/"
+//                credentials {
+//                    username 'admin'
+//                }
+//            }
     }
     publications {
         mavenJava(MavenPublication) {
@@ -61,6 +62,11 @@ publishing {
                         id = 'celebikutay'
                         name = 'Kutay Çelebi'
                         email = 'mail@kutaycelebi.com'
+                    }
+                    developer {
+                        id = 'azizerel'
+                        name = 'Aziz Erel'
+                        email = 'azizerel69@gmail.com'
                     }
                 }
                 // scm {

@@ -47,15 +47,14 @@ task javadocJar(type: Jar) {
 }
 
 publishing {
-    repositories {
-        maven {
-            url "http://10.10.14.35:8081/repository/maven-releases/"
-            credentials {
-                username 'admin'
-                password '2802nK.'
-            }
-        }
-    }
+    //todo duzenlenecek.
+    // todo acilacak
+//            maven {
+//                url "http://10.10.14.35:8081/repository/maven-releases/"
+//                credentials {
+//                    username 'admin'
+//                }
+//            }
     publications {
         mavenJava(MavenPublication) {
             artifactId = 'kuartz-data-jpa'
