@@ -17,7 +17,6 @@ buildscript {
 }
 
 subprojects {
-
     buildscript {
         repositories {
             mavenCentral()
@@ -25,13 +24,6 @@ subprojects {
             maven {
                 url "https://plugins.gradle.org/m2/"
             }
-            // todo acilacak
-//            maven {
-//                url "http://10.10.14.35:8081/repository/maven-releases/"
-//                credentials {
-//                    username 'admin'
-//                }
-//            }
         }
     }
 
@@ -39,13 +31,6 @@ subprojects {
         mavenCentral()
         jcenter()
         mavenLocal();
-        // todo acilacak
-//            maven {
-//                url "http://10.10.14.35:8081/repository/maven-releases/"
-//                credentials {
-//                    username 'admin'
-//                }
-//            }
     }
 
     apply plugin: 'idea'
@@ -67,20 +52,15 @@ subprojects {
         options.addStringOption('charSet', 'UTF-8')
     }
 
-    //todo acilacak.
 //    publishing {
 //        repositories {
 //            maven {
 //                name = "GitHubPackages"
 //                url = uri("https://maven.pkg.github.com/kutay-celebi")
 //                credentials {
-//                    username = "kutay-celebi"
+//                    username = githubProperties["gpr.usr"] ?: System.getenv("USERNAME")
+//                    password = githubProperties["gpr.key"]
 //                }
-//            }
-//        }
-//        publications {
-//            gpr(MavenPublication) {
-//                from(components.java)
 //            }
 //        }
 //    }
