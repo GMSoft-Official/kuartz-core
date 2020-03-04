@@ -1,11 +1,22 @@
 buildscript {
 
+    def githubProperties = new Properties()
+    githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
+
     repositories {
         jcenter()
         mavenCentral()
         mavenLocal()
         maven {
             url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/GMSoft-Official/kuartz-core")
+            credentials {
+                username = githubProperties["gpr.usr"] ?: System.getenv("GITHUB_USERNAME")
+                password = githubProperties["gpr.key"] ?: System.getenv("GITHUB_TOKEN")
+            }
         }
     }
 
