@@ -1,10 +1,5 @@
 package com.kuartz.core.common.exception;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class KzRuntimeException extends RuntimeException implements KzBaseException {
 
     private ExceptionMessage exceptionMessage;
@@ -36,5 +31,13 @@ public class KzRuntimeException extends RuntimeException implements KzBaseExcept
     @Override
     public ExceptionMessage getExceptionDetail() {
         return exceptionMessage;
+    }
+
+    public ExceptionMessage getExceptionMessage() {
+        return exceptionMessage;
+    }
+
+    public void setExceptionMessage(ExceptionMessage exceptionMessage) {
+        this.exceptionMessage = exceptionMessage;
     }
 }

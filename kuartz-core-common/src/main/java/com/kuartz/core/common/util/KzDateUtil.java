@@ -1,11 +1,8 @@
 package com.kuartz.core.common.util;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.Calendar;
 import java.util.Date;
 
-@Slf4j
 public class KzDateUtil {
 
     public static Date suankiTarih() {

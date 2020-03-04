@@ -2,7 +2,6 @@ package com.kuartz.core.data.jpa.initializer;
 
 import com.kuartz.core.common.util.KzUtil;
 import com.kuartz.core.data.jpa.configuration.property.KuartzJpaProperty;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -15,7 +14,6 @@ import javax.sql.DataSource;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 public class KuartzDataInitializer implements InitializingBean {
 
     @Autowired
@@ -28,7 +26,6 @@ public class KuartzDataInitializer implements InitializingBean {
     private DataSourceProperties dataSourceProperties;
 
     private final ResourceLoader resourceLoader;
-
 
 
     public KuartzDataInitializer(ResourceLoader resourceLoader) {

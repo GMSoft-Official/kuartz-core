@@ -27,15 +27,6 @@ dependencies {
 
 publishing {
     //todo duzenlenecek.
-    repositories {
-        // todo acilacak
-//            maven {
-//                url "http://10.10.14.35:8081/repository/maven-releases/"
-//                credentials {
-//                    username 'admin'
-//                }
-//            }
-    }
     publications {
         mavenJava(MavenPublication) {
             artifactId = 'kuartz-core-rest'
@@ -64,11 +55,6 @@ publishing {
                         email = 'azizerel69@gmail.com'
                     }
                 }
-                // scm {
-                //     connection = 'scm:git:git://example.com/my-library.git'
-                //     developerConnection = 'scm:git:ssh://example.com/my-library.git'
-                //     url = 'http://example.com/my-library/'
-                // }
             }
         }
     }
