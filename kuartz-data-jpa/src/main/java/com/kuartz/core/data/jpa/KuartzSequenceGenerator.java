@@ -2,7 +2,6 @@ package com.kuartz.core.data.jpa;
 
 import com.kuartz.core.common.exception.ExceptionMessage;
 import com.kuartz.core.common.exception.KzRuntimeException;
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.boot.model.naming.Identifier;
 import org.hibernate.boot.model.relational.QualifiedName;
 import org.hibernate.boot.model.relational.QualifiedNameParser;
@@ -10,13 +9,15 @@ import org.hibernate.dialect.Dialect;
 import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
 import org.hibernate.id.enhanced.SequenceStyleGenerator;
 import org.hibernate.service.ServiceRegistry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.Table;
 import java.util.Properties;
 
-@Slf4j
 public class KuartzSequenceGenerator extends SequenceStyleGenerator {
 
+    public static final Logger LOG = LoggerFactory.getLogger(KuartzSequenceGenerator.class);
 
     private String numberFormat;
 
@@ -33,7 +34,7 @@ public class KuartzSequenceGenerator extends SequenceStyleGenerator {
             String catalog;
             String sequenceName;
             if (sequence != null) {
-                log.trace("Sequence bulundu.");
+                LOG.trace("Sequence bulundu.");
                 sequenceName = sequence.name();
             } else {
                 sequenceName = params.getProperty(JPA_ENTITY_NAME).concat(DEF_SEQUENCE_SUFFIX);

@@ -1,6 +1,7 @@
 package com.kuartz.core.data.jpa.initializer;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.support.EncodedResource;
 import org.springframework.jdbc.datasource.init.*;
 import org.springframework.util.StringUtils;
@@ -14,15 +15,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 public class KuartzScriptUtil extends ScriptUtils {
+
+    public static final Logger LOG = LoggerFactory.getLogger(KuartzScriptUtil.class);
 
     public static void executeSqlScript(Connection connection, EncodedResource resource, boolean continueOnError,
                                         boolean ignoreFailedDrops, String commentPrefix, String separator,
                                         String blockCommentStartDelimiter, String blockCommentEndDelimiter) throws ScriptException {
 
         try {
-            log.info(resource + " SQL dosyasi calistiriliyor.");
+            LOG.info(resource + " SQL dosyasi calistiriliyor.");
             long startTime = System.currentTimeMillis();
 
             String script;
@@ -51,22 +53,22 @@ public class KuartzScriptUtil extends ScriptUtils {
                     stmtNumber++;
                     try {
                         stmt.execute(statement);
-                        log.info(statement + " calistirildi.");
+                        LOG.info(statement + " calistirildi.");
 
                         // todo bunu inceleyelim.
                         rowsAffected += stmt.getUpdateCount();
 
                         SQLWarning warningToLog = stmt.getWarnings();
                         while (warningToLog != null) {
-                            log.warn(warningToLog.getSQLState() + " " + warningToLog.getErrorCode() + " " + warningToLog.getMessage() +
+                            LOG.warn(warningToLog.getSQLState() + " " + warningToLog.getErrorCode() + " " + warningToLog.getMessage() +
                                      " hatasi esgecildi");
                             warningToLog = warningToLog.getNextWarning();
                         }
                     } catch (SQLException ex) {
                         boolean dropStatement = StringUtils.startsWithIgnoreCase(statement.trim(), "drop");
                         if (continueOnError || (dropStatement && ignoreFailedDrops)) {
-                            log.warn("Satir calistirilamadi : " + statement);
-                            log.error("SQL Exception : ", ex);
+                            LOG.warn("Satir calistirilamadi : " + statement);
+                            LOG.error("SQL Exception : ", ex);
                         } else {
                             throw new ScriptStatementFailedException(statement, stmtNumber, resource, ex);
                         }
@@ -76,12 +78,12 @@ public class KuartzScriptUtil extends ScriptUtils {
                 try {
                     stmt.close();
                 } catch (Throwable ex) {
-                    log.trace("Could not close JDBC Statement", ex);
+                    LOG.trace("Could not close JDBC Statement", ex);
                 }
             }
 
             long elapsedTime = System.currentTimeMillis() - startTime;
-            log.info(resource.getResource().getFilename() + " --> " + elapsedTime + " ms." + " 'de calistiridi. " + rowsAffected +
+            LOG.info(resource.getResource().getFilename() + " --> " + elapsedTime + " ms." + " 'de calistiridi. " + rowsAffected +
                      " satir guncellendi.");
         } catch (Exception ex) {
             if (ex instanceof ScriptException) {
