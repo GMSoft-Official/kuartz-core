@@ -26,7 +26,7 @@ public final class KzUtil {
         return anEnum == null;
     }
 
-    public static Boolean isNull(Integer integer) {return integer == null;}
+    public static Boolean isNull(Integer integer) { return integer == null;}
 
     public static Boolean isNull(Date date) {
         return date == null;
