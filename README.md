@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/GMSoft-Official/kuartz-core.svg?branch=master)](https://travis-ci.com/GMSoft-Official/kuartz-core)
+
 ## Prerequisite
 
 - Java 8
