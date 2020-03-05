@@ -6,7 +6,7 @@ import java.util.Map;
 
 public final class KzUtil {
 
-    public KzUtil() {
+    private KzUtil() {
         throw new UnsupportedOperationException();
     }
 
@@ -25,6 +25,8 @@ public final class KzUtil {
     public static Boolean isNull(Enum anEnum) {
         return anEnum == null;
     }
+
+    public static Boolean isNull(Integer integer) {return integer == null;}
 
     public static Boolean isNull(Date date) {
         return date == null;
