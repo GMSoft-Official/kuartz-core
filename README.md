@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.com/GMSoft-Official/kuartz-core.svg?branch=master)](https://travis-ci.com/GMSoft-Official/kuartz-core)
-
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8c8c431a9ed94cab8f3031c8b43e5439)](https://www.codacy.com/gh/GMSoft-Official/kuartz-core?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=GMSoft-Official/kuartz-core&amp;utm_campaign=Badge_Grade)
 ## Prerequisite
 
 - Java 8
