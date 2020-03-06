@@ -1,67 +1,28 @@
-[![Build Status](https://travis-ci.com/GMSoft-Official/kuartz-core.svg?branch=master)](https://travis-ci.com/GMSoft-Official/kuartz-core)
+[![Build Status](https://travis-ci.com/GMSoft-Official/kuartz-auth-server.svg?branch=dev)](https://travis-ci.com/GMSoft-Official/kuartz-auth-server) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/dfde0a27a2074adc84e54eeebc15dabf)](https://www.codacy.com/gh/GMSoft-Official/kuartz-auth-server?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=GMSoft-Official/kuartz-auth-server&amp;utm_campaign=Badge_Grade)
 
-## Prerequisite
+# Kuartz Authorization Server
 
-- Java 8
-- Gradle > 6.0.0
+This repository, which is made for authorization between client and resource, uses Spring Security features and OAuth 2.0. This application is intended to be used in resources app. The authorization server authenticate via JWT tokens which are stored in [`JwtTokenStore`](https://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/provider/token/store/JwtTokenStore.html).
 
-## Introduction
+# Prerequisites
+ 1. PostgreSQL (we preferred postgresql docker image)
+ 2. Java > 1.8
+ 3. Gradle > 6.0
 
-This repository combines Spring and some tech features and allows to easily boot up an app.  Some  versions of dependencies used to create this repository as below,
-> Spring Boot Version : 2.1.3.RELEASE   
-> Spring Cloud Version : Greenwich.SR2
-> Spring Dependency Management Version : 0.6.1.RELEASE   
-> QueryDsl Version : 4.2.1     
-> Jackson Core Version : 2.9.8   
-> Json Web Token Version : 0.9.0  
-> Lombok Version : 5.0.0-rc2
-    
-## Features
+# TODO
+- [ ] Dockerize authorization server.
+- [ ] SSO support
+- [ ] Redis support for token store
+- [ ] Link microservices
+- [ ] Docker profile
 
-- Spring-security support.
-- Spring environment features implementation
-- Spring feign central configuration
-- Custom generic JPA repository implementation
-	- Soft delete support
-	- Custom sequence support
-	- Custom data initializer support
-- QueryDsl support
-- Postgresql support
-- Central exception handler for rest endpoint
-- Utility
+# Structure
+todo (client module, service module)
 
-## TODO
+# Usage
 
- - [ ] Data initializer with xml scenario
- - [ ] NoSQL support
- - [ ] Unit test
-
-## Usage
-
-To use any project,
-1. Libraries must be published in an artifactory
-	- Local 
-	- Maven Central
-	- Self hosted artifact (nexus, artifactory etc.). 
-2.  Example for local publication,
-```groovy
-gradle kuartz-auth-core:publishMavenJavaPublicationToMavenLocal
-gradle kuartz-cloud-core:publishMavenJavaPublicationToMavenLocal
-```
-3. Add dependency,
-for example
-```groovy
-dependencies {
-    compile(
-            [group: 'com.kuartz.core.data.jpa', name: 'kuartz-data-jpa', version: "${kuartzDataJpaVersion}"]
-    )
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-}
-```
+todo (swagger, endpoint, how to works.)
 
 ## Contributor
 
 [![kutaycelebi](https://avatars1.githubusercontent.com/u/10180684?s=96&v=4)](https://github.com/kutay-celebi) [![azizerel](https://avatars0.githubusercontent.com/u/9365541?s=96&v=4)](https://github.com/azizerel)
-
-
-
