@@ -6,4 +6,5 @@ package com.kuartz.core.common.enumaration;
  */
 public interface ExceptionCode extends KzEnum {
     String exceptionCode();
+    //  todo javaDocu eng e çevir
 }
