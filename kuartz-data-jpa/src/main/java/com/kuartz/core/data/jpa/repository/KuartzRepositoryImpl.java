@@ -123,8 +123,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     @Override
     public void hardDelete(Long id) {
         Assert.notNull(id, "ID null olamaz.");
-        Optional<KE> optional = findById(id);
-        // fixme silmesi kalmis yapalim
+        super.deleteById(id);
     }
 
     @Override
