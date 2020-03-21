@@ -1,7 +1,12 @@
 package com.kuartz.core.common.security;
 
 public class PrincipalAuthority {
+
     private String code;
+
+    public PrincipalAuthority() {
+        //    do nothing
+    }
 
     public PrincipalAuthority(String code) {
         this.code = code;
