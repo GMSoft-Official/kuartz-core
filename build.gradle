@@ -36,7 +36,7 @@ subprojects {
                 url "https://plugins.gradle.org/m2/"
             }
             maven {
-                url = uri("https://maven.pkg.github.com/GMSoft-Official/kuartz-core")
+                url = uri("https://maven.pkg.github.com/kutay-celebi/kuartz-core")
                 credentials {
                     username = gprusr
                     password = gprkey
@@ -52,7 +52,7 @@ subprojects {
         jcenter()
         mavenLocal();
         maven {
-            url = uri("https://maven.pkg.github.com/GMSoft-Official/kuartz-core")
+            url = uri("https://maven.pkg.github.com/kutay-celebi/kuartz-core")
             credentials {
                 username = gprusr
                 password = gprkey
@@ -85,7 +85,7 @@ subprojects {
         repositories {
             maven {
                 name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/GMSoft-Official/kuartz-core")
+                url = uri("https://maven.pkg.github.com/kutay-celebi/kuartz-core")
                 credentials {
                     username = gprusr
                     password = gprkey
