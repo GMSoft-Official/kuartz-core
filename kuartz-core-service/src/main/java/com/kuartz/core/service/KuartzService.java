@@ -7,6 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class KuartzService {
 
     @Autowired
-    private HttpServletRequest request;
+    protected HttpServletRequest request;
 
 }

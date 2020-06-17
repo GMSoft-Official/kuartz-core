@@ -29,7 +29,7 @@ publishing {
     //todo duzenlenecek.
     publications {
         mavenJava(MavenPublication) {
-            artifactId = 'kuartz-core-rest'
+            artifactId = 'kuartz-core-service'
             from components.java
             artifact sourcesJar
             artifact javadocJar
