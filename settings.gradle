@@ -23,3 +23,6 @@ project(':kuartz-core-feign').projectDir = file('kuartz-core-feign')
 include ':kuartz-auth-core'
 project(':kuartz-auth-core').projectDir = file('kuartz-auth-core')
 
+include ':kuartz-core-service'
+project(':kuartz-core-service').projectDir = file('kuartz-core-service')
+
