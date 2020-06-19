@@ -25,8 +25,8 @@ import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.querydsl.QSort;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
-import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.support.PageableExecutionUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
@@ -39,7 +39,7 @@ import java.util.Optional;
  * @author Kutay Celebi
  * @since 24.09.2019
  */
-@NoRepositoryBean
+@Transactional
 public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepository<KE, Long> implements
                                                                                                  KuartzRepository<KE>,
                                                                                                  QuerydslPredicateExecutor<KE> {
