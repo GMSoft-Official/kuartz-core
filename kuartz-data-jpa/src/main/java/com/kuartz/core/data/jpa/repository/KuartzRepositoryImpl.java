@@ -71,6 +71,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         return jpaQuery;
     }
 
+    @Transactional
     @Override
     public <S extends KE> S save(S entity) {
         if (entityInformation.isNew(entity)) {
@@ -81,18 +82,14 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         }
     }
 
+    @Transactional
     public KE saveFlush(KE entity) {
-        if (entityInformation.isNew(entity)) {
-            em.persist(entity);
-            em.flush();
-            return entity;
-        } else {
-            KE merge = em.merge(entity);
-            em.flush();
-            return merge;
-        }
+        KE result = save(entity);
+        flush();
+        return result;
     }
 
+    @Transactional
     public KE update(KE entity) {
         return save(entity);
     }
@@ -101,6 +98,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         return saveFlush(entity);
     }
 
+    @Transactional
     @Override
     public <S extends KE> List<S> saveAll(Iterable<S> entities) {
         Assert.notNull(entities, "The given Iterable of entities not be null!");
@@ -111,6 +109,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         return result;
     }
 
+    @Transactional
     public List<KE> saveAllFlush(Iterable<KE> entities) {
         Assert.notNull(entities, "The given Iterable of entities not be null!");
         List<KE> result = new ArrayList<KE>();
@@ -120,6 +119,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         return result;
     }
 
+    @Transactional
     @Override
     public void hardDelete(Long id) {
         Assert.notNull(id, "ID null olamaz.");
@@ -198,6 +198,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         return createQuery(predicate).fetchCount() > 0;
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
         Assert.notNull(id, "SILINECEK ENTITY ID BOS OLAMAZ"); // todo bu hatalari mesaja cekelim
@@ -213,6 +214,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         }
     }
 
+    @Transactional
     @Override
     public void delete(KE entity) {
         boolean isExists = existsById(entity.getId());
@@ -223,11 +225,13 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         updateFlush(entity);
     }
 
+    @Transactional
     @Override
     public void deleteAll(Iterable<? extends KE> entities) {
         entities.forEach(this::delete);
     }
 
+    @Transactional
     @Override
     public void deleteAll() {
         findAll().forEach(this::delete);
