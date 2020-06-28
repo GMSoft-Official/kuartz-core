@@ -5,7 +5,7 @@ import org.springframework.context.MessageSource;
 
 import javax.servlet.http.HttpServletRequest;
 
-public abstract class KuartzService {
+public abstract class AbstractKuartzService {
 
     @Autowired
     protected HttpServletRequest request;

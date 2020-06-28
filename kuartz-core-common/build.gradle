@@ -10,12 +10,12 @@ jar {
 dependencies {
 
     compile(
-            [group: 'com.kuartz.core.env', name: 'kuartz-core-environment', version: "${kuartzEnvVersion}"],
+            project(":kuartz-core-environment"),
 
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-web'],
             [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonVersion}"],
             [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${jacksonVersion}"],
             [group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'],
-            [group: 'org.springframework.data', name: 'spring-data-commons'],
     )
 }
 

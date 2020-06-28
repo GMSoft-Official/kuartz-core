@@ -1,4 +1,4 @@
-package com.kuartz.core.rest.model;
+package com.kuartz.core.common.model;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

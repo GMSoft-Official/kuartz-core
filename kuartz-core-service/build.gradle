@@ -17,10 +17,15 @@ task javadocJar(type: Jar) {
     archiveClassifier = 'javadoc'
 }
 
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:' + springCloudVersion
+    }
+}
+
 dependencies {
     compile(
-            [group: 'com.kuartz.core.common', name: 'kuartz-core-common', version: "${kuartzCommonVersion}"],
-            [group: 'org.springframework.boot', name: 'spring-boot-starter-web'],
+            project(":kuartz-core-feign"),
     )
     testCompile 'org.springframework:spring-test:4.0.6.RELEASE'
 }
