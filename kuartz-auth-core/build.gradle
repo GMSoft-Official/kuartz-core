@@ -15,7 +15,7 @@ dependencyManagement {
 dependencies {
 
     compile(
-            [group: 'com.kuartz.core.common', name: 'kuartz-core-common', version: "${kuartzCommonVersion}"],
+            project(":kuartz-core-common"),
             [group: 'io.jsonwebtoken', name: 'jjwt', version: "${jsonWebtokenVersion}"],
 
             [group: 'org.springframework.cloud', name: 'spring-cloud-starter-security'],
