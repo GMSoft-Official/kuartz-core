@@ -9,10 +9,12 @@ import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
 
+import javax.annotation.Nullable;
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
@@ -62,4 +64,13 @@ public interface KuartzRepository<KE extends KuartzEntity> extends Repository<KE
     List<KE> findAll();
 
     void deleteById(Long id);
+
+    KzPage<KE> applyPagination(KzPageable pageable, JPAQuery<KE> query);
+
+    KzPage<KE> applyPagination(Pageable pageable, JPAQuery<KE> query);
+
+    @Nullable
+    Querydsl getQuerydsl();
+
+    Querydsl getRequiredQuerydsl();
 }

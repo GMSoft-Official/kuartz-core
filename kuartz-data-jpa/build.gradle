@@ -2,9 +2,21 @@ group 'com.kuartz.core.data.jpa'
 version "${kuartzDataJpaVersion}"
 sourceCompatibility = 1.8
 
+sourceSets {
+    main.java.srcDir "src/main/java"
+    main.resources.srcDir "src/main/resources"
+    test.java.srcDir "src/test/java"
+    test.resources.srcDir "src/test/resources"
+}
+
 buildscript {
+    ext {
+        springBootVersion = '1.5.10.RELEASE'
+        checkstyleversion = '8.4'
+    }
 
     dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath "com.kuartz.core.plugin.gradle:kuartz-gradle-plugin:${kuartzGradlePluginVersion}"
     }
 }

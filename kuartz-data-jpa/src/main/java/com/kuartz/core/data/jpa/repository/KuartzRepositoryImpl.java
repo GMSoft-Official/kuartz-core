@@ -29,8 +29,10 @@ import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import javax.annotation.Nullable;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -73,6 +75,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
 
     @Transactional
     @Override
+    @Transactional
     public <S extends KE> S save(S entity) {
         if (entityInformation.isNew(entity)) {
             em.persist(entity);
@@ -94,12 +97,14 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         return save(entity);
     }
 
+    @Transactional
     public KE updateFlush(KE entity) {
         return saveFlush(entity);
     }
 
     @Transactional
     @Override
+    @Transactional
     public <S extends KE> List<S> saveAll(Iterable<S> entities) {
         Assert.notNull(entities, "The given Iterable of entities not be null!");
         List<S> result = new ArrayList<S>();
@@ -121,6 +126,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
 
     @Transactional
     @Override
+    @Transactional
     public void hardDelete(Long id) {
         Assert.notNull(id, "ID null olamaz.");
         super.deleteById(id);
@@ -189,6 +195,21 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     }
 
     @Override
+    public KzPage<KE> applyPagination(KzPageable pageable, JPAQuery<KE> query) {
+        final PageRequest toPageable = KzPageableUtil.kzPageableToPageable(pageable);
+        final JPQLQuery<KE> applyPagination = querydsl.applyPagination(toPageable, query);
+        final Page<KE> page = PageableExecutionUtils.getPage(applyPagination.fetch(), toPageable, query::fetchCount);
+        return KzPageableUtil.pageToKzPage(page);
+    }
+
+    @Override
+    public KzPage<KE> applyPagination(Pageable pageable, JPAQuery<KE> query) {
+        final JPQLQuery<KE> applyPagination = querydsl.applyPagination(pageable, query);
+        final Page<KE> page = PageableExecutionUtils.getPage(applyPagination.fetch(), pageable, query::fetchCount);
+        return KzPageableUtil.pageToKzPage(page);
+    }
+
+    @Override
     public long count(Predicate predicate) {
         return createQuery(predicate).fetchCount();
     }
@@ -200,6 +221,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
 
     @Transactional
     @Override
+    @Transactional
     public void deleteById(Long id) {
         Assert.notNull(id, "SILINECEK ENTITY ID BOS OLAMAZ"); // todo bu hatalari mesaja cekelim
         Optional<KE> optional = findById(id);
@@ -216,6 +238,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
 
     @Transactional
     @Override
+    @Transactional
     public void delete(KE entity) {
         boolean isExists = existsById(entity.getId());
         Assert.isTrue(isExists, "ENTITY VERITABANINDA YOK");
@@ -227,12 +250,14 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
 
     @Transactional
     @Override
+    @Transactional
     public void deleteAll(Iterable<? extends KE> entities) {
         entities.forEach(this::delete);
     }
 
     @Transactional
     @Override
+    @Transactional
     public void deleteAll() {
         findAll().forEach(this::delete);
     }
@@ -257,4 +282,33 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     private List<KE> executeSorted(JPQLQuery<KE> query, Sort sort) {
         return querydsl.applySorting(sort, query).fetch();
     }
+
+    @Override
+    public List<KE> findAllById(Iterable<Long> longs) {
+        return super.findAllById(longs);
+    }
+
+
+    /**
+     * Returns the underlying Querydsl helper instance.
+     *
+     * @return
+     */
+    @Nullable
+    @Override
+    public Querydsl getQuerydsl() {
+        return this.querydsl;
+    }
+
+    @Override
+    public Querydsl getRequiredQuerydsl() {
+
+        if (querydsl == null) {
+            throw new IllegalStateException("Querydsl is null!");
+        }
+
+        return querydsl;
+    }
+
+
 }

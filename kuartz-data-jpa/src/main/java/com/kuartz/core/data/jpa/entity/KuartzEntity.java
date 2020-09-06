@@ -10,6 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -40,6 +41,7 @@ public class KuartzEntity implements Serializable {
     )
     @GeneratedValue(generator = "sequence-generator")
     @Column(name = "ID")
+    @org.springframework.data.annotation.AccessType(org.springframework.data.annotation.AccessType.Type.PROPERTY)
     private Long id;
 
     @CreationTimestamp
@@ -58,8 +60,9 @@ public class KuartzEntity implements Serializable {
     private String uuid;
 
     @Column(name = "DELETED")
+    @NotNull
     //@Type(type = "org.hibernate.type.NumericBooleanType") todo dialect ile cozelim. simdilik boyle kalsin.
-    private Boolean isDeleted;
+    private Boolean isDeleted = false;
 
     @Override
     public boolean equals(Object o) {
