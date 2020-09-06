@@ -1,13 +1,14 @@
 package com.kuartz.core.data.jpa.entity.query;
 
+import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.kuartz.core.data.jpa.entity.KuartzEntity;
-import com.querydsl.core.types.Path;
-import com.querydsl.core.types.PathMetadata;
+
+
 import com.querydsl.core.types.dsl.*;
 
+import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
-
-import static com.querydsl.core.types.PathMetadataFactory.forVariable;
+import com.querydsl.core.types.Path;
 
 
 /**
