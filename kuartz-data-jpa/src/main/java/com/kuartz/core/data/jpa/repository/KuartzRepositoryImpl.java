@@ -32,7 +32,6 @@ import org.springframework.util.Assert;
 import javax.annotation.Nullable;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -73,7 +72,6 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         return jpaQuery;
     }
 
-    @Transactional
     @Override
     @Transactional
     public <S extends KE> S save(S entity) {
@@ -102,7 +100,6 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         return saveFlush(entity);
     }
 
-    @Transactional
     @Override
     @Transactional
     public <S extends KE> List<S> saveAll(Iterable<S> entities) {
@@ -124,7 +121,6 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         return result;
     }
 
-    @Transactional
     @Override
     @Transactional
     public void hardDelete(Long id) {
@@ -221,7 +217,6 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
 
     @Transactional
     @Override
-    @Transactional
     public void deleteById(Long id) {
         Assert.notNull(id, "SILINECEK ENTITY ID BOS OLAMAZ"); // todo bu hatalari mesaja cekelim
         Optional<KE> optional = findById(id);
@@ -236,7 +231,6 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         }
     }
 
-    @Transactional
     @Override
     @Transactional
     public void delete(KE entity) {
@@ -248,14 +242,12 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         updateFlush(entity);
     }
 
-    @Transactional
     @Override
     @Transactional
     public void deleteAll(Iterable<? extends KE> entities) {
         entities.forEach(this::delete);
     }
 
-    @Transactional
     @Override
     @Transactional
     public void deleteAll() {

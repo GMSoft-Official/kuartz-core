@@ -27,7 +27,6 @@ dependencies {
     compile(
             project(":kuartz-core-feign"),
             project(":kuartz-core-common"),
-            [group: 'org.springframework.boot', name: 'spring-boot-starter-web'],
     )
     testCompile 'org.springframework:spring-test:4.0.6.RELEASE'
 }

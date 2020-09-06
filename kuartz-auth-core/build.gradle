@@ -18,7 +18,6 @@ dependencies {
             project(":kuartz-core-common"),
             [group: 'io.jsonwebtoken', name: 'jjwt', version: "${jsonWebtokenVersion}"],
 
-            [group: 'org.springframework.boot', name: 'spring-boot-starter-web'],
             [group: 'org.springframework.cloud', name: 'spring-cloud-starter-security'],
             [group: 'org.springframework.cloud', name: 'spring-cloud-starter-oauth2'],
 //            [group: 'org.springframework.boot', name: 'spring-boot-starter-security'],
