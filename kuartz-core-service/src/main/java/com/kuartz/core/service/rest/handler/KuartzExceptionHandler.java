@@ -3,7 +3,7 @@ package com.kuartz.core.service.rest.handler;
 import com.kuartz.core.common.exception.CoddedExceptionMessage;
 import com.kuartz.core.common.exception.ExceptionMessage;
 import com.kuartz.core.common.exception.KzCoddedException;
-import com.kuartz.core.common.exception.KzException;
+import com.kuartz.core.common.exception.KzCheckedException;
 import com.kuartz.core.common.model.KuartzResponse;
 import com.kuartz.core.common.util.KzUtil;
 import org.slf4j.Logger;
@@ -26,9 +26,9 @@ public class KuartzExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public KuartzResponse<ExceptionMessage> handleException(Exception e, Locale locale) {
-        if (e instanceof KzException) {
-            KzException kzException = (KzException) e;
-            ExceptionMessage exceptionDetail = kzException.getExceptionDetail();
+        if (e instanceof KzCheckedException) {
+            KzCheckedException kzCheckedException = (KzCheckedException) e;
+            ExceptionMessage exceptionDetail = kzCheckedException.getExceptionDetail();
             return extractExceptionMessage(locale, exceptionDetail);
         } else if (e instanceof KzCoddedException) {
             KzCoddedException kzException = (KzCoddedException) e;

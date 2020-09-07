@@ -1,7 +1,7 @@
 package com.kuartz.core.data.jpa;
 
 import com.kuartz.core.common.exception.ExceptionMessage;
-import com.kuartz.core.common.exception.KzRuntimeException;
+import com.kuartz.core.common.exception.KzException;
 import org.hibernate.boot.model.naming.Identifier;
 import org.hibernate.boot.model.relational.QualifiedName;
 import org.hibernate.boot.model.relational.QualifiedNameParser;
@@ -47,7 +47,7 @@ public class KuartzSequenceGenerator extends SequenceStyleGenerator {
                                                      Identifier.toIdentifier(schema),
                                                      Identifier.toIdentifier(sequenceName));
         } catch (ClassNotFoundException e) {
-            throw new KzRuntimeException(e, new ExceptionMessage("Sequence olusturulamadi", KuartzSequenceGenerator.class));
+            throw new KzException(e, new ExceptionMessage("Sequence olusturulamadi", KuartzSequenceGenerator.class));
         }
     }
 

@@ -1,17 +1,17 @@
 package com.kuartz.core.common.exception;
 
-public class KzException extends Exception implements KzBaseException {
-    private static final long serialVersionUID = 8916428016458346879L;
+public class KzException extends RuntimeException implements KzBaseException {
 
     private ExceptionMessage exceptionMessage;
-
-    public KzException() {
-        // bos yapici.
-    }
 
     public KzException(ExceptionMessage exceptionMessage) {
         this.exceptionMessage = exceptionMessage;
     }
+
+    public KzException() {
+        super();
+    }
+
 
     public KzException(String s, ExceptionMessage exceptionMessage) {
         super(s);
@@ -27,7 +27,6 @@ public class KzException extends Exception implements KzBaseException {
         super(throwable);
         this.exceptionMessage = exceptionMessage;
     }
-
 
     @Override
     public ExceptionMessage getExceptionDetail() {
