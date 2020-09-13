@@ -10,6 +10,10 @@ public final class KzUtil {
         throw new UnsupportedOperationException();
     }
 
+    public static Object[] createArray(Object... obj) {
+        return obj;
+    }
+
     public static Boolean isEmpty(Collection collection) {
         return collection == null || collection.size() <= 0;
     }
@@ -26,7 +30,9 @@ public final class KzUtil {
         return anEnum == null;
     }
 
-    public static Boolean isNull(Integer integer) { return integer == null;}
+    public static Boolean isNull(Integer integer) {
+        return integer == null;
+    }
 
     public static Boolean isNull(Date date) {
         return date == null;

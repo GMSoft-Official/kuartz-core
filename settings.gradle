@@ -11,9 +11,6 @@ project(':kuartz-cloud-core').projectDir = file('kuartz-cloud-core')
 include ':kuartz-core-common'
 project(':kuartz-core-common').projectDir = file('kuartz-core-common')
 
-include ':kuartz-core-rest'
-project(':kuartz-core-rest').projectDir = file('kuartz-core-rest')
-
 include ':kuartz-data-jpa'
 project(':kuartz-data-jpa').projectDir = file('kuartz-data-jpa')
 
@@ -22,4 +19,7 @@ project(':kuartz-core-feign').projectDir = file('kuartz-core-feign')
 
 include ':kuartz-auth-core'
 project(':kuartz-auth-core').projectDir = file('kuartz-auth-core')
+
+include ':kuartz-core-service'
+project(':kuartz-core-service').projectDir = file('kuartz-core-service')
 

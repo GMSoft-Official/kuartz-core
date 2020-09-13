@@ -20,12 +20,10 @@ dependencies {
 
             [group: 'org.springframework.cloud', name: 'spring-cloud-starter-security'],
             [group: 'org.springframework.cloud', name: 'spring-cloud-starter-oauth2'],
-
-            [group: 'org.springframework.boot', name: 'spring-boot-starter-security'],
+//            [group: 'org.springframework.boot', name: 'spring-boot-starter-security'],
     )
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-    annotationProcessor "org.springframework.boot:spring-boot-autoconfigure-processor"
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

@@ -1,5 +1,5 @@
-group 'com.kuartz.core.rest'
-version "${kuartzRestVersion}"
+group 'com.kuartz.core.service'
+version "${kuartzServiceVersion}"
 sourceCompatibility = 1.8
 
 jar {
@@ -17,9 +17,15 @@ task javadocJar(type: Jar) {
     archiveClassifier = 'javadoc'
 }
 
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:' + springCloudVersion
+    }
+}
+
 dependencies {
     compile(
-            [group: 'org.springframework.boot', name: 'spring-boot-starter-web'],
+            project(":kuartz-core-feign"),
             project(":kuartz-core-common"),
     )
     testCompile 'org.springframework:spring-test:4.0.6.RELEASE'
@@ -29,7 +35,7 @@ publishing {
     //todo duzenlenecek.
     publications {
         mavenJava(MavenPublication) {
-            artifactId = 'kuartz-core-rest'
+            artifactId = 'kuartz-core-service'
             from components.java
             artifact sourcesJar
             artifact javadocJar
