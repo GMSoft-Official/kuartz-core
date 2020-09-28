@@ -33,6 +33,8 @@ public class KuartzEntityQuery extends EntityPathBase<KuartzEntity> {
 
     public final StringPath uuid = createString("uuid");
 
+    public final NumberPath<Long> version = createNumber("version", Long.class);
+
     public KuartzEntityQuery(String variable) {
         super(KuartzEntity.class, forVariable(variable));
     }

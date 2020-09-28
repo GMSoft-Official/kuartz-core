@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Nullable;
 import javax.persistence.EntityManager;
@@ -25,7 +26,7 @@ import java.util.Optional;
  */
 @NoRepositoryBean
 public interface KuartzRepository<KE extends KuartzEntity> extends Repository<KE, Long>, QuerydslPredicateExecutor<KE> {
-    JPAQuery<KE> getJpaQuery();
+    JPAQuery<?> getJpaQuery();
 
     EntityManager getEntityManager();
 
@@ -38,6 +39,9 @@ public interface KuartzRepository<KE extends KuartzEntity> extends Repository<KE
     KE updateFlush(KE entity);
 
     void hardDelete(Long id);
+
+    @Transactional
+    void hardDelete(Iterable<Long> ids);
 
     Optional<KE> findOne(Predicate predicate);
 
@@ -62,6 +66,9 @@ public interface KuartzRepository<KE extends KuartzEntity> extends Repository<KE
     Optional<KE> findById(Long id);
 
     List<KE> findAll();
+
+    @Transactional
+    void deleteAllByIds(Long... ids);
 
     void deleteById(Long id);
 

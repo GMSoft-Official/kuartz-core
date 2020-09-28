@@ -6,13 +6,17 @@ import com.kuartz.core.common.util.KzDateUtil;
 import com.kuartz.core.data.jpa.bean.KuartzEntityPathResolver;
 import com.kuartz.core.data.jpa.entity.KuartzEntity;
 import com.kuartz.core.data.jpa.util.KzPageableUtil;
+import com.querydsl.core.DefaultQueryMetadata;
 import com.querydsl.core.NonUniqueResultException;
 import com.querydsl.core.types.EntityPath;
+import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.hibernate.HibernateQuery;
 import com.querydsl.jpa.impl.JPAQuery;
+import org.hibernate.SessionFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.data.domain.Page;
@@ -33,6 +37,7 @@ import javax.annotation.Nullable;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,22 +57,27 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     private final EntityPath<KE>              path;
     private final PathBuilder<KE>             builder;
     private final Querydsl                    querydsl;
+    private final SessionFactory              sessionFactory;
 
-    public KuartzRepositoryImpl(JpaEntityInformation<KE, ?> entityInformation, EntityManager em) {
+    public KuartzRepositoryImpl(JpaEntityInformation<KE, ?> entityInformation, EntityManager em, SessionFactory sm) {
         super(entityInformation, em);
         this.entityInformation = entityInformation;
         this.path              = PATH_RESOLVER.createPath(entityInformation.getJavaType());
         this.builder           = new PathBuilder<>(path.getType(), path.getMetadata());
         this.querydsl          = new Querydsl(em, builder);
         this.em                = em;
+        this.sessionFactory    = sm;
     }
 
     public EntityManager getEntityManager() {
         return this.em;
     }
 
-    public JPAQuery<KE> getJpaQuery() {
-        JPAQuery<KE> jpaQuery = new JPAQuery<>(em);
+    public JPAQuery<?> getJpaQuery() {
+        final DefaultQueryMetadata defaultQueryMetadata = new DefaultQueryMetadata();
+        defaultQueryMetadata.addWhere(builder.getBoolean(KuartzEntity.DELETED_FIELD).isNull()
+                                             .or(builder.getBoolean(KuartzEntity.DELETED_FIELD).isFalse()));
+        JPAQuery<?> jpaQuery = new JPAQuery<>(em, defaultQueryMetadata);
         jpaQuery.from(this.path);
         return jpaQuery;
     }
@@ -125,7 +135,20 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     @Transactional
     public void hardDelete(Long id) {
         Assert.notNull(id, "ID null olamaz.");
-        super.deleteById(id);
+        final KE entity = findById(id).orElseThrow(() -> new EmptyResultDataAccessException(
+                String.format("No %s entity with id %s exists!", entityInformation.getJavaType(), id), 1));
+
+        Assert.notNull(entity, "The entity must not be null!");
+        em.remove(em.contains(entity) ? entity : em.merge(entity));
+    }
+
+    @Override
+    @Transactional
+    public void hardDelete(Iterable<Long> ids) {
+        Assert.notNull(ids, "ID null olamaz.");
+        for (Long id : ids) {
+            hardDelete(id);
+        }
     }
 
     @Override
@@ -175,7 +198,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
 
         JPAQuery<KE> query = (JPAQuery<KE>) querydsl.applyPagination(pageable, countQuery);
 
-        return PageableExecutionUtils.getPage(query.fetch(), pageable, countQuery::fetchCount);
+        return PageableExecutionUtils.getPage(query.fetchJoin().fetch(), pageable, countQuery::fetchCount);
     }
 
     @Override
@@ -213,6 +236,15 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     @Override
     public boolean exists(Predicate predicate) {
         return createQuery(predicate).fetchCount() > 0;
+    }
+
+    @Transactional
+    @Override
+    public void deleteAllByIds(Long... ids) {
+        Assert.notNull(ids, "SILINECEK ENTITY ID BOS OLAMAZ"); // todo bu hatalari mesaja cekelim
+        for (Long id : ids) {
+            deleteById(id);
+        }
     }
 
     @Transactional
@@ -256,8 +288,17 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
 
 
     protected JPAQuery<KE> createQuery(Predicate... predicate) {
-        JPAQuery<KE> query = getJpaQuery().where(predicate);
-        query.where(builder.getBoolean(KuartzEntity.DELETED_FIELD).isNull().or(builder.getBoolean(KuartzEntity.DELETED_FIELD).isFalse()));
+
+        DefaultQueryMetadata defaultQueryMetadata = new DefaultQueryMetadata();
+        OrderSpecifier<Date> order = new OrderSpecifier<>(Order.DESC,
+                                                          builder.getDate(KuartzEntity.CREATED_FIELD, Date.class),
+                                                          OrderSpecifier.NullHandling.NullsLast);
+        defaultQueryMetadata.addOrderBy(order);
+        defaultQueryMetadata.addWhere(builder.getBoolean(KuartzEntity.DELETED_FIELD).isNull()
+                                             .or(builder.getBoolean(KuartzEntity.DELETED_FIELD).isFalse()));
+        HibernateQuery<KE> query = new HibernateQuery<>();
+        query.from(this.path);
+        query.where(predicate);
 
         CrudMethodMetadata metadata = getRepositoryMethodMetadata();
         if (metadata == null) {
@@ -272,6 +313,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     }
 
     private List<KE> executeSorted(JPQLQuery<KE> query, Sort sort) {
+        Sort.by(Sort.Direction.DESC, KuartzEntity.CREATED_FIELD);
         return querydsl.applySorting(sort, query).fetch();
     }
 

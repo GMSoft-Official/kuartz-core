@@ -1,0 +1,3 @@
+- Enum converter yazilacak
+- Email altyapisi alinacak.
+- Auditable kullanici eklenecek.

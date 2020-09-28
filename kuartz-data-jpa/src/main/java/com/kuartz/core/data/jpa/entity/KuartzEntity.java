@@ -3,11 +3,11 @@ package com.kuartz.core.data.jpa.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.kuartz.core.common.util.KzDateUtil;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.*;
 import org.hibernate.annotations.Parameter;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.repository.Lock;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,10 +23,13 @@ import java.util.UUID;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uuid")
+@DynamicUpdate
+@DynamicInsert
 public class KuartzEntity implements Serializable {
 
     public static final  String ID_FIELD         = "ID";
     public static final  String DELETED_FIELD    = "isDeleted";
+    public static final  String CREATED_FIELD    = "createdAt";
     public static final  String DELETED_AT_FIELD = "deletedAt";
     private static final long   serialVersionUID = 402199730764879680L;
 
@@ -51,6 +54,10 @@ public class KuartzEntity implements Serializable {
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+
+    @Column(name = "version")
+    @Version
+    private Long version;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DELETED_AT")
@@ -142,5 +149,13 @@ public class KuartzEntity implements Serializable {
 
     public void setDeleted(Boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }
