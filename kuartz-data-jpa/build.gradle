@@ -29,15 +29,13 @@ jar {
 
 dependencies {
 
-    compile(
-            project(":kuartz-core-common"),
-            [group: 'com.querydsl', name: 'querydsl-core', version: queryDslVersion],
-            [group: 'com.querydsl', name: 'querydsl-jpa', version: queryDslVersion],
-            [group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'],
-            [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonVersion}"],
+    api project(":kuartz-core-common")
+    compile(group: 'com.querydsl', name: 'querydsl-core', version: queryDslVersion)
+    compile(group: 'com.querydsl', name: 'querydsl-jpa', version: queryDslVersion)
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa')
+    compile(group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonVersion}")
+    compile(group: 'org.postgresql', name: 'postgresql', version: '42.2.6')
 
-            [group:'org.postgresql', name: 'postgresql', version: '42.2.6'],
-    )
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     testImplementation 'junit:junit:4.12'

@@ -1,6 +1,5 @@
 package com.kuartz.core.service.rest.handler;
 
-import com.kuartz.core.common.exception.CoddedExceptionMessage;
 import com.kuartz.core.common.exception.ExceptionMessage;
 import com.kuartz.core.common.exception.KzCoddedException;
 import com.kuartz.core.common.exception.KzCheckedException;
@@ -32,7 +31,7 @@ public class KuartzExceptionHandler {
             return extractExceptionMessage(locale, exceptionDetail);
         } else if (e instanceof KzCoddedException) {
             KzCoddedException kzException = (KzCoddedException) e;
-            CoddedExceptionMessage exceptionDetail = kzException.getExceptionDetail();
+            ExceptionMessage exceptionDetail = kzException.getExceptionDetail();
             return extractExceptionMessage(locale, exceptionDetail);
 
         }

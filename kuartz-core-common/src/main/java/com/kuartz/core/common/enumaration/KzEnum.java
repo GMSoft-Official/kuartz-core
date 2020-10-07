@@ -8,6 +8,4 @@ public interface KzEnum {
     String label();
 
     int code();
-
-    //todo write function baseEnumConverter
 }

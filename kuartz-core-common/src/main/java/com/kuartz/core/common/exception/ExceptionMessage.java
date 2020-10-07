@@ -38,6 +38,8 @@ public class ExceptionMessage implements Serializable {
 
     private Map<String, Object> exceptionArguments;
 
+    private String code;
+
 
     public ExceptionMessage(String message) {
         this.message = message;
@@ -132,5 +134,13 @@ public class ExceptionMessage implements Serializable {
 
     public Map<String, Object> getExceptionArguments() {
         return exceptionArguments;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    protected void setCode(String code) {
+        this.code = code;
     }
 }

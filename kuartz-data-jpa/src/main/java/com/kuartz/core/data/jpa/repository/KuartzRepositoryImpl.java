@@ -14,9 +14,7 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.JPQLQuery;
-import com.querydsl.jpa.hibernate.HibernateQuery;
 import com.querydsl.jpa.impl.JPAQuery;
-import org.hibernate.SessionFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.data.domain.Page;
@@ -57,16 +55,14 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     private final EntityPath<KE>              path;
     private final PathBuilder<KE>             builder;
     private final Querydsl                    querydsl;
-    private final SessionFactory              sessionFactory;
 
-    public KuartzRepositoryImpl(JpaEntityInformation<KE, ?> entityInformation, EntityManager em, SessionFactory sm) {
+    public KuartzRepositoryImpl(JpaEntityInformation<KE, ?> entityInformation, EntityManager em) {
         super(entityInformation, em);
         this.entityInformation = entityInformation;
         this.path              = PATH_RESOLVER.createPath(entityInformation.getJavaType());
         this.builder           = new PathBuilder<>(path.getType(), path.getMetadata());
         this.querydsl          = new Querydsl(em, builder);
         this.em                = em;
-        this.sessionFactory    = sm;
     }
 
     public EntityManager getEntityManager() {
@@ -286,17 +282,16 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         findAll().forEach(this::delete);
     }
 
-
     protected JPAQuery<KE> createQuery(Predicate... predicate) {
 
         DefaultQueryMetadata defaultQueryMetadata = new DefaultQueryMetadata();
         OrderSpecifier<Date> order = new OrderSpecifier<>(Order.DESC,
-                                                          builder.getDate(KuartzEntity.CREATED_FIELD, Date.class),
-                                                          OrderSpecifier.NullHandling.NullsLast);
+                                                                builder.getDate(KuartzEntity.CREATED_FIELD, Date.class),
+                                                                OrderSpecifier.NullHandling.NullsLast);
         defaultQueryMetadata.addOrderBy(order);
         defaultQueryMetadata.addWhere(builder.getBoolean(KuartzEntity.DELETED_FIELD).isNull()
                                              .or(builder.getBoolean(KuartzEntity.DELETED_FIELD).isFalse()));
-        HibernateQuery<KE> query = new HibernateQuery<>();
+        JPAQuery<KE> query = new JPAQuery<>(em, defaultQueryMetadata);
         query.from(this.path);
         query.where(predicate);
 
