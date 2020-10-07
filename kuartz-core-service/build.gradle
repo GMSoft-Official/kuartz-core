@@ -1,11 +1,10 @@
-group 'com.kuartz.core.service'
+group 'com.kuartz.core'
 version "${kuartzServiceVersion}"
 sourceCompatibility = 1.8
 
 jar {
     enabled = true
 }
-
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
@@ -24,15 +23,12 @@ dependencyManagement {
 }
 
 dependencies {
-    compile(
-            project(":kuartz-core-feign"),
-            project(":kuartz-core-common"),
-    )
+    api project(":kuartz-core-feign")
+    api project(":kuartz-core-common")
     testCompile 'org.springframework:spring-test:4.0.6.RELEASE'
 }
 
 publishing {
-    //todo duzenlenecek.
     publications {
         mavenJava(MavenPublication) {
             artifactId = 'kuartz-core-service'
@@ -41,8 +37,7 @@ publishing {
             artifact javadocJar
             pom {
                 name = 'Kuart REST Library'
-                description = 'Kuartz custom REST library'
-//                 url = 'http://10.10.14.35:8081/repository/maven-public/'
+                description = 'Kuartz custom service library'
                 licenses {
                     license {
                         name = 'The Apache License, Version 2.0'
@@ -54,11 +49,6 @@ publishing {
                         id = 'celebikutay'
                         name = 'Kutay Çelebi'
                         email = 'mail@kutaycelebi.com'
-                    }
-                    developer {
-                        id = 'azizerel'
-                        name = 'Aziz Erel'
-                        email = 'azizerel69@gmail.com'
                     }
                 }
             }
