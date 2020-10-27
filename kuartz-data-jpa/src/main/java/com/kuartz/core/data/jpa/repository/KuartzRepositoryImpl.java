@@ -251,7 +251,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         if (optional.isPresent()) {
             KE entity = optional.get();
             entity.setDeleted(Boolean.TRUE);
-            entity.setDeletedAt(KzDateUtil.suankiTarih());
+            entity.setDeletedAt(KzDateUtil.now());
             updateFlush(entity);
         } else {
             throw new EmptyResultDataAccessException(
@@ -266,7 +266,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         Assert.isTrue(isExists, "ENTITY VERITABANINDA YOK");
 
         entity.setDeleted(Boolean.TRUE);
-        entity.setDeletedAt(KzDateUtil.suankiTarih());
+        entity.setDeletedAt(KzDateUtil.now());
         updateFlush(entity);
     }
 

@@ -23,3 +23,6 @@ project(':kuartz-auth-core').projectDir = file('kuartz-auth-core')
 include ':kuartz-core-service'
 project(':kuartz-core-service').projectDir = file('kuartz-core-service')
 
+include ':kuartz-core-schedule'
+project(':kuartz-core-schedule').projectDir = file('kuartz-core-schedule')
+

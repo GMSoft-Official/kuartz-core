@@ -26,7 +26,7 @@ public class ExceptionMessage implements Serializable {
     /**
      * Exceptionun tarihidir.
      */
-    private Date     date = KzDateUtil.suankiTarih();
+    private Date     date = KzDateUtil.now();
     /**
      * Exceptionun kolay trace edilmesi amaciyla exception kaynagini belirtir.
      */

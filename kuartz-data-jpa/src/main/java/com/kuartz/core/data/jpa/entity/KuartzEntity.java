@@ -7,7 +7,6 @@ import org.hibernate.annotations.*;
 import org.hibernate.annotations.Parameter;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.jpa.repository.Lock;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -96,7 +95,7 @@ public class KuartzEntity implements Serializable {
     @PreRemove
     void preRemove() {
         this.isDeleted = Boolean.TRUE;
-        this.deletedAt = KzDateUtil.suankiTarih();
+        this.deletedAt = KzDateUtil.now();
     }
 
 
