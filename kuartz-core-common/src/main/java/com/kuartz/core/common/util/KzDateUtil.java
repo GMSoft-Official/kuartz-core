@@ -57,10 +57,10 @@ public class KzDateUtil {
     //endregion
 
     //region AY ISLEMLERI
-    public static Date addMonth(Date date, int i) {
+    public static Date substractMonth(Date date, int i) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(date);
-        instance.add(Calendar.MONTH, i);
+        instance.add(Calendar.MONTH, -i);
         return instance.getTime();
     }
 

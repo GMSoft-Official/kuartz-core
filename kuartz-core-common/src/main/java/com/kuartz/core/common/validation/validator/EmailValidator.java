@@ -1,7 +1,7 @@
 package com.kuartz.core.common.validation.validator;
 
+import com.kuartz.core.common.validation.Email;
 import org.apache.commons.lang3.StringUtils;
-import org.aydinliknesiller.eburs.logic.validation.Email;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

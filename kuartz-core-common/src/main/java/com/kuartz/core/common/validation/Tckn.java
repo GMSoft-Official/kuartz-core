@@ -1,6 +1,7 @@
 package com.kuartz.core.common.validation;
 
-import org.aydinliknesiller.eburs.logic.validation.validator.TcknValidator;
+
+import com.kuartz.core.common.validation.validator.TcknValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

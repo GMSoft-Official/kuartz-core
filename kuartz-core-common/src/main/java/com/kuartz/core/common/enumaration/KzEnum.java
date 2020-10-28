@@ -3,9 +3,9 @@ package com.kuartz.core.common.enumaration;
 /**
  * Base enum interface to be used when stored in database
  */
-public interface KzEnum {
+public interface KzEnum<T> {
 
     String label();
 
-    int code();
+    T code();
 }
