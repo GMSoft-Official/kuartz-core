@@ -48,6 +48,13 @@ public class KzDateUtil {
     //endregion
 
     //region ZAMAN ISLEMLERI
+    public static Date addMinute(Date sonTarih, Integer value) {
+        Calendar instance = Calendar.getInstance();
+        instance.setTime(sonTarih);
+        instance.add(Calendar.MINUTE, value);
+        return instance.getTime();
+    }
+
     public static Date addHour(Date sonTarih, Integer value) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(sonTarih);
@@ -64,6 +71,29 @@ public class KzDateUtil {
         return instance.getTime();
     }
 
+    public static Date substractMonthFirstDay(Date date, int i) {
+        Calendar instance = Calendar.getInstance();
+        instance.setTime(date);
+        instance.add(Calendar.MONTH, -i);
+        instance.set(Calendar.DAY_OF_MONTH, instance.getMinimalDaysInFirstWeek());
+        return instance.getTime();
+    }
+
+    public static Date addMonth(Date date, int i) {
+        Calendar instance = Calendar.getInstance();
+        instance.setTime(date);
+        instance.add(Calendar.MONTH, i);
+        return instance.getTime();
+    }
+
+    public static Date addMonthLastDay(Date date, int i) {
+        Calendar instance = Calendar.getInstance();
+        instance.setTime(date);
+        instance.add(Calendar.MONTH, i);
+        instance.set(Calendar.DAY_OF_MONTH, instance.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return instance.getTime();
+    }
+
     public static void setMonth(Date date, int i) {
         final Calendar instance = Calendar.getInstance();
         instance.setTime(date);
@@ -76,6 +106,12 @@ public class KzDateUtil {
         return instance.get(Calendar.MONTH);
     }
     //endregion
+
+    public static int getDay(Date date) {
+        final Calendar instance = Calendar.getInstance();
+        instance.setTime(date);
+        return instance.get(Calendar.DAY_OF_MONTH);
+    }
 
     //region FORMATTER
     public static String format(Date tarih, String s) {

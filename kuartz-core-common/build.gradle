@@ -7,6 +7,14 @@ jar {
     enabled = true
 }
 
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events  "failed" //"passed", "skipped",
+    }
+}
+
 dependencies {
     api project(":kuartz-core-environment")
     compile(
@@ -17,6 +25,9 @@ dependencies {
             [group: 'org.springframework.data', name: 'spring-data-commons'],
             [group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hibernate5', version: "${jacksonVersion}"]
     )
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 task sourcesJar(type: Jar) {
@@ -28,6 +39,8 @@ task javadocJar(type: Jar) {
     from javadoc
     archiveClassifier = 'javadoc'
 }
+
+tasks.withType(PublishToMavenRepository) { it.dependsOn test }
 
 publishing {
     publications {

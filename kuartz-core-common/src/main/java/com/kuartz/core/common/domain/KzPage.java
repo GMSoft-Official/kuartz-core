@@ -15,27 +15,21 @@ public class KzPage<T> implements Serializable {
 
     private Integer totalPage;
 
-    private final KzPageable pageable;
-
     public KzPage() {
-        this.pageable = new KzPageable();
-        //    bos yapici
     }
 
-    public KzPage(List<T> content, KzPageable pageable) {
+    public KzPage(List<T> content) {
         Assert.notNull(content, "Content must not be null!");
-        Assert.notNull(pageable, "Pageable must not be null!");
         this.content.addAll(content);
-        this.pageable = pageable;
     }
 
-    public KzPage(List<T> content, KzPageable pageable, Long totalElements) {
-        this(content, pageable);
+    public KzPage(List<T> content, Long totalElements) {
+        this.content.addAll(content);
         this.totalElements = totalElements;
     }
 
-    public KzPage(List<T> content, KzPageable pageable, Long totalElements, Integer totalPage) {
-        this(content, pageable);
+    public KzPage(List<T> content, Long totalElements, Integer totalPage) {
+        this(content);
         this.totalElements = totalElements;
         this.totalPage     = totalPage;
     }
@@ -50,9 +44,5 @@ public class KzPage<T> implements Serializable {
 
     public Integer getTotalPage() {
         return totalPage;
-    }
-
-    public KzPageable getPageable() {
-        return pageable;
     }
 }

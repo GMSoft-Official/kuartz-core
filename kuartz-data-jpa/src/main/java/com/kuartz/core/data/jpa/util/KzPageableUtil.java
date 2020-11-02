@@ -58,7 +58,7 @@ public final class KzPageableUtil {
     }
 
     public static <T> KzPage<T> pageToKzPage(Page<T> page) {
-        return new KzPage<T>(page.getContent(), pageableToKzPageable(page.getPageable()), page.getTotalElements(), page.getTotalPages());
+        return new KzPage<T>(page.getContent(), page.getTotalElements(), page.getTotalPages());
     }
 
     public static KzPageable pageableToKzPageable(Pageable pageable) {
