@@ -2,10 +2,12 @@ package com.kuartz.core.data.jpa.repository;
 
 import com.kuartz.core.common.domain.KzPage;
 import com.kuartz.core.common.domain.KzPageable;
+import com.kuartz.core.common.model.KuartzModel;
 import com.kuartz.core.common.util.KzDateUtil;
 import com.kuartz.core.data.jpa.bean.KuartzEntityPathResolver;
 import com.kuartz.core.data.jpa.entity.KuartzEntity;
-import com.kuartz.core.data.jpa.util.KzPageableUtil;
+import com.kuartz.core.data.jpa.util.ExecutionUtils;
+import com.kuartz.core.data.jpa.util.PageableResult;
 import com.querydsl.core.DefaultQueryMetadata;
 import com.querydsl.core.NonUniqueResultException;
 import com.querydsl.core.types.EntityPath;
@@ -17,8 +19,6 @@ import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.CrudMethodMetadata;
@@ -27,7 +27,6 @@ import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.querydsl.QSort;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
-import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
@@ -69,13 +68,8 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         return this.em;
     }
 
-    public JPAQuery<?> getJpaQuery() {
-        final DefaultQueryMetadata defaultQueryMetadata = new DefaultQueryMetadata();
-        defaultQueryMetadata.addWhere(builder.getBoolean(KuartzEntity.DELETED_FIELD).isNull()
-                                             .or(builder.getBoolean(KuartzEntity.DELETED_FIELD).isFalse()));
-        JPAQuery<?> jpaQuery = new JPAQuery<>(em, defaultQueryMetadata);
-        jpaQuery.from(this.path);
-        return jpaQuery;
+    public <T> JPAQuery<T> getJpaQuery() {
+        return new JPAQuery<>(em);
     }
 
     @Override
@@ -180,13 +174,12 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
 
     @Override
     public List<KE> findAll(OrderSpecifier<?>... orders) {
-
         Assert.notNull(orders, "Order specifiers must not be null!");
         return executeSorted(createQuery(new Predicate[0]).select(path), orders);
     }
 
     @Override
-    public Page<KE> findAll(Predicate predicate, Pageable pageable) {
+    public KzPage<KE> findAll(Predicate predicate, Pageable pageable) {
 
         Assert.notNull(pageable, "Pageable must not be null!");
 
@@ -194,35 +187,22 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
 
         JPAQuery<KE> query = (JPAQuery<KE>) querydsl.applyPagination(pageable, countQuery);
 
-        return PageableExecutionUtils.getPage(query.fetchJoin().fetch(), pageable, countQuery::fetchCount);
+        return ExecutionUtils.getPage(query.fetch(), pageable, countQuery::fetchCount);
     }
+
 
     @Override
-    public KzPage<KE> findAll(Predicate predicate, KzPageable pageable) {
-        Assert.notNull(pageable, "Pageable must not be null!");
-
-        final JPAQuery<KE> query = createQuery(predicate);
-
-        PageRequest toPageable = KzPageableUtil.kzPageableToPageable(pageable);
-        JPAQuery<KE> applyPagination = (JPAQuery<KE>) querydsl.applyPagination(toPageable, query);
-        Page<KE> page = PageableExecutionUtils.getPage(applyPagination.fetch(), toPageable, query::fetchCount);
-        return KzPageableUtil.pageToKzPage(page);
+    public <T> KzPage<T>  applyPagination(KzPageable pageable, JPAQuery<T> query) {
+        final JPQLQuery<T> applyPagination = querydsl.applyPagination(pageable, query);
+        return ExecutionUtils.getPage(applyPagination.fetch(), pageable, query::fetchCount);
     }
 
-    @Override
-    public KzPage<KE> applyPagination(KzPageable pageable, JPAQuery<KE> query) {
-        final PageRequest toPageable = KzPageableUtil.kzPageableToPageable(pageable);
-        final JPQLQuery<KE> applyPagination = querydsl.applyPagination(toPageable, query);
-        final Page<KE> page = PageableExecutionUtils.getPage(applyPagination.fetch(), toPageable, query::fetchCount);
-        return KzPageableUtil.pageToKzPage(page);
-    }
-
-    @Override
-    public KzPage<KE> applyPagination(Pageable pageable, JPAQuery<KE> query) {
-        final JPQLQuery<KE> applyPagination = querydsl.applyPagination(pageable, query);
-        final Page<KE> page = PageableExecutionUtils.getPage(applyPagination.fetch(), pageable, query::fetchCount);
-        return KzPageableUtil.pageToKzPage(page);
-    }
+    //@Override
+    //public KzPage<KE> applyPagination(Pageable pageable, JPAQuery<Object> query) {
+    //    final JPQLQuery<Object> applyPagination = querydsl.applyPagination(pageable, query);
+    //    final Page<Object> page = PageableExecutionUtils.getPage(applyPagination.fetch(), pageable, query::fetchCount);
+    //    return KzPageableUtil.pageToKzPage(page);
+    //}
 
     @Override
     public long count(Predicate predicate) {
@@ -286,8 +266,8 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
 
         DefaultQueryMetadata defaultQueryMetadata = new DefaultQueryMetadata();
         OrderSpecifier<Date> order = new OrderSpecifier<>(Order.DESC,
-                                                                builder.getDate(KuartzEntity.CREATED_FIELD, Date.class),
-                                                                OrderSpecifier.NullHandling.NullsLast);
+                                                          builder.getDate(KuartzEntity.CREATED_FIELD, Date.class),
+                                                          OrderSpecifier.NullHandling.NullsLast);
         defaultQueryMetadata.addOrderBy(order);
         defaultQueryMetadata.addWhere(builder.getBoolean(KuartzEntity.DELETED_FIELD).isNull()
                                              .or(builder.getBoolean(KuartzEntity.DELETED_FIELD).isFalse()));

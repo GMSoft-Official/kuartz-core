@@ -3,10 +3,10 @@ package com.kuartz.core.data.jpa.repository;
 import com.kuartz.core.common.domain.KzPage;
 import com.kuartz.core.common.domain.KzPageable;
 import com.kuartz.core.data.jpa.entity.KuartzEntity;
+import com.kuartz.core.data.jpa.util.PageableResult;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQuery;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.Querydsl;
@@ -26,7 +26,7 @@ import java.util.Optional;
  */
 @NoRepositoryBean
 public interface KuartzRepository<KE extends KuartzEntity> extends Repository<KE, Long>, QuerydslPredicateExecutor<KE> {
-    JPAQuery<?> getJpaQuery();
+    <T> JPAQuery<T> getJpaQuery();
 
     EntityManager getEntityManager();
 
@@ -53,9 +53,9 @@ public interface KuartzRepository<KE extends KuartzEntity> extends Repository<KE
 
     List<KE> findAll(OrderSpecifier<?>... orders);
 
-    Page<KE> findAll(Predicate predicate, Pageable pageable);
+    KzPage<KE> findAll(Predicate predicate, Pageable pageable);
 
-    KzPage<KE> findAll(Predicate predicate, KzPageable pageable);
+    <T> KzPage<T>  applyPagination(KzPageable pageable, JPAQuery<T> query);
 
     @Override
     long count(Predicate predicate);
@@ -72,9 +72,7 @@ public interface KuartzRepository<KE extends KuartzEntity> extends Repository<KE
 
     void deleteById(Long id);
 
-    KzPage<KE> applyPagination(KzPageable pageable, JPAQuery<KE> query);
-
-    KzPage<KE> applyPagination(Pageable pageable, JPAQuery<KE> query);
+    //KzPage<KE> applyPagination(KzPageable pageable, JPAQuery<Object> query);
 
     @Nullable
     Querydsl getQuerydsl();

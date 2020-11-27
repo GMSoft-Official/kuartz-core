@@ -26,7 +26,6 @@ public class KzCoddedException extends Exception implements KzBaseException {
         this.code             = code.exceptionCode();
     }
 
-
     @Override
     public ExceptionMessage getExceptionDetail() {
         return exceptionMessage;

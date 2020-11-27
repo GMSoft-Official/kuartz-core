@@ -6,4 +6,6 @@ package com.kuartz.core.common.enumaration;
  */
 public interface ExceptionCode {
     String exceptionCode();
+
+    String label();
 }
