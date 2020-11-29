@@ -26,7 +26,7 @@ public class ExceptionMessage implements Serializable {
     /**
      * Exceptionun tarihidir.
      */
-    private Date     date = KzDateUtil.suankiTarih();
+    private Date     date = KzDateUtil.now();
     /**
      * Exceptionun kolay trace edilmesi amaciyla exception kaynagini belirtir.
      */
@@ -37,6 +37,8 @@ public class ExceptionMessage implements Serializable {
     private String   uuid = UUID.randomUUID().toString();
 
     private Map<String, Object> exceptionArguments;
+
+    private String code;
 
 
     public ExceptionMessage(String message) {
@@ -132,5 +134,13 @@ public class ExceptionMessage implements Serializable {
 
     public Map<String, Object> getExceptionArguments() {
         return exceptionArguments;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    protected void setCode(String code) {
+        this.code = code;
     }
 }

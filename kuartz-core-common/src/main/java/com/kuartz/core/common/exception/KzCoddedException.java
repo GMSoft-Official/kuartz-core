@@ -2,68 +2,36 @@ package com.kuartz.core.common.exception;
 
 import com.kuartz.core.common.enumaration.ExceptionCode;
 
-import java.util.Date;
-
+// todo @kcelebi propertiesden ayarlanabilir exception code prefix ekleyelim.
 public class KzCoddedException extends Exception implements KzBaseException {
 
     private static final long serialVersionUID = -5042458415613778685L;
 
-    private CoddedExceptionMessage exceptionMessage;
+    private ExceptionMessage exceptionMessage;
+
+    private String code;
 
     public KzCoddedException() {
         // bos yapici
     }
 
-    public KzCoddedException(CoddedExceptionMessage exceptionMessage, ExceptionCode code) {
+    public KzCoddedException(ExceptionMessage exceptionMessage, ExceptionCode code) {
         this.exceptionMessage = exceptionMessage;
-        this.exceptionMessage.setCode(code.exceptionCode());
+        this.code             = code.exceptionCode();
     }
 
     public KzCoddedException(String message, ExceptionCode code) {
         super(message);
-        this.exceptionMessage = new CoddedExceptionMessage(message);
-        this.exceptionMessage.setCode(code.exceptionCode());
-    }
-
-    public KzCoddedException(String message, Class source, ExceptionCode code) {
-        super(message);
-        this.exceptionMessage = new CoddedExceptionMessage(message, source);
-        this.exceptionMessage.setCode(code.exceptionCode());
-    }
-
-    public KzCoddedException(String message, Date date, ExceptionCode code) {
-        super(message);
-        this.exceptionMessage = new CoddedExceptionMessage(message, date);
-        this.exceptionMessage.setCode(code.exceptionCode());
-    }
-
-    public KzCoddedException(String message, Object[] argument, ExceptionCode code) {
-        super(message);
-        this.exceptionMessage = new CoddedExceptionMessage(message, argument);
-        this.exceptionMessage.setCode(code.exceptionCode());
-    }
-
-    public KzCoddedException(String message, Object[] argument, Class source, ExceptionCode code) {
-        super(message);
-        this.exceptionMessage = new CoddedExceptionMessage(message, argument, source);
-        this.exceptionMessage.setCode(code.exceptionCode());
-    }
-
-    public KzCoddedException(String message, Object[] argument, Date date, ExceptionCode code) {
-        super(message);
-        this.exceptionMessage = new CoddedExceptionMessage(message, argument, date);
-        this.exceptionMessage.setCode(code.exceptionCode());
-    }
-
-    public KzCoddedException(String message, Object[] argument, Date date, Class source, ExceptionCode code) {
-        super(message);
-        this.exceptionMessage = new CoddedExceptionMessage(message, argument, date, source);
-        this.exceptionMessage.setCode(code.exceptionCode());
+        this.exceptionMessage = new ExceptionMessage(message);
+        this.code             = code.exceptionCode();
     }
 
     @Override
-    public CoddedExceptionMessage getExceptionDetail() {
+    public ExceptionMessage getExceptionDetail() {
         return exceptionMessage;
     }
 
+    public String getCode() {
+        return code;
+    }
 }

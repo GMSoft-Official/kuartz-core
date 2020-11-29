@@ -1,4 +1,4 @@
-group 'com.kuartz.core.data.jpa'
+group 'com.kuartz.core'
 version "${kuartzDataJpaVersion}"
 sourceCompatibility = 1.8
 
@@ -28,15 +28,14 @@ jar {
 }
 
 dependencies {
-
+    api project(":kuartz-core-common")
     compile(
-            project(":kuartz-core-common"),
             [group: 'com.querydsl', name: 'querydsl-core', version: queryDslVersion],
             [group: 'com.querydsl', name: 'querydsl-jpa', version: queryDslVersion],
             [group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'],
             [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonVersion}"],
 
-            [group:'org.postgresql', name: 'postgresql', version: '42.2.6'],
+            [group: 'org.postgresql', name: 'postgresql', version: '42.2.6'],
     )
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
@@ -44,9 +43,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-
 compileJava.dependsOn("processResources");
-
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
@@ -59,7 +56,6 @@ task javadocJar(type: Jar) {
 }
 
 publishing {
-    //todo duzenlenecek.
     publications {
         mavenJava(MavenPublication) {
             artifactId = 'kuartz-data-jpa'
@@ -69,7 +65,6 @@ publishing {
             pom {
                 name = 'Kuart JPA Library'
                 description = 'Kuartz custom JPA repository library'
-//                 url = 'http://10.10.14.35:8081/repository/maven-public/'
                 licenses {
                     license {
                         name = 'The Apache License, Version 2.0'

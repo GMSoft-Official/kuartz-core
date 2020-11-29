@@ -1,4 +1,4 @@
-group 'com.kuartz.core.feign'
+group 'com.kuartz.core'
 version "${kuartzFeignVersion}"
 sourceCompatibility = 1.8
 
@@ -14,8 +14,8 @@ dependencyManagement {
 }
 
 dependencies {
+    api project(":kuartz-core-common")
     compile(
-            project(":kuartz-core-common"),
             [group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'],
     )
 
@@ -56,11 +56,6 @@ publishing {
                         id = 'kutaycelebi'
                         name = 'Kutay Çelebi'
                         email = 'mail@kutaycelebi.com'
-                    }
-                    developer {
-                        id = 'azizerel'
-                        name = 'Aziz Erel'
-                        email = 'azizerel69@gmail.com'
                     }
                 }
             }

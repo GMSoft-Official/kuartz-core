@@ -10,7 +10,9 @@ public abstract class KuartzQueryBuilder<QM extends KuartzQueryModel, EQ extends
 
     public BooleanBuilder buildQuery(QM querymodel, EQ entityQuery) {
         BooleanBuilder builder = new BooleanBuilder();
-        prepareQuery(builder, querymodel, entityQuery);
+        if (querymodel != null) {
+            prepareQuery(builder, querymodel, entityQuery);
+        }
         return builder;
     }
 }

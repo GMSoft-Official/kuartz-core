@@ -7,29 +7,24 @@ jar {
 }
 
 dependencies {
-
     compile(
             [group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'],
             [group: 'org.springframework.boot', name: 'spring-boot'],
     )
-
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
-
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
     archiveClassifier = 'sources'
 }
-
 task javadocJar(type: Jar) {
     from javadoc
     archiveClassifier = 'javadoc'
 }
 
 publishing {
-    //todo duzenlenecek.
     publications {
         mavenJava(MavenPublication) {
             artifactId = 'kuartz-core-environment'
@@ -39,7 +34,6 @@ publishing {
             pom {
                 name = 'Kuart Environment Library'
                 description = 'Kuartz custom Environment library'
-//                 url = 'http://10.10.14.35:8081/repository/maven-public/'
                 licenses {
                     license {
                         name = 'The Apache License, Version 2.0'
@@ -51,11 +45,6 @@ publishing {
                         id = 'celebikutay'
                         name = 'Kutay Çelebi'
                         email = 'mail@kutaycelebi.com'
-                    }
-                    developer {
-                        id = 'azizerel'
-                        name = 'Aziz Erel'
-                        email = 'azizerel69@gmail.com'
                     }
                 }
             }

@@ -1,58 +1,61 @@
 package com.kuartz.core.common.domain;
 
-import java.io.Serializable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
-public class KzPageable implements Serializable {
+public class KzPageable extends PageRequest {
 
     private static final long serialVersionUID = -970697255361843356L;
 
-    private KzSort sort;
-
-    private Integer pageNumber;
-
-    private Integer pageSize;
-
-    public KzPageable() {
-        //    bos yapici
+    protected KzPageable(int page, int size) {
+        super(page, size);
     }
 
-    public KzPageable(KzSort sort, Integer pageNumber, Integer pageSize) {
-        this.sort       = sort;
-        this.pageNumber = pageNumber;
-        this.pageSize   = pageSize;
+    protected KzPageable(int page, int size, Sort.Direction direction, String... properties) {
+        super(page, size, direction, properties);
     }
 
-    public KzPageable(KzSort sort, Integer pageNumber) {
-        this.sort       = sort;
-        this.pageNumber = pageNumber;
+    protected KzPageable(int page, int size, Sort sort) {
+        super(page, size, sort);
     }
 
-    public KzPageable(Integer pageNumber, Integer pageSize) {
-        this.pageNumber = pageNumber;
-        this.pageSize   = pageSize;
+
+    /**
+     * Creates a new unsorted {@link PageRequest}.
+     *
+     * @param page zero-based page index.
+     * @param size the size of the page to be returned.
+     *
+     * @since 2.0
+     */
+    public static KzPageable of(int page, int size) {
+        return of(page, size, Sort.unsorted());
     }
 
-    public KzSort getSort() {
-        return sort;
+    /**
+     * Creates a new {@link PageRequest} with sort parameters applied.
+     *
+     * @param page zero-based page index.
+     * @param size the size of the page to be returned.
+     * @param sort must not be {@literal null}.
+     *
+     * @since 2.0
+     */
+    public static KzPageable of(int page, int size, Sort sort) {
+        return new KzPageable(page, size, sort);
     }
 
-    public void setSort(KzSort sort) {
-        this.sort = sort;
-    }
-
-    public Integer getPageNumber() {
-        return pageNumber;
-    }
-
-    public void setPageNumber(Integer pageNumber) {
-        this.pageNumber = pageNumber;
-    }
-
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
+    /**
+     * Creates a new {@link PageRequest} with sort direction and properties applied.
+     *
+     * @param page       zero-based page index.
+     * @param size       the size of the page to be returned.
+     * @param direction  must not be {@literal null}.
+     * @param properties must not be {@literal null}.
+     *
+     * @since 2.0
+     */
+    public static KzPageable of(int page, int size, Sort.Direction direction, String... properties) {
+        return of(page, size, Sort.by(direction, properties));
     }
 }
