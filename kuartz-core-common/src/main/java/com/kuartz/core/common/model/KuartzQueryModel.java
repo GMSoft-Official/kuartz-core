@@ -1,7 +1,5 @@
 package com.kuartz.core.common.model;
 
-import com.kuartz.core.common.domain.KzPageable;
-
 import java.io.Serializable;
 
 public class KuartzQueryModel implements Serializable {
