@@ -10,9 +10,9 @@ import java.util.Objects;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uuid")
 public class KuartzModel implements Serializable {
 
-    private static final long serialVersionUID = -8331727143494828302L;
+    private static final long serialVersionUID = - 8331727143494828302L;
 
-    public static final String DELETED_FIELD    = "isDeleted";
+    public static final String DELETED_FIELD = "isDeleted";
     public static final String DELETED_AT_FIELD = "deletedAt";
 
     private Long id;
@@ -23,9 +23,11 @@ public class KuartzModel implements Serializable {
 
     private Date deletedAt;
 
+    private Long version;
+
     private String uuid;
 
-    private Boolean isDeleted;
+    private Boolean isDeleted = false;
 
     public KuartzModel() {
         //    bos yapici
@@ -94,5 +96,13 @@ public class KuartzModel implements Serializable {
 
     public void setDeleted(Boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }
