@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author Kutay Çelebi
  * @since 28.06.2020
  */
-public class KuartzCrudController<M extends KuartzModel, S extends KuartzCrudService<M>> extends AbstractKuartzController implements
+public abstract class AbstractKuartzCrudController<M extends KuartzModel, S extends KuartzCrudService<M>> extends AbstractKuartzController implements
         KuartzCrudFeignClient<M> {
 
     @Autowired

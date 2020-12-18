@@ -17,9 +17,9 @@ public abstract class AbstractKuartzCrudService<KE extends KuartzEntity, KM exte
         AbstractKuartzService implements KuartzCrudService<KM> {
 
     @Autowired
-    private KR repository;
+    protected KR repository;
     @Autowired
-    private M mapper;
+    protected M mapper;
 
     //protected abstract KE toEntity(KM model);
     //
