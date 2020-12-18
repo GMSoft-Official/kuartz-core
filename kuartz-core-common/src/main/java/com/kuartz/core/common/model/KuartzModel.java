@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "uuid")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = KuartzModel.class)
 public class KuartzModel implements Serializable {
 
     private static final long serialVersionUID = - 8331727143494828302L;
@@ -19,7 +19,11 @@ public class KuartzModel implements Serializable {
 
     private Date createdAt;
 
+    private String createdBy;
+
     private Date updatedAt;
+
+    private String lastModifiedBy;
 
     private Date deletedAt;
 
@@ -35,19 +39,17 @@ public class KuartzModel implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
+        if (this == o)
             return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null || getClass() != o.getClass())
             return false;
-        }
         KuartzModel that = (KuartzModel) o;
-        return id.equals(that.id);
+        return id.equals(that.id) && uuid.equals(that.uuid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, uuid);
     }
 
     public Long getId() {
@@ -104,5 +106,21 @@ public class KuartzModel implements Serializable {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 }

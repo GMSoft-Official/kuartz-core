@@ -1,10 +1,13 @@
 package com.kuartz.core.auth.token;
 
-import com.kuartz.core.auth.KuartzPrincipal;
-import com.kuartz.core.auth.model.KuartzPrincipalModel;
-import com.kuartz.core.auth.model.KuartzPrincipalRol;
-import com.kuartz.core.auth.model.KuartzPrincipalYetki;
+import com.kuartz.core.common.security.KuartzPrincipal;
+
+
+
 import com.kuartz.core.common.converter.KuartzModelConverter;
+import com.kuartz.core.common.security.KuartzPrincipalModel;
+import com.kuartz.core.common.security.KuartzPrincipalRol;
+import com.kuartz.core.common.security.KuartzPrincipalYetki;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,11 +26,12 @@ import java.util.stream.Collectors;
  * @author Kutay Celebi
  * @since 11.12.2020 17:17
  */
-public abstract class AbstractKuartzUserAuthenticationConverter extends DefaultUserAuthenticationConverter {
+public abstract class AbstractKuartzUserAuthenticationConverter extends DefaultUserAuthenticationConverter implements
+        KuartzUserAuthenticationConverter {
 
-    private final String PRINCIPAL_KEY = "user";
+    private final String PRINCIPAL_KEY = "account";
 
-    protected abstract Map<String,String> additionalInfo(KuartzPrincipal authenticatedPrincipal);
+    protected abstract Map<String, String> additionalInfo(KuartzPrincipal authenticatedPrincipal);
 
     @Override
     public Map<String, ?> convertUserAuthentication(Authentication authentication) {

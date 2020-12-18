@@ -1,6 +1,4 @@
-package com.kuartz.core.auth.model;
-
-import com.kuartz.core.auth.KuartzPrincipalPrivilege;
+package com.kuartz.core.common.security;
 
 import java.util.Objects;
 
@@ -8,7 +6,7 @@ import java.util.Objects;
  * @author Kutay Celebi
  * @since 10.12.2020 02:09
  */
-public class KuartzPrincipalYetki {
+public class KuartzPrincipalYetki implements KuartzPrincipalPrivilege{
 
     private String kod;
 
@@ -35,5 +33,10 @@ public class KuartzPrincipalYetki {
             return false;
         KuartzPrincipalYetki that = (KuartzPrincipalYetki) o;
         return kod.equals(that.kod);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(kod);
     }
 }

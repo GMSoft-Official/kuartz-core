@@ -1,4 +1,4 @@
-package com.kuartz.core.auth;
+package com.kuartz.core.common.security;
 
 /**
  * @author Kutay Celebi

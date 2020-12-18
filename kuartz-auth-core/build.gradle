@@ -18,6 +18,7 @@ dependencies {
             [group: 'io.jsonwebtoken', name: 'jjwt', version: "${jsonWebtokenVersion}"],
             [group: 'org.springframework.cloud', name: 'spring-cloud-starter-security'],
             [group: 'org.springframework.cloud', name: 'spring-cloud-starter-oauth2'],
+            // [group: 'org.springframework.boot', name: 'spring-boot-starter-security'],
     )
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"

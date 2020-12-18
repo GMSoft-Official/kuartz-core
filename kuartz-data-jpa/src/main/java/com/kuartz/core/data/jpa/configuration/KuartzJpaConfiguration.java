@@ -1,9 +1,12 @@
 package com.kuartz.core.data.jpa.configuration;
 
+import com.kuartz.core.data.jpa.bean.KuartzAuditorAware;
+import com.kuartz.core.data.jpa.configuration.property.KuartzAuditProperty;
 import com.kuartz.core.data.jpa.configuration.property.KuartzJpaProperty;
 import com.kuartz.core.data.jpa.initializer.KuartzDataInitializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
@@ -12,12 +15,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Primary;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
-import javax.sql.DataSource;
 import java.util.Properties;
 
 /**
@@ -26,7 +26,7 @@ import java.util.Properties;
  */
 @Configuration
 @EnableAutoConfiguration
-@EnableConfigurationProperties({KuartzJpaProperty.class})
+@EnableConfigurationProperties({KuartzJpaProperty.class, KuartzAuditProperty.class})
 @EntityScan(basePackages = "com.kuartz.core.data.jpa.entity")
 @Import(KuartzDataInitializer.class)
 public class KuartzJpaConfiguration {
@@ -39,6 +39,12 @@ public class KuartzJpaConfiguration {
 
     @Autowired
     private HibernateProperties hibernateProperties;
+
+    @Bean
+    @ConditionalOnProperty(prefix = "kuartz.jpa.audit", name = "enable")
+    public KuartzAuditorAware kuartzAuditorAware() {
+        return new KuartzAuditorAware();
+    }
 
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {

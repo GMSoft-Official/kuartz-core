@@ -2,12 +2,10 @@ package com.kuartz.core.data.jpa.repository;
 
 import com.kuartz.core.common.domain.KzPage;
 import com.kuartz.core.common.domain.KzPageable;
-import com.kuartz.core.common.model.KuartzModel;
 import com.kuartz.core.common.util.KzDateUtil;
 import com.kuartz.core.data.jpa.bean.KuartzEntityPathResolver;
 import com.kuartz.core.data.jpa.entity.KuartzEntity;
 import com.kuartz.core.data.jpa.util.ExecutionUtils;
-import com.kuartz.core.data.jpa.util.PageableResult;
 import com.querydsl.core.DefaultQueryMetadata;
 import com.querydsl.core.NonUniqueResultException;
 import com.querydsl.core.types.EntityPath;
@@ -43,17 +41,16 @@ import java.util.Optional;
  * @since 24.09.2019
  */
 @Transactional
-public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepository<KE, Long> implements
-                                                                                                 KuartzRepository<KE>,
-                                                                                                 QuerydslPredicateExecutor<KE> {
+public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepository<KE, Long> implements KuartzRepository<KE>,
+        QuerydslPredicateExecutor<KE> {
 
     private static final KuartzEntityPathResolver PATH_RESOLVER = KuartzEntityPathResolver.INSTANCE;
 
-    private       JpaEntityInformation<KE, ?> entityInformation;
-    private final EntityManager               em;
-    private final EntityPath<KE>              path;
-    private final PathBuilder<KE>             builder;
-    private final Querydsl                    querydsl;
+    private JpaEntityInformation<KE, ?> entityInformation;
+    private final EntityManager em;
+    private final EntityPath<KE> path;
+    private final PathBuilder<KE> builder;
+    private final Querydsl querydsl;
 
     public KuartzRepositoryImpl(JpaEntityInformation<KE, ?> entityInformation, EntityManager em) {
         super(entityInformation, em);
@@ -192,7 +189,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
 
 
     @Override
-    public <T> KzPage<T>  applyPagination(KzPageable pageable, JPAQuery<T> query) {
+    public <T> KzPage<T> applyPagination(KzPageable pageable, JPAQuery<T> query) {
         final JPQLQuery<T> applyPagination = querydsl.applyPagination(pageable, query);
         return ExecutionUtils.getPage(applyPagination.fetch(), pageable, query::fetchCount);
     }
@@ -234,8 +231,8 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
             entity.setDeletedAt(KzDateUtil.now());
             updateFlush(entity);
         } else {
-            throw new EmptyResultDataAccessException(
-                    String.format("No %s entity with id %s exists!", entityInformation.getJavaType(), id), 1);
+            throw new EmptyResultDataAccessException(String.format("No %s entity with id %s exists!", entityInformation.getJavaType(), id),
+                                                     1);
         }
     }
 
@@ -265,12 +262,11 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     protected JPAQuery<KE> createQuery(Predicate... predicate) {
 
         DefaultQueryMetadata defaultQueryMetadata = new DefaultQueryMetadata();
-        OrderSpecifier<Date> order = new OrderSpecifier<>(Order.DESC,
-                                                          builder.getDate(KuartzEntity.CREATED_FIELD, Date.class),
+        OrderSpecifier<Date> order = new OrderSpecifier<>(Order.DESC, builder.getDate(KuartzEntity.CREATED_FIELD, Date.class),
                                                           OrderSpecifier.NullHandling.NullsLast);
         defaultQueryMetadata.addOrderBy(order);
-        defaultQueryMetadata.addWhere(builder.getBoolean(KuartzEntity.DELETED_FIELD).isNull()
-                                             .or(builder.getBoolean(KuartzEntity.DELETED_FIELD).isFalse()));
+        defaultQueryMetadata.addWhere(
+                builder.getBoolean(KuartzEntity.DELETED_FIELD).isNull().or(builder.getBoolean(KuartzEntity.DELETED_FIELD).isFalse()));
         JPAQuery<KE> query = new JPAQuery<>(em, defaultQueryMetadata);
         query.from(this.path);
         query.where(predicate);

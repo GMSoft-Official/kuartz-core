@@ -1,5 +1,5 @@
 package com.kuartz.core.common.exception;
 
-public interface KzBaseException {
-    ExceptionMessage getExceptionDetail();
+public interface KzBaseException<M extends BaseExceptionMessage> {
+    M getExceptionDetail();
 }

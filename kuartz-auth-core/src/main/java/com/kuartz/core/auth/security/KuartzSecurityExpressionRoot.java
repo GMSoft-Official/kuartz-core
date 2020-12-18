@@ -1,14 +1,16 @@
 package com.kuartz.core.auth.security;
 
-import com.kuartz.core.common.security.PrincipalRole;
-import com.kuartz.core.common.security.UserPrincipal;
+
+
+
+import com.kuartz.core.common.security.KuartzPrincipalModel;
+import com.kuartz.core.common.security.KuartzPrincipalRol;
+import com.kuartz.core.common.security.KuartzPrincipalYetki;
 import org.springframework.security.access.expression.SecurityExpressionRoot;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
-import java.util.List;
 
 public class KuartzSecurityExpressionRoot extends SecurityExpressionRoot implements MethodSecurityExpressionOperations {
 
@@ -37,19 +39,19 @@ public class KuartzSecurityExpressionRoot extends SecurityExpressionRoot impleme
      * </code>
      *
      * @param privileges {@link String}
-     *
      * @return boolean
      */
     public boolean checkYetki(String... privileges) {
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        if (authorities == null) {
+        KuartzPrincipalModel principal = (KuartzPrincipalModel) authentication.getPrincipal();
+        final Collection<KuartzPrincipalYetki> yetkiList = principal.getYetkiList();
+
+        if (yetkiList == null) {
             return false;
         }
 
-        for (GrantedAuthority userAuth : authorities) {
-            String userPrivilege = userAuth.getAuthority();
+        for (KuartzPrincipalYetki userAuth : yetkiList) {
             for (String privilege : privileges) {
-                if (privilege.startsWith(userPrivilege)) {
+                if (privilege.startsWith(userAuth.getKod())) {
                     return true;
                 }
             }
@@ -59,12 +61,12 @@ public class KuartzSecurityExpressionRoot extends SecurityExpressionRoot impleme
 
     // todo javadoc.
     public boolean checkRol(String... roles) {
-        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
-        List<PrincipalRole> userRoles = principal.getRoles();
+        KuartzPrincipalModel principal = (KuartzPrincipalModel) authentication.getPrincipal();
+        Collection<KuartzPrincipalRol> userRoles = principal.getRolList();
 
-        for (PrincipalRole userRole : userRoles) {
+        for (KuartzPrincipalRol userRole : userRoles) {
             for (String role : roles) {
-                if (role.equals(userRole.getCode())) {
+                if (role.equals(userRole.getKod())) {
                     return true;
                 }
             }

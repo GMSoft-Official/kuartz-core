@@ -1,6 +1,4 @@
-package com.kuartz.core.auth.model;
-
-import com.kuartz.core.auth.KuartzPrincipal;
+package com.kuartz.core.common.security;
 
 import java.util.Map;
 import java.util.Set;
@@ -9,7 +7,7 @@ import java.util.Set;
  * @author Kutay Celebi
  * @since 9.12.2020 02:20
  */
-public class KuartzPrincipalModel {
+public class KuartzPrincipalModel implements KuartzPrincipal{
     private String kullaniciAdi;
 
     private Set<KuartzPrincipalRol> rolList;
@@ -29,6 +27,11 @@ public class KuartzPrincipalModel {
 
     public String getKullaniciAdi() {
         return kullaniciAdi;
+    }
+
+    @Override
+    public Object additionalInfo() {
+        return additionalInfo;
     }
 
     public void setKullaniciAdi(String kullaniciAdi) {

@@ -33,6 +33,7 @@ dependencies {
             [group: 'com.querydsl', name: 'querydsl-core', version: queryDslVersion],
             [group: 'com.querydsl', name: 'querydsl-jpa', version: queryDslVersion],
             [group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'],
+            [group: 'org.springframework.security', name: 'spring-security-core'],
             [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonVersion}"],
 
             [group: 'org.postgresql', name: 'postgresql', version: '42.2.6'],

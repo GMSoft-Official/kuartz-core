@@ -1,10 +1,7 @@
 package com.kuartz.core.auth.handler;
 
-import com.kuartz.core.auth.KzAuthenticationException;
-import com.kuartz.core.env.KuartzMessageSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.provider.error.AbstractOAuth2SecurityExceptionHandler;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -20,14 +17,9 @@ public class KuartzAuthenticationEntryPoint extends AbstractOAuth2SecurityExcept
 
     public static final Logger LOG = LoggerFactory.getLogger(KuartzAuthenticationEntryPoint.class);
 
-    @Autowired
-    private KuartzMessageSource messageSource;
-
     @Override
-    public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws
-            IOException, ServletException {
+    public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e)
+            throws IOException, ServletException {
         LOG.error(e.getMessage(), e);
-        String message = messageSource.getMessage("ex_duringAuth", null, httpServletRequest.getLocale());
-        doHandle(httpServletRequest, httpServletResponse, new KzAuthenticationException(message));
     }
 }

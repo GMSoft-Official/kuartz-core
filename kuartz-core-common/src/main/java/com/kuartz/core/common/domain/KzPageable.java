@@ -1,61 +1,105 @@
 package com.kuartz.core.common.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.domain.AbstractPageRequest;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-public class KzPageable extends PageRequest {
+public class KzPageable implements Pageable {
 
-    private static final long serialVersionUID = -970697255361843356L;
+    private static final long serialVersionUID = - 970697255361843356L;
 
-    protected KzPageable(int page, int size) {
-        super(page, size);
+    private KzSortable sort;
+    private int page;
+    private int size;
+
+    public KzPageable() {
     }
 
-    protected KzPageable(int page, int size, Sort.Direction direction, String... properties) {
-        super(page, size, direction, properties);
+    public KzPageable(int page, int size) {
+        this.page = page;
+        this.size = size;
     }
 
-    protected KzPageable(int page, int size, Sort sort) {
-        super(page, size, sort);
+    public KzPageable(int page, int size,KzSortable sort) {
+        this.sort = sort;
+        this.page = page;
+        this.size = size;
     }
 
+    @JsonIgnore
+    @Override
+    public int getPageNumber() {
+        return page;
+    }
 
-    /**
-     * Creates a new unsorted {@link PageRequest}.
-     *
-     * @param page zero-based page index.
-     * @param size the size of the page to be returned.
-     *
-     * @since 2.0
-     */
+    @JsonIgnore
+    @Override
+    public int getPageSize() {
+        return size;
+    }
+
+    @JsonIgnore
+    @Override
+    public long getOffset() {
+        return (long) page * (long) size;
+    }
+
+    @Override
+    public Sort getSort() {
+        return sort;
+    }
+
+    @JsonIgnore
+    @Override
+    public Pageable next() {
+        return KzPageable.of(getPageNumber() + 1, getPageSize(), (KzSortable) getSort());
+    }
+
+    @JsonIgnore
+    @Override
+    public Pageable previousOrFirst() {
+        return getPageNumber() == 0 ? this : KzPageable.of(getPageNumber() - 1, getPageSize(), (KzSortable) getSort());
+    }
+
+    @JsonIgnore
+    @Override
+    public Pageable first() {
+        return KzPageable.of(0, getPageSize(), (KzSortable) getSort());
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean hasPrevious() {
+        return page > 0;
+    }
+
     public static KzPageable of(int page, int size) {
-        return of(page, size, Sort.unsorted());
+        return new KzPageable(page, size);
     }
 
-    /**
-     * Creates a new {@link PageRequest} with sort parameters applied.
-     *
-     * @param page zero-based page index.
-     * @param size the size of the page to be returned.
-     * @param sort must not be {@literal null}.
-     *
-     * @since 2.0
-     */
-    public static KzPageable of(int page, int size, Sort sort) {
+    public static KzPageable of(int page, int size, KzSortable sort) {
         return new KzPageable(page, size, sort);
     }
 
-    /**
-     * Creates a new {@link PageRequest} with sort direction and properties applied.
-     *
-     * @param page       zero-based page index.
-     * @param size       the size of the page to be returned.
-     * @param direction  must not be {@literal null}.
-     * @param properties must not be {@literal null}.
-     *
-     * @since 2.0
-     */
-    public static KzPageable of(int page, int size, Sort.Direction direction, String... properties) {
-        return of(page, size, Sort.by(direction, properties));
+    public void setSort(KzSortable sort) {
+        this.sort = sort;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 }

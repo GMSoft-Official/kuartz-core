@@ -1,6 +1,5 @@
 package com.kuartz.core.data.jpa;
 
-import com.kuartz.core.common.exception.ExceptionMessage;
 import com.kuartz.core.common.exception.KzException;
 import org.hibernate.boot.model.naming.Identifier;
 import org.hibernate.boot.model.relational.QualifiedName;
@@ -43,11 +42,10 @@ public class KuartzSequenceGenerator extends SequenceStyleGenerator {
             schema  = tableAnnotation.schema();
             catalog = tableAnnotation.catalog();
 
-            return new QualifiedNameParser.NameParts(Identifier.toIdentifier(catalog),
-                                                     Identifier.toIdentifier(schema),
+            return new QualifiedNameParser.NameParts(Identifier.toIdentifier(catalog), Identifier.toIdentifier(schema),
                                                      Identifier.toIdentifier(sequenceName));
         } catch (ClassNotFoundException e) {
-            throw new KzException(e, new ExceptionMessage("Sequence olusturulamadi", KuartzSequenceGenerator.class));
+            throw new KzException("Sequence olusturulamadi", e);
         }
     }
 

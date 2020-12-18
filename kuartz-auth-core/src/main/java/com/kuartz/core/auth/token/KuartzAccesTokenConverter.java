@@ -11,7 +11,7 @@ import java.util.Map;
  * @author Kutay Celebi
  * @since 11.12.2020 17:16
  */
-public class KuartzAccesTokenConverter<AC extends AbstractKuartzUserAuthenticationConverter> extends DefaultAccessTokenConverter {
+public class KuartzAccesTokenConverter<AC extends KuartzUserAuthenticationConverter> extends DefaultAccessTokenConverter {
 
     public KuartzAccesTokenConverter(AC abstractKuartzUserAuthenticationConverter) {
         this.setUserTokenConverter(abstractKuartzUserAuthenticationConverter);

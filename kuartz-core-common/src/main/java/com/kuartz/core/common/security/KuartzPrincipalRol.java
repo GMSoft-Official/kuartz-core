@@ -1,6 +1,4 @@
-package com.kuartz.core.auth.model;
-
-import com.kuartz.core.auth.KuartzPrincipalRole;
+package com.kuartz.core.common.security;
 
 import java.util.Objects;
 
@@ -8,7 +6,7 @@ import java.util.Objects;
  * @author Kutay Celebi
  * @since 10.12.2020 02:08
  */
-public class KuartzPrincipalRol {
+public class KuartzPrincipalRol implements KuartzPrincipalRole {
     private String kod;
 
     public KuartzPrincipalRol() {
