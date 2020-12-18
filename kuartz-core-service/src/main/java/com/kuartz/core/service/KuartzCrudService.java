@@ -15,9 +15,9 @@ import javax.validation.constraints.Positive;
 @Validated
 public interface KuartzCrudService<M extends KuartzModel> {
 
-     M save (@Valid M model);
+     M kaydet(@Valid M model);
 
-    KzMessageModel deleteById(@NotNull @Positive Long id);
+    KzMessageModel sil(@NotNull @Positive Long id);
 
-    M get(@NotNull @Positive Long id);
+    M getir(@NotNull @Positive Long id);
 }

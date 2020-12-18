@@ -8,4 +8,6 @@ public interface KzEnum<T> {
     String label();
 
     T code();
+
+    KzEnum<T> getByCode(int code);
 }

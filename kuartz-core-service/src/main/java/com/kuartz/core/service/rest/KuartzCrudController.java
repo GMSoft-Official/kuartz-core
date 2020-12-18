@@ -13,24 +13,24 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author Kutay Çelebi
  * @since 28.06.2020
  */
-public class KuartzCrudController<M extends KuartzModel, S extends KuartzCrudService<M>> extends AbstractKuartzController
-        implements KuartzCrudFeignClient<M> {
+public class KuartzCrudController<M extends KuartzModel, S extends KuartzCrudService<M>> extends AbstractKuartzController implements
+        KuartzCrudFeignClient<M> {
 
     @Autowired
     protected S service;
 
     @Override
-    public KuartzResponse<M> save(@RequestBody M model) {
-        return new KuartzResponse<>(service.save(model));
+    public KuartzResponse<M> kaydet(@RequestBody M model) {
+        return new KuartzResponse<>(service.kaydet(model));
     }
 
     @Override
-    public KuartzResponse<KzMessageModel> deleteById(@PathVariable("id") Long id) {
-        return new KuartzResponse<>(service.deleteById(id));
+    public KuartzResponse<KzMessageModel> sil(@PathVariable("id") Long id) {
+        return new KuartzResponse<>(service.sil(id));
     }
 
     @Override
-    public KuartzResponse<M> get(@PathVariable("id") Long id) {
-        return new KuartzResponse<>(service.get(id));
+    public KuartzResponse<M> getir(@PathVariable("id") Long id) {
+        return new KuartzResponse<>(service.getir(id));
     }
 }

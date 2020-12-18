@@ -22,9 +22,6 @@ import java.util.UUID;
  */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = KuartzEntity.class)
-@DynamicUpdate
-@DynamicInsert
 public class KuartzEntity implements Serializable {
 
     public static final String ID_FIELD = "ID";

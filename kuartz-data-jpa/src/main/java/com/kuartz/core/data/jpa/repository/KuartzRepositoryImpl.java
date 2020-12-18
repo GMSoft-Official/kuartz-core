@@ -9,7 +9,6 @@ import com.kuartz.core.data.jpa.util.ExecutionUtils;
 import com.querydsl.core.DefaultQueryMetadata;
 import com.querydsl.core.NonUniqueResultException;
 import com.querydsl.core.types.EntityPath;
-import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.PathBuilder;
@@ -149,7 +148,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
 
     @Override
     public List<KE> findAll() {
-        return createQuery().fetch();
+        return executeSorted(createQuery(), Sort.by(Sort.Direction.DESC, KuartzEntity.CREATED_FIELD));
     }
 
     @Override
@@ -183,7 +182,10 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         final JPAQuery<KE> countQuery = createQuery(predicate);
 
         JPAQuery<KE> query = (JPAQuery<KE>) querydsl.applyPagination(pageable, countQuery);
-
+        if (pageable.getSort().isUnsorted()) {
+            return ExecutionUtils.getPage(executeSorted(query, Sort.by(Sort.Direction.DESC, KuartzEntity.CREATED_FIELD)), pageable,
+                                          countQuery::fetchCount);
+        }
         return ExecutionUtils.getPage(query.fetch(), pageable, countQuery::fetchCount);
     }
 
@@ -193,13 +195,6 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         final JPQLQuery<T> applyPagination = querydsl.applyPagination(pageable, query);
         return ExecutionUtils.getPage(applyPagination.fetch(), pageable, query::fetchCount);
     }
-
-    //@Override
-    //public KzPage<KE> applyPagination(Pageable pageable, JPAQuery<Object> query) {
-    //    final JPQLQuery<Object> applyPagination = querydsl.applyPagination(pageable, query);
-    //    final Page<Object> page = PageableExecutionUtils.getPage(applyPagination.fetch(), pageable, query::fetchCount);
-    //    return KzPageableUtil.pageToKzPage(page);
-    //}
 
     @Override
     public long count(Predicate predicate) {
@@ -262,9 +257,9 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     protected JPAQuery<KE> createQuery(Predicate... predicate) {
 
         DefaultQueryMetadata defaultQueryMetadata = new DefaultQueryMetadata();
-        OrderSpecifier<Date> order = new OrderSpecifier<>(Order.DESC, builder.getDate(KuartzEntity.CREATED_FIELD, Date.class),
-                                                          OrderSpecifier.NullHandling.NullsLast);
-        defaultQueryMetadata.addOrderBy(order);
+        //OrderSpecifier<Date> order = new OrderSpecifier<>(Order.DESC, builder.getDate(KuartzEntity.CREATED_FIELD, Date.class),
+        //                                                  OrderSpecifier.NullHandling.NullsLast);
+        //defaultQueryMetadata.addOrderBy(order);
         defaultQueryMetadata.addWhere(
                 builder.getBoolean(KuartzEntity.DELETED_FIELD).isNull().or(builder.getBoolean(KuartzEntity.DELETED_FIELD).isFalse()));
         JPAQuery<KE> query = new JPAQuery<>(em, defaultQueryMetadata);

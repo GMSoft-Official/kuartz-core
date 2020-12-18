@@ -25,6 +25,7 @@ dependencyManagement {
 dependencies {
     api project(":kuartz-core-feign")
     api project(":kuartz-core-common")
+    api project(":kuartz-data-jpa")
     testCompile 'org.springframework:spring-test:4.0.6.RELEASE'
 }
 
