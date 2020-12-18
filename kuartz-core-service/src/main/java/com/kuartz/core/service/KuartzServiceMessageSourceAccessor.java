@@ -11,7 +11,8 @@ import org.springframework.security.core.SpringSecurityMessageSource;
 public class KuartzServiceMessageSourceAccessor extends ResourceBundleMessageSource {
 
     public KuartzServiceMessageSourceAccessor() {
-        setBasename("com.kuartz.service.service_message");
+        setDefaultEncoding("UTF-8");
+        setBasename("service_message");
     }
 
     public static MessageSourceAccessor getAccessor() {
