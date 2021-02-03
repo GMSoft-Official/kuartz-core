@@ -67,8 +67,9 @@ public interface KuartzRepository<KE extends KuartzEntity> extends Repository<KE
 
     List<KE> findAll();
 
-    @Transactional
     void deleteAllByIds(Long... ids);
+
+    void deleteAllByIdList(Iterable<Long> ids);
 
     void deleteById(Long id);
 

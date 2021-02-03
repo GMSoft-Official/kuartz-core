@@ -69,7 +69,6 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     }
 
     @Override
-    @Transactional
     public <S extends KE> S save(S entity) {
         if (entityInformation.isNew(entity)) {
             em.persist(entity);
@@ -79,25 +78,24 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         }
     }
 
-    @Transactional
+    @Override
     public KE saveFlush(KE entity) {
         KE result = save(entity);
         flush();
         return result;
     }
 
-    @Transactional
+    @Override
     public KE update(KE entity) {
         return save(entity);
     }
 
-    @Transactional
+    @Override
     public KE updateFlush(KE entity) {
         return saveFlush(entity);
     }
 
     @Override
-    @Transactional
     public <S extends KE> List<S> saveAll(Iterable<S> entities) {
         Assert.notNull(entities, "The given Iterable of entities not be null!");
         List<S> result = new ArrayList<S>();
@@ -107,7 +105,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         return result;
     }
 
-    @Transactional
+    @Override
     public List<KE> saveAllFlush(Iterable<KE> entities) {
         Assert.notNull(entities, "The given Iterable of entities not be null!");
         List<KE> result = new ArrayList<KE>();
@@ -118,7 +116,6 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     }
 
     @Override
-    @Transactional
     public void hardDelete(Long id) {
         Assert.notNull(id, "ID null olamaz.");
         final KE entity = findById(id).orElseThrow(() -> new EmptyResultDataAccessException(
@@ -129,7 +126,6 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     }
 
     @Override
-    @Transactional
     public void hardDelete(Iterable<Long> ids) {
         Assert.notNull(ids, "ID null olamaz.");
         for (Long id : ids) {
@@ -189,6 +185,11 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         return ExecutionUtils.getPage(query.fetch(), pageable, countQuery::fetchCount);
     }
 
+    @Override
+    public List<KE> findAllById(Iterable<Long> longs) {
+        return super.findAllById(longs);
+    }
+
 
     @Override
     public <T> KzPage<T> applyPagination(KzPageable pageable, JPAQuery<T> query) {
@@ -206,7 +207,26 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         return createQuery(predicate).fetchCount() > 0;
     }
 
-    @Transactional
+    @Override
+    public void delete(KE entity) {
+        boolean isExists = existsById(entity.getId());
+        Assert.isTrue(isExists, "ENTITY VERITABANINDA YOK");
+
+        entity.setDeleted(Boolean.TRUE);
+        entity.setDeletedAt(KzDateUtil.now());
+        updateFlush(entity);
+    }
+
+    @Override
+    public void deleteAll(Iterable<? extends KE> entities) {
+        entities.forEach(this::delete);
+    }
+
+    @Override
+    public void deleteAll() {
+        findAll().forEach(this::delete);
+    }
+
     @Override
     public void deleteAllByIds(Long... ids) {
         Assert.notNull(ids, "SILINECEK ENTITY ID BOS OLAMAZ"); // todo bu hatalari mesaja cekelim
@@ -215,7 +235,14 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         }
     }
 
-    @Transactional
+    @Override
+    public void deleteAllByIdList(Iterable<Long> ids) {
+        Assert.notNull(ids, "SILINECEK ENTITY ID BOS OLAMAZ");
+        for (Long id : ids) {
+            deleteById(id);
+        }
+    }
+
     @Override
     public void deleteById(Long id) {
         Assert.notNull(id, "SILINECEK ENTITY ID BOS OLAMAZ"); // todo bu hatalari mesaja cekelim
@@ -229,29 +256,6 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
             throw new EmptyResultDataAccessException(String.format("No %s entity with id %s exists!", entityInformation.getJavaType(), id),
                                                      1);
         }
-    }
-
-    @Override
-    @Transactional
-    public void delete(KE entity) {
-        boolean isExists = existsById(entity.getId());
-        Assert.isTrue(isExists, "ENTITY VERITABANINDA YOK");
-
-        entity.setDeleted(Boolean.TRUE);
-        entity.setDeletedAt(KzDateUtil.now());
-        updateFlush(entity);
-    }
-
-    @Override
-    @Transactional
-    public void deleteAll(Iterable<? extends KE> entities) {
-        entities.forEach(this::delete);
-    }
-
-    @Override
-    @Transactional
-    public void deleteAll() {
-        findAll().forEach(this::delete);
     }
 
     protected JPAQuery<KE> createQuery(Predicate... predicate) {
@@ -282,12 +286,6 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         Sort.by(Sort.Direction.DESC, KuartzEntity.CREATED_FIELD);
         return querydsl.applySorting(sort, query).fetch();
     }
-
-    @Override
-    public List<KE> findAllById(Iterable<Long> longs) {
-        return super.findAllById(longs);
-    }
-
 
     /**
      * Returns the underlying Querydsl helper instance.

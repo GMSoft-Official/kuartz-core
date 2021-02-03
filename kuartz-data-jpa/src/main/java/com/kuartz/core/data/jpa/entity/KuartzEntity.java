@@ -37,7 +37,6 @@ public class KuartzEntity implements Serializable {
     })
     @GeneratedValue(generator = "sequence-generator")
     @Column(name = "ID")
-    @org.springframework.data.annotation.AccessType(org.springframework.data.annotation.AccessType.Type.PROPERTY)
     private Long id;
 
     @CreatedBy
