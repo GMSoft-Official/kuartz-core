@@ -29,7 +29,7 @@ public abstract class AbstractKuartzExceptionHandler {
 
         LOGGER.error("{} : exception cause", exceptionMessage.getUuid());
         LOGGER.error("Exception : ", e);
-        return new KuartzResponse<>(exceptionMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new KuartzResponse<>(exceptionMessage,false);
     }
 
     @ExceptionHandler(RuntimeException.class)
@@ -41,11 +41,11 @@ public abstract class AbstractKuartzExceptionHandler {
         }
         LOGGER.error("{} : exception cause", exceptionMessage.getUuid());
         LOGGER.error("Exception : ", e);
-        return new KuartzResponse<>(exceptionMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new KuartzResponse<>(exceptionMessage, false);
     }
 
     private <M extends BaseExceptionMessage> KuartzResponse<M> extractDefaultException(Exception e) {
         ExceptionMessage exceptionMessage = new ExceptionMessage(e.getLocalizedMessage() != null ? e.getLocalizedMessage() : "Internal Server Error");
-        return new KuartzResponse<>((M) exceptionMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new KuartzResponse<>((M) exceptionMessage, false);
     }
 }

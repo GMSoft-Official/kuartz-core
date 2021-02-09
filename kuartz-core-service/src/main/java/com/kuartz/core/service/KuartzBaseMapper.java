@@ -7,7 +7,7 @@ import com.kuartz.core.data.jpa.entity.KuartzEntity;
  * @author Kutay Celebi
  * @since 18.12.2020 23:01
  */
-public interface KuartzBaseMapper<E extends KuartzEntity, M extends KuartzModel> {
+public interface KuartzBaseMapper<E, M> {
 
     E toEntity(M model);
 

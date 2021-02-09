@@ -4,7 +4,7 @@ import com.kuartz.core.common.enumaration.KzEnum;
 
 import javax.persistence.AttributeConverter;
 
-public abstract class KuartzEnumConverter<T extends KzEnum<Integer>> implements AttributeConverter<T, Integer> {
+public abstract class KuartzEnumConverter<T extends KzEnum> implements AttributeConverter<T, Integer> {
 
     @Override
     public Integer convertToDatabaseColumn(T attribute) {
