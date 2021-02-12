@@ -25,11 +25,11 @@ public class KuartzEntityQuery extends EntityPathBase<KuartzEntity> {
 
     public final StringPath createdBy = createString("createdBy");
 
+    public final BooleanPath deleted = createBoolean("deleted");
+
     public final DateTimePath<java.util.Date> deletedAt = createDateTime("deletedAt", java.util.Date.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
-
-    public final BooleanPath isDeleted = createBoolean("isDeleted");
 
     public final StringPath lastModifiedBy = createString("lastModifiedBy");
 

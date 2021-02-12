@@ -45,8 +45,8 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
 
     private static final KuartzEntityPathResolver PATH_RESOLVER = KuartzEntityPathResolver.INSTANCE;
 
-    private JpaEntityInformation<KE, ?> entityInformation;
-    private final EntityManager em;
+    protected JpaEntityInformation<KE, ?> entityInformation;
+    protected final EntityManager em;
     private final EntityPath<KE> path;
     private final PathBuilder<KE> builder;
     private final Querydsl querydsl;
@@ -80,19 +80,25 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
 
     @Override
     public KE saveFlush(KE entity) {
-        KE result = save(entity);
+        KE result;
+        if (entityInformation.isNew(entity)) {
+            em.persist(entity);
+            result =entity;
+        } else {
+            result= em.merge(entity);
+        }
         flush();
         return result;
     }
 
     @Override
     public KE update(KE entity) {
-        return save(entity);
+        return this.save(entity);
     }
 
     @Override
     public KE updateFlush(KE entity) {
-        return saveFlush(entity);
+        return this.saveFlush(entity);
     }
 
     @Override
@@ -100,7 +106,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
         Assert.notNull(entities, "The given Iterable of entities not be null!");
         List<S> result = new ArrayList<S>();
         for (S entity : entities) {
-            result.add(save(entity));
+            result.add(this.save(entity));
         }
         return result;
     }
@@ -211,10 +217,9 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     public void delete(KE entity) {
         boolean isExists = existsById(entity.getId());
         Assert.isTrue(isExists, "ENTITY VERITABANINDA YOK");
-
         entity.setDeleted(Boolean.TRUE);
         entity.setDeletedAt(KzDateUtil.now());
-        updateFlush(entity);
+        this.updateFlush(entity);
     }
 
     @Override
@@ -251,7 +256,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
             KE entity = optional.get();
             entity.setDeleted(Boolean.TRUE);
             entity.setDeletedAt(KzDateUtil.now());
-            updateFlush(entity);
+            delete(entity);
         } else {
             throw new EmptyResultDataAccessException(String.format("No %s entity with id %s exists!", entityInformation.getJavaType(), id),
                                                      1);
