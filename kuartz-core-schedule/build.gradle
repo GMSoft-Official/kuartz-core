@@ -1,0 +1,77 @@
+group 'com.kuartz.core'
+version "${kuartzScheduleVersion}"
+sourceCompatibility = 1.8
+
+sourceSets {
+    main.java.srcDir "src/main/java"
+    main.resources.srcDir "src/main/resources"
+    test.java.srcDir "src/test/java"
+    test.resources.srcDir "src/test/resources"
+}
+
+buildscript {
+    ext {
+        springBootVersion = '1.5.10.RELEASE'
+        checkstyleversion = '8.4'
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+jar {
+    enabled = true
+}
+
+dependencies {
+    api project(":kuartz-core-common")
+    compile(
+            [group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.0'],
+            [group: 'org.quartz-scheduler', name: 'quartz-jobs', version: '2.3.0'],
+    )
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+compileJava.dependsOn("processResources");
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    archiveClassifier = 'sources'
+}
+
+task javadocJar(type: Jar) {
+    from javadoc
+    archiveClassifier = 'javadoc'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'kuartz-core-schedule'
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            pom {
+                name = 'Kuart Schedule Library'
+                description = 'Kuartz custom Schedule library'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'celebikutay'
+                        name = 'Kutay Çelebi'
+                        email = 'mail@kutaycelebi.com'
+                    }
+                }
+            }
+        }
+    }
+}
