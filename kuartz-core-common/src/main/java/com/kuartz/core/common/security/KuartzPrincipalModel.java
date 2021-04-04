@@ -7,14 +7,16 @@ import java.util.Set;
  * @author Kutay Celebi
  * @since 9.12.2020 02:20
  */
-public class KuartzPrincipalModel implements KuartzPrincipal{
+public class KuartzPrincipalModel implements KuartzPrincipal {
+    private Long kullaniciId;
+
     private String kullaniciAdi;
 
     private Set<KuartzPrincipalRol> rolList;
 
     private Set<KuartzPrincipalYetki> yetkiList;
 
-    private Map<String,String> additionalInfo;
+    private Map<String, Object> additionalInfo;
 
     public KuartzPrincipalModel() {
     }
@@ -23,6 +25,15 @@ public class KuartzPrincipalModel implements KuartzPrincipal{
         this.kullaniciAdi = kullaniciAdi;
         this.rolList      = rolList;
         this.yetkiList    = yetkiList;
+    }
+
+    @Override
+    public Long getKullaniciId() {
+        return kullaniciId;
+    }
+
+    public void setKullaniciId(Long kullaniciId) {
+        this.kullaniciId = kullaniciId;
     }
 
     public String getKullaniciAdi() {
@@ -54,11 +65,11 @@ public class KuartzPrincipalModel implements KuartzPrincipal{
         this.yetkiList = yetkiList;
     }
 
-    public Map<String, String> getAdditionalInfo() {
+    public Map<String, Object> getAdditionalInfo() {
         return additionalInfo;
     }
 
-    public void setAdditionalInfo(Map<String, String> additionalInfo) {
+    public void setAdditionalInfo(Map<String, Object> additionalInfo) {
         this.additionalInfo = additionalInfo;
     }
 }

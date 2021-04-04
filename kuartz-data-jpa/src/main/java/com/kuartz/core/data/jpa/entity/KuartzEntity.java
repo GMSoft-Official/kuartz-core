@@ -1,14 +1,9 @@
 package com.kuartz.core.data.jpa.entity;
 
-import com.kuartz.core.common.security.KuartzPrincipalModel;
 import com.kuartz.core.common.util.KzDateUtil;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-import net.bytebuddy.implementation.bind.annotation.Super;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;

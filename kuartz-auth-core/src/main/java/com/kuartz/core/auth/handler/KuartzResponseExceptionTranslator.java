@@ -18,7 +18,7 @@ public class KuartzResponseExceptionTranslator implements WebResponseExceptionTr
 
     @Override
     public ResponseEntity<ExceptionMessage> translate(Exception e) throws Exception {
-        LOG.debug(e.getMessage(), e);
+        LOG.warn(e.getMessage(), e);
         return new ResponseEntity<>(new ExceptionMessage(e.getMessage()),
                                     Objects.requireNonNull(HttpStatus.resolve(((OAuth2Exception) e).getHttpErrorCode())));
     }

@@ -1,10 +1,7 @@
 package com.kuartz.core.auth.token;
 
-import com.kuartz.core.common.security.KuartzPrincipal;
-
-
-
 import com.kuartz.core.common.converter.KuartzModelConverter;
+import com.kuartz.core.common.security.KuartzPrincipal;
 import com.kuartz.core.common.security.KuartzPrincipalModel;
 import com.kuartz.core.common.security.KuartzPrincipalRol;
 import com.kuartz.core.common.security.KuartzPrincipalYetki;
@@ -27,11 +24,11 @@ import java.util.stream.Collectors;
  * @since 11.12.2020 17:17
  */
 public abstract class AbstractKuartzUserAuthenticationConverter extends DefaultUserAuthenticationConverter implements
-        KuartzUserAuthenticationConverter {
+                                                                                                           KuartzUserAuthenticationConverter {
 
     private final String PRINCIPAL_KEY = "account";
 
-    protected abstract Map<String, String> additionalInfo(KuartzPrincipal authenticatedPrincipal);
+    protected abstract Map<String, Object> additionalInfo(KuartzPrincipal authenticatedPrincipal);
 
     @Override
     public Map<String, ?> convertUserAuthentication(Authentication authentication) {
@@ -41,6 +38,7 @@ public abstract class AbstractKuartzUserAuthenticationConverter extends DefaultU
 
         final KuartzPrincipalModel kuartzPrincipalModel = new KuartzPrincipalModel();
         kuartzPrincipalModel.setKullaniciAdi(principal.getKullaniciAdi());
+        kuartzPrincipalModel.setKullaniciId(principal.getKullaniciId());
 
         if (CollectionUtils.isNotEmpty(principal.getRolList())) {
             Set<KuartzPrincipalRol> rolList;
@@ -57,7 +55,7 @@ public abstract class AbstractKuartzUserAuthenticationConverter extends DefaultU
 
         response.put(PRINCIPAL_KEY, kuartzPrincipalModel);
 
-        if (authentication.getAuthorities() != null && ! authentication.getAuthorities().isEmpty()) {
+        if (authentication.getAuthorities() != null && !authentication.getAuthorities().isEmpty()) {
             response.put(AUTHORITIES, AuthorityUtils.authorityListToSet(authentication.getAuthorities()));
         }
         return response;
@@ -66,8 +64,9 @@ public abstract class AbstractKuartzUserAuthenticationConverter extends DefaultU
     @Override
     public Authentication extractAuthentication(Map<String, ?> map) {
         if (map.containsKey(PRINCIPAL_KEY)) {
-            final KuartzPrincipalModel nekaPrincipalModel = (KuartzPrincipalModel) KuartzModelConverter.getMapper()
-                    .convertValue(map.get(PRINCIPAL_KEY), KuartzPrincipalModel.class);
+            final KuartzPrincipalModel nekaPrincipalModel = KuartzModelConverter.getMapper()
+                                                                                .convertValue(map.get(PRINCIPAL_KEY),
+                                                                                              KuartzPrincipalModel.class);
 
             Collection<? extends GrantedAuthority> authorities = getAuthority(map);
 

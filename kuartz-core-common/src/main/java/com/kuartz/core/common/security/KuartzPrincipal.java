@@ -8,6 +8,8 @@ import java.util.Collection;
  */
 public interface KuartzPrincipal {
 
+    Long getKullaniciId();
+
     String getKullaniciAdi();
 
     <P extends KuartzPrincipalPrivilege> Collection<P> getYetkiList();

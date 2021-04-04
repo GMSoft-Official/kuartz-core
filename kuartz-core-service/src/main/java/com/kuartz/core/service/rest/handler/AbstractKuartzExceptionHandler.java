@@ -16,32 +16,30 @@ public abstract class AbstractKuartzExceptionHandler {
 
     private final Logger LOGGER = LoggerFactory.getLogger(AbstractKuartzExceptionHandler.class);
 
-    protected abstract <M extends BaseExceptionMessage> M extractException(Exception e, Locale locale);
+    protected abstract <M extends BaseExceptionMessage> KuartzResponse<M> extractException(Exception e, Locale locale);
 
     @ExceptionHandler(Exception.class)
     public <M extends BaseExceptionMessage> KuartzResponse<M> handleException(Exception e, Locale locale) {
-        M exceptionMessage = extractException(e, locale);
+        KuartzResponse<M> exceptionMessage = extractException(e, locale);
 
         if (exceptionMessage == null) {
-            LOGGER.error("Hata : ",e);
             return extractDefaultException(e);
         }
 
-        LOGGER.error("{} : exception cause", exceptionMessage.getUuid());
+        LOGGER.error("UUID : {} : exception cause", exceptionMessage.getBody().getBody().getUuid());
         LOGGER.error("Exception : ", e);
-        return new KuartzResponse<>(exceptionMessage,false);
+        return exceptionMessage;
     }
 
     @ExceptionHandler(RuntimeException.class)
     public <M extends BaseExceptionMessage> KuartzResponse<M> handleRuntimeException(RuntimeException e, Locale locale) {
-        M exceptionMessage = extractException(e, locale);
+        KuartzResponse<M> exceptionMessage = extractException(e, locale);
         if (exceptionMessage == null) {
-            LOGGER.error("Hata : ",e);
             return extractDefaultException(e);
         }
-        LOGGER.error("{} : exception cause", exceptionMessage.getUuid());
+        LOGGER.error("UUID : {} : exception cause", exceptionMessage.getBody().getBody().getUuid());
         LOGGER.error("Exception : ", e);
-        return new KuartzResponse<>(exceptionMessage, false);
+        return exceptionMessage;
     }
 
     private <M extends BaseExceptionMessage> KuartzResponse<M> extractDefaultException(Exception e) {

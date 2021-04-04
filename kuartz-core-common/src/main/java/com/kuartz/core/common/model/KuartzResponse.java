@@ -27,4 +27,6 @@ public class KuartzResponse<T> extends ResponseEntity<KuartzResponseModel<T>> {
     public KuartzResponse(MultiValueMap<String, String> headers, HttpStatus status) {
         super(headers, status);
     }
+
+
 }

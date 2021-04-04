@@ -1,15 +1,16 @@
 package com.kuartz.core.common.model;
 
 import com.kuartz.core.common.util.KzUtil;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class KzMessageModel {
-    private String message;
-
-    private Boolean success;
-
+    private String       message;
+    private List<String> warnings;
+    private Boolean      success;
+    private Boolean      warning;
     private List<Object> argumentList;
 
     public static KzMessageModel succeed() {
@@ -30,10 +31,27 @@ public class KzMessageModel {
     }
 
     public KzMessageModel addArgument(Object o) {
-        if (!KzUtil.isEmpty(argumentList)) {
+        if (CollectionUtils.isEmpty(argumentList)) {
             argumentList = new ArrayList<>();
         }
         return this;
+    }
+
+    public KzMessageModel addWarnings(String warning) {
+        this.warning = true;
+        if (CollectionUtils.isEmpty(warnings)) {
+            this.warnings = new ArrayList<>();
+        }
+        this.warnings.add(warning);
+        return this;
+    }
+
+    public List<String> getWarnings() {
+        return warnings;
+    }
+
+    public void setWarnings(List<String> warnings) {
+        this.warnings = warnings;
     }
 
     public String getMessage() {
@@ -58,5 +76,9 @@ public class KzMessageModel {
 
     public void setArgumentList(List<Object> argumentList) {
         this.argumentList = argumentList;
+    }
+
+    public Boolean getWarning() {
+        return warning;
     }
 }
