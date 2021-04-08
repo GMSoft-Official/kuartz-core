@@ -48,13 +48,14 @@ public class KuartzEntity implements Serializable {
     @Column(name = "created_by")
     private String createdBy;
 
-
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at")
     private Date createdAt;
 
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at")
     private Date updatedAt;
 
     @LastModifiedBy
@@ -65,8 +66,8 @@ public class KuartzEntity implements Serializable {
     @Version
     private Long version;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DELETED_AT")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date deletedAt;
 
     @Column(name = "UUID", unique = true)

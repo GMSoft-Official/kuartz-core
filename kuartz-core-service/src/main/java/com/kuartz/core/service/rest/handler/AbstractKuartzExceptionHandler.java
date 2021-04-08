@@ -1,13 +1,10 @@
 package com.kuartz.core.service.rest.handler;
 
 import com.kuartz.core.common.exception.BaseExceptionMessage;
-import com.kuartz.core.common.exception.CodedExceptionMessage;
 import com.kuartz.core.common.exception.ExceptionMessage;
-import com.kuartz.core.common.exception.StackedExceptionMessage;
 import com.kuartz.core.common.model.KuartzResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Locale;
@@ -26,7 +23,7 @@ public abstract class AbstractKuartzExceptionHandler {
             return extractDefaultException(e);
         }
 
-        LOGGER.error("UUID : {} : exception cause", exceptionMessage.getBody().getBody().getUuid());
+        LOGGER.error("UUID : {} : exception cause", exceptionMessage.getBody().getData().getUuid());
         LOGGER.error("Exception : ", e);
         return exceptionMessage;
     }
@@ -37,7 +34,7 @@ public abstract class AbstractKuartzExceptionHandler {
         if (exceptionMessage == null) {
             return extractDefaultException(e);
         }
-        LOGGER.error("UUID : {} : exception cause", exceptionMessage.getBody().getBody().getUuid());
+        LOGGER.error("UUID : {} : exception cause", exceptionMessage.getBody().getData().getUuid());
         LOGGER.error("Exception : ", e);
         return exceptionMessage;
     }
