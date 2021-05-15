@@ -2,9 +2,9 @@ package com.kuartz.core.data.jpa.entity;
 
 import com.kuartz.core.common.util.KzDateUtil;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -22,27 +22,25 @@ import java.util.UUID;
  * @since 23.02.2019
  */
 @Data
+@SuperBuilder
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class KuartzEntity implements Serializable {
 
-    public static final String ID_FIELD = "ID";
-    public static final String DELETED_FIELD = "deleted";
-    public static final String CREATED_FIELD = "createdAt";
-    public static final String DELETED_AT_FIELD = "deletedAt";
-    private static final long serialVersionUID = 402199730764879680L;
+    public static final  String ID_FIELD         = "ID";
+    public static final  String DELETED_FIELD    = "deleted";
+    public static final  String CREATED_FIELD    = "createdAt";
+    public static final  String DELETED_AT_FIELD = "deletedAt";
+    private static final long   serialVersionUID = 402199730764879680L;
 
     public KuartzEntity() {
     }
 
     @Id
-    @GenericGenerator(name = "sequence-generator", strategy = "com.kuartz.core.data.jpa.KuartzSequenceGenerator", parameters = {
-            @Parameter(name = "initial_value", value = "1"), @Parameter(name = "increment_size", value = "10"),
-            @Parameter(name = "prefer_sequence_per_entity", value = "true")
-    })
-    @GeneratedValue(generator = "sequence-generator")
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "uuid2")
     @Column(name = "ID")
-    private Long id;
+    private String id;
 
     @CreatedBy
     @Column(name = "created_by")
@@ -81,10 +79,12 @@ public class KuartzEntity implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || getClass() != o.getClass())
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
+        }
         KuartzEntity that = (KuartzEntity) o;
         return uuid.equals(that.uuid);
     }
@@ -101,7 +101,7 @@ public class KuartzEntity implements Serializable {
 
     @PreRemove
     void preRemove() {
-        this.deleted = Boolean.TRUE;
+        this.deleted   = Boolean.TRUE;
         this.deletedAt = KzDateUtil.now();
     }
 }

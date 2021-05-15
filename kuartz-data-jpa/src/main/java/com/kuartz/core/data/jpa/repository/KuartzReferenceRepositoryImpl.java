@@ -99,7 +99,7 @@ public class KuartzReferenceRepositoryImpl<KE extends KuartzReferenceEntity> ext
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         Assert.notNull(id, "SILINECEK ENTITY ID BOS OLAMAZ"); // todo bu hatalari mesaja cekelim
         Optional<KE> optional = findById(id);
         if (optional.isPresent()) {

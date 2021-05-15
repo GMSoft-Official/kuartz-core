@@ -61,7 +61,7 @@ subprojects {
     }
 
     apply plugin: 'idea'
-    apply plugin: 'java'
+//    apply plugin: 'java'
     apply plugin: 'java-library'
 
     apply plugin: 'maven-publish'
@@ -76,11 +76,9 @@ subprojects {
     }
 
     dependencies {
-        compileOnly 'org.projectlombok:lombok:1.18.2'
-        annotationProcessor 'org.projectlombok:lombok:1.18.2'
 
-        testCompileOnly 'org.projectlombok:lombok:1.18.2'
-        testAnnotationProcessor 'org.projectlombok:lombok:1.18.2'
+//        testCompileOnly 'org.projectlombok:lombok:1.18.2'
+//        testAnnotationProcessor 'org.projectlombok:lombok:1.18.2'
     }
 
     tasks.withType(Javadoc) {

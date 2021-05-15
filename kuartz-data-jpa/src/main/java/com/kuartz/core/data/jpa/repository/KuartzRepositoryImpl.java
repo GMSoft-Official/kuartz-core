@@ -40,7 +40,7 @@ import java.util.Optional;
  * @since 24.09.2019
  */
 @Transactional
-public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepository<KE, Long> implements KuartzRepository<KE>,
+public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepository<KE, String> implements KuartzRepository<KE>,
         QuerydslPredicateExecutor<KE> {
 
     private static final KuartzEntityPathResolver PATH_RESOLVER = KuartzEntityPathResolver.INSTANCE;
@@ -122,7 +122,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     }
 
     @Override
-    public void hardDelete(Long id) {
+    public void hardDelete(String id) {
         Assert.notNull(id, "ID null olamaz.");
         final KE entity = findById(id).orElseThrow(() -> new EmptyResultDataAccessException(
                 String.format("No %s entity with id %s exists!", entityInformation.getJavaType(), id), 1));
@@ -132,9 +132,9 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     }
 
     @Override
-    public void hardDelete(Iterable<Long> ids) {
+    public void hardDelete(Iterable<String> ids) {
         Assert.notNull(ids, "ID null olamaz.");
-        for (Long id : ids) {
+        for (String id : ids) {
             hardDelete(id);
         }
     }
@@ -192,7 +192,7 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     }
 
     @Override
-    public List<KE> findAllById(Iterable<Long> longs) {
+    public List<KE> findAllById(Iterable<String> longs) {
         return super.findAllById(longs);
     }
 
@@ -233,23 +233,23 @@ public class KuartzRepositoryImpl<KE extends KuartzEntity> extends SimpleJpaRepo
     }
 
     @Override
-    public void deleteAllByIds(Long... ids) {
+    public void deleteAllByIds(String... ids) {
         Assert.notNull(ids, "SILINECEK ENTITY ID BOS OLAMAZ"); // todo bu hatalari mesaja cekelim
-        for (Long id : ids) {
+        for (String id : ids) {
             deleteById(id);
         }
     }
 
     @Override
-    public void deleteAllByIdList(Iterable<Long> ids) {
+    public void deleteAllByIdList(Iterable<String> ids) {
         Assert.notNull(ids, "SILINECEK ENTITY ID BOS OLAMAZ");
-        for (Long id : ids) {
+        for (String id : ids) {
             deleteById(id);
         }
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         Assert.notNull(id, "SILINECEK ENTITY ID BOS OLAMAZ"); // todo bu hatalari mesaja cekelim
         Optional<KE> optional = findById(id);
         if (optional.isPresent()) {

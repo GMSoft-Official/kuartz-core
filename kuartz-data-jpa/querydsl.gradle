@@ -1,0 +1,45 @@
+
+class QueryDslPlugin implements Plugin<Project> {
+
+    void apply(Project project) {
+        def generatedSourcesDir = "src/main/java"
+        def sourceSets = project.sourceSets
+
+        project.task('generateQueryDSL', type: JavaCompile, group: 'build') {
+            // todo @kcelebi
+            // doFirst {
+            //     project.delete generatedSourcesDir
+            //     project.file(generatedSourcesDir).mkdirs()
+            // }
+
+            setSource(project.sourceSets.main.java)
+            classpath = sourceSets.main.compileClasspath
+            setDestinationDir(new File(generatedSourcesDir))
+            source = sourceSets.main.java
+
+            // options.annotationProcessorPath = sourceSets.main.annotationProcessorPath
+
+            options.compilerArgs = [
+                    "-proc:only",
+                    "-processor", "com.querydsl.apt.jpa.JPAAnnotationProcessor",
+                    "-Aquerydsl.prefix=",
+                    "-Aquerydsl.suffix=Query",
+                    "-Aquerydsl.packageSuffix=.query",
+                     "-s", generatedSourcesDir
+            ]
+        }
+
+        def compileJavaTask = getTask(project, 'compileJava')
+        def generateQueryDslTask = getTask(project, 'generateQueryDSL')
+        compileJavaTask.dependsOn generateQueryDslTask
+    }
+
+    private static getTask(Project project, String name) {
+        return project
+                .tasks
+                .matching { it.name == name } [0]
+    }
+
+}
+
+apply plugin: QueryDslPlugin

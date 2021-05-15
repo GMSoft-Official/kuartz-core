@@ -36,12 +36,12 @@ public class KuartzReferenceEntityQuery extends EntityPathBase<KuartzReferenceEn
     public final DateTimePath<java.util.Date> deletedAt = _super.deletedAt;
 
     //inherited
-    public final NumberPath<Long> id = _super.id;
+    public final StringPath id = _super.id;
 
     //inherited
     public final StringPath lastModifiedBy = _super.lastModifiedBy;
 
-    public final NumberPath<Long> parentId = createNumber("parentId", Long.class);
+    public final StringPath parentId = createString("parentId");
 
     public final NumberPath<Long> referenceVersion = createNumber("referenceVersion", Long.class);
 

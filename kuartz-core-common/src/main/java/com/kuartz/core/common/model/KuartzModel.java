@@ -1,13 +1,16 @@
 package com.kuartz.core.common.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = KuartzModel.class)
+@Data
+@SuperBuilder
+@AllArgsConstructor
 public class KuartzModel implements Serializable {
 
     private static final long serialVersionUID = - 8331727143494828302L;
@@ -15,7 +18,7 @@ public class KuartzModel implements Serializable {
     public static final String DELETED_FIELD = "isDeleted";
     public static final String DELETED_AT_FIELD = "deletedAt";
 
-    private Long id;
+    private String id;
 
     private Date createdAt;
 
@@ -31,96 +34,9 @@ public class KuartzModel implements Serializable {
 
     private String uuid;
 
-    private Boolean isDeleted = false;
+    @Builder.Default
+    private Boolean isDeleted = Boolean.FALSE;
 
     public KuartzModel() {
-        //    bos yapici
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        KuartzModel that = (KuartzModel) o;
-        return id.equals(that.id) && uuid.equals(that.uuid);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, uuid);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Date getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(Date deletedAt) {
-        this.deletedAt = deletedAt;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public Boolean getDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        isDeleted = deleted;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
     }
 }

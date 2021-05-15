@@ -1,4 +1,4 @@
-package com.kuartz.core.env;
+package com.kuartz.core.common;
 
 import org.springframework.context.support.ResourceBundleMessageSource;
 

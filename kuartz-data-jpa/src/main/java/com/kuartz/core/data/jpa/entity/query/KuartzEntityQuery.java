@@ -29,7 +29,7 @@ public class KuartzEntityQuery extends EntityPathBase<KuartzEntity> {
 
     public final DateTimePath<java.util.Date> deletedAt = createDateTime("deletedAt", java.util.Date.class);
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    public final StringPath id = createString("id");
 
     public final StringPath lastModifiedBy = createString("lastModifiedBy");
 

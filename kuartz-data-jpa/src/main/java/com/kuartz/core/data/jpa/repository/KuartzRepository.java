@@ -25,7 +25,7 @@ import java.util.Optional;
  * @since 24.09.2019
  */
 @NoRepositoryBean
-public interface KuartzRepository<KE extends KuartzEntity> extends Repository<KE, Long>, QuerydslPredicateExecutor<KE> {
+public interface KuartzRepository<KE extends KuartzEntity> extends Repository<KE, String>, QuerydslPredicateExecutor<KE> {
     <T> JPAQuery<T> getJpaQuery();
 
     EntityManager getEntityManager();
@@ -38,10 +38,10 @@ public interface KuartzRepository<KE extends KuartzEntity> extends Repository<KE
 
     KE updateFlush(KE entity);
 
-    void hardDelete(Long id);
+    void hardDelete(String id);
 
     @Transactional
-    void hardDelete(Iterable<Long> ids);
+    void hardDelete(Iterable<String> ids);
 
     Optional<KE> findOne(Predicate predicate);
 
@@ -63,17 +63,17 @@ public interface KuartzRepository<KE extends KuartzEntity> extends Repository<KE
     @Override
     boolean exists(Predicate predicate);
 
-    Optional<KE> findById(Long id);
+    Optional<KE> findById(String id);
 
     List<KE> findAll();
 
-    void deleteAllByIds(Long... ids);
+    void deleteAllByIds(String... ids);
 
-    void deleteAllByIdList(Iterable<Long> ids);
+    void deleteAllByIdList(Iterable<String> ids);
 
-    void deleteById(Long id);
+    void deleteById(String id);
 
-    //KzPage<KE> applyPagination(KzPageable pageable, JPAQuery<Object> query);
+    void delete(KE entity);
 
     @Nullable
     Querydsl getQuerydsl();

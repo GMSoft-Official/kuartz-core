@@ -63,7 +63,7 @@ public class KuartzJpaRepositoryFactory<KE extends KuartzReferenceEntity> extend
     }
 
     @Override
-    protected JpaRepositoryImplementation<KE, Long> getTargetRepository(RepositoryInformation information, EntityManager entityManager) {
+    protected JpaRepositoryImplementation<KE, String> getTargetRepository(RepositoryInformation information, EntityManager entityManager) {
         final JpaEntityInformation<KE, Object> entityInformation = getEntityInformation((Class<KE>) information.getDomainType());
         final boolean isKuartzRepo = KuartzRepositoryImpl.class.isAssignableFrom(information.getRepositoryBaseClass());
         final boolean isReferenceRepo = KuartzReferenceRepositoryImpl.class.isAssignableFrom(information.getRepositoryBaseClass());

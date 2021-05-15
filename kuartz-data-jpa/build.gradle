@@ -1,3 +1,28 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.10.RELEASE'
+        checkstyleversion = '8.4'
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+//        classpath "com.kuartz.core.plugin.gradle:kuartz-gradle-plugin:${kuartzGradlePluginVersion}"
+    }
+}
+
+//apply plugin: "com.kuartz.core.plugin.gradle"
+
+//querydsl {
+//    aptOptions = ['querydsl.entityAccessors=true','querydsl.useFields=false',
+//                  "-proc:only",
+////            "-processor", "com.querydsl.apt.jpa.JPAAnnotationProcessor",
+//                  "-Aquerydsl.prefix=",
+//                  "-Aquerydsl.suffix=Query",
+//                  "-Aquerydsl.packageSuffix=.query",
+////            "-s", generatedSourcesDir
+//            ]
+//}
+
 group 'com.kuartz.core'
 version "${kuartzDataJpaVersion}"
 sourceCompatibility = 1.8
@@ -8,20 +33,6 @@ sourceSets {
     test.java.srcDir "src/test/java"
     test.resources.srcDir "src/test/resources"
 }
-
-buildscript {
-    ext {
-        springBootVersion = '1.5.10.RELEASE'
-        checkstyleversion = '8.4'
-    }
-
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath "com.kuartz.core.plugin.gradle:kuartz-gradle-plugin:${kuartzGradlePluginVersion}"
-    }
-}
-
-apply plugin: "com.kuartz.core.plugin.gradle"
 
 jar {
     enabled = true
@@ -38,6 +49,13 @@ dependencies {
 
             [group: 'org.postgresql', name: 'postgresql', version: '42.2.6'],
     )
+    annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}:jpa"
+    annotationProcessor "javax.annotation:javax.annotation-api"
+    annotationProcessor("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    compileOnly 'org.projectlombok:lombok:1.18.2'
+    annotationProcessor 'org.projectlombok:lombok:1.18.2'
+
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     testImplementation 'junit:junit:4.12'
@@ -82,4 +100,26 @@ publishing {
             }
         }
     }
+}
+
+task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+    def generatedSourcesDir = "src/main/java"
+    def sourceSets = project.sourceSets
+
+//    setSource(project.sourceSets.main.java)
+    classpath = sourceSets.main.compileClasspath
+    setDestinationDir(new File(generatedSourcesDir))
+    source = sourceSets.main.java
+
+    options.annotationProcessorPath = sourceSets.main.annotationProcessorPath
+
+
+    options.compilerArgs = [
+            "-proc:only",
+            "-processor", "com.querydsl.apt.jpa.JPAAnnotationProcessor",
+            "-Aquerydsl.prefix=",
+            "-Aquerydsl.suffix=Query",
+            "-Aquerydsl.packageSuffix=.query",
+            "-s", generatedSourcesDir
+    ]
 }

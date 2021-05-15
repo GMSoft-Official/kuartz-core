@@ -22,7 +22,7 @@ import javax.persistence.MappedSuperclass;
 @EntityListeners(AuditingEntityListener.class)
 public class KuartzReferenceEntity extends KuartzEntity {
     @Column(name = "PARENT_ID")
-    private Long parentId;
+    private String parentId;
     @Column(name = "REFERENCE_VERSION")
     private Long referenceVersion;
 
